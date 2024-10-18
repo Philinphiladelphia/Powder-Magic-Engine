@@ -1,5 +1,6 @@
 import os
 import shutil
+import sys
 
 def find_headers(directory):
     headers = []
@@ -29,14 +30,19 @@ def copy_generated_headers(build_dir, destination):
         shutil.copy2(header, destination)
 
 if __name__ == "__main__":
-    base_path = '/home/phil/iceoryx_ws/src/powder_magic_wrapper/'
+    if len(sys.argv) != 2:
+        print("Usage: install_libs.py <base_path>")
+        sys.exit(1)
+
+    base_path = sys.argv[1]
 
     headers = find_headers('src')
     copy_headers(headers, os.path.join(base_path, 'include/powder_toy/'))
 
 
     # Update the source path for the libraries
-    copy_libraries('/home/phil/gunpowder_plot/test_dir/The-Powder-Toy/builddir', os.path.join(base_path, 'lib'))
+    current_dir = os.getcwd()
+    copy_libraries(os.path.join(current_dir, 'builddir'), os.path.join(base_path, 'lib'))
 
     copy_generated_headers('build/src', os.path.join(base_path, 'include/powder_toy/'))
 
