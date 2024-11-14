@@ -921,7 +921,7 @@ static int loadStamp(lua_State *L)
 {
 	int i = -1;
 	int pushed = 1;
-	std::unique_ptr<SaveFile> tempfile;
+	std::shared_ptr<SaveFile> tempfile;
 	Vec2<int> partP = {
 		luaL_optint(L, 2, 0),
 		luaL_optint(L, 3, 0),

@@ -11,10 +11,10 @@ void Client::LoadAuthUser()
 		        document.querySelector("#PowderSessionInfo [name='SessionKey']")) ? 1 : 0;
 	}))
 	{
-		newUsername = ByteString(std::unique_ptr<char, decltype(&free)>((char *)EM_ASM_PTR({
+		newUsername = ByteString(std::shared_ptr<char, decltype(&free)>((char *)EM_ASM_PTR({
 			return stringToNewUTF8(document.querySelector("#PowderSessionInfo [name='Username']").value);
 		}), free).get());
-		newSessionKey = ByteString(std::unique_ptr<char, decltype(&free)>((char *)EM_ASM_PTR({
+		newSessionKey = ByteString(std::shared_ptr<char, decltype(&free)>((char *)EM_ASM_PTR({
 			return stringToNewUTF8(document.querySelector("#PowderSessionInfo [name='SessionKey']").value);
 		}), free).get());
 	}

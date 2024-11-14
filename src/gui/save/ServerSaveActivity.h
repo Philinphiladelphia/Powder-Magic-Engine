@@ -30,16 +30,16 @@ class Task;
 class VideoBuffer;
 class ServerSaveActivity: public WindowActivity, public TaskListener
 {
-	std::unique_ptr<http::UploadSaveRequest> uploadSaveRequest;
+	std::shared_ptr<http::UploadSaveRequest> uploadSaveRequest;
 
-	using OnUploaded = std::function<void (std::unique_ptr<SaveInfo>)>;
-	std::unique_ptr<PlaneAdapter<std::vector<pixel_rgba>>> saveToServerImage = format::PixelsFromPNG(
+	using OnUploaded = std::function<void (std::shared_ptr<SaveInfo>)>;
+	std::shared_ptr<PlaneAdapter<std::vector<pixel_rgba>>> saveToServerImage = format::PixelsFromPNG(
 		std::vector<char>(save_online_png, save_online_png + save_online_png_size)
 	);
 
 public:
-	ServerSaveActivity(std::unique_ptr<SaveInfo> newSave, OnUploaded onUploaded);
-	ServerSaveActivity(std::unique_ptr<SaveInfo> newSave, bool saveNow, OnUploaded onUploaded);
+	ServerSaveActivity(std::shared_ptr<SaveInfo> newSave, OnUploaded onUploaded);
+	ServerSaveActivity(std::shared_ptr<SaveInfo> newSave, bool saveNow, OnUploaded onUploaded);
 	void saveUpload();
 	void Save();
 	virtual void Exit() override;
@@ -53,8 +53,8 @@ protected:
 	void AddAuthorInfo();
 	void NotifyDone(Task * task) override;
 	ThumbnailRendererTask *thumbnailRenderer;
-	std::unique_ptr<VideoBuffer> thumbnail;
-	std::unique_ptr<SaveInfo> save;
+	std::shared_ptr<VideoBuffer> thumbnail;
+	std::shared_ptr<SaveInfo> save;
 private:
 	OnUploaded onUploaded;
 protected:

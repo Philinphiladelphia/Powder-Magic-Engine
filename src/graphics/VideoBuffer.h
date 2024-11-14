@@ -53,7 +53,7 @@ public:
 	// Automatically choose a size to fit within the given box, keeping aspect ratio
 	void ResizeToFit(Vec2<int> bound, bool resample = false);
 
-	static std::unique_ptr<VideoBuffer> FromPNG(std::vector<char> const &);
-	std::unique_ptr<std::vector<char>> ToPNG() const;
+	static std::shared_ptr<VideoBuffer> FromPNG(std::vector<char> const &);
+	std::shared_ptr<std::vector<char>> ToPNG() const;
 	std::vector<char> ToPPM() const;
 };

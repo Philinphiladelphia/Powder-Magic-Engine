@@ -28,7 +28,7 @@ void DoRestart()
 ByteString ExecutableName()
 {
 	auto firstApproximation = ExecutableNameFirstApprox();
-	auto rp = std::unique_ptr<char, decltype(std::free) *>(realpath(firstApproximation.data(), NULL), std::free);
+	auto rp = std::shared_ptr<char>(realpath(firstApproximation.data(), NULL), std::free);
 	if (!rp)
 	{
 		std::cerr << "realpath: " << errno << std::endl;

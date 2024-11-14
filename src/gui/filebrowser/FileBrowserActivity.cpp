@@ -24,7 +24,7 @@ class LoadFilesTask: public Task
 {
 	ByteString directory;
 	ByteString search;
-	std::vector<std::unique_ptr<SaveFile>> saveFiles;
+	std::vector<std::shared_ptr<SaveFile>> saveFiles;
 
 	void before() override
 	{
@@ -55,7 +55,7 @@ class LoadFilesTask: public Task
 	}
 
 public:
-	std::vector<std::unique_ptr<SaveFile>> TakeSaveFiles()
+	std::vector<std::shared_ptr<SaveFile>> TakeSaveFiles()
 	{
 		return std::move(saveFiles);
 	}

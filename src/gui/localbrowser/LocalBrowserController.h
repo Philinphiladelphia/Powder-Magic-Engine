@@ -14,7 +14,7 @@ public:
 	bool HasDone;
 	LocalBrowserController(std::function<void ()> onDone = nullptr);
 	LocalBrowserView * GetView() {return browserView;}
-	std::unique_ptr<SaveFile> TakeSave();
+	std::shared_ptr<SaveFile> TakeSave();
 	void RemoveSelected();
 	void removeSelectedC();
 	void RenameSelected();

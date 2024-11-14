@@ -21,12 +21,9 @@ constexpr auto transSize = (blocks.X / 2 + 1) * blocks.Y;
 constexpr auto scaleFactor = -float(M_GRAV) / (NCELL * 4);
 
 static_assert(sizeof(std::complex<float>) == sizeof(fftwf_complex));
-struct FftwArrayDeleter        { void operator ()(float               ptr[]) const { fftwf_free(ptr);         } };
-struct FftwComplexArrayDeleter { void operator ()(std::complex<float> ptr[]) const { fftwf_free(ptr);         } };
-struct FftwPlanDeleter         { void operator ()(fftwf_plan          ptr  ) const { fftwf_destroy_plan(ptr); } };
-using  FftwArrayPtr        = std::unique_ptr<float                              [], FftwArrayDeleter       >;
-using  FftwComplexArrayPtr = std::unique_ptr<std::complex<float>                [], FftwComplexArrayDeleter>;
-using  FftwPlanPtr         = std::unique_ptr<std::remove_pointer<fftwf_plan>::type, FftwPlanDeleter        >;
+using  FftwArrayPtr        = std::shared_ptr<float                              []       >;
+using  FftwComplexArrayPtr = std::shared_ptr<std::complex<float>                []>;
+using  FftwPlanPtr         = std::shared_ptr<std::remove_pointer<fftwf_plan>::type        >;
 FftwArrayPtr FftwArray(size_t size)
 {
 	return FftwArrayPtr(reinterpret_cast<float *>(fftwf_malloc(size * sizeof(float))));

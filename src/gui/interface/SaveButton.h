@@ -17,7 +17,7 @@ class SaveButton : public Component
 {
 	SaveFile *file = nullptr; // non-owning
 	SaveInfo *save = nullptr; // non-owning
-	std::unique_ptr<VideoBuffer> thumbnail;
+	std::shared_ptr<VideoBuffer> thumbnail;
 	ui::Point thumbSize = ui::Point(0, 0);
 	PTString name;
 	PTString votesString;
@@ -32,7 +32,7 @@ class SaveButton : public Component
 	bool showVotes;
 	ThumbnailRendererTask *thumbnailRenderer;
 
-	std::unique_ptr<http::ThumbnailRequest> thumbnailRequest;
+	std::shared_ptr<http::ThumbnailRequest> thumbnailRequest;
 
 	struct SaveButtonAction
 	{
@@ -78,7 +78,7 @@ public:
 
 	// TODO: clone the request instead because sometimes the user of CloneThumbnail might end up
 	// with a nullptr even though the thumbnail for the SaveButton will eventually arrive.
-	std::unique_ptr<VideoBuffer> CloneThumbnail() const;
+	std::shared_ptr<VideoBuffer> CloneThumbnail() const;
 
 protected:
 	bool isButtonDown, state, isMouseInside, selected, selectable;

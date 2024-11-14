@@ -50,7 +50,7 @@ const SaveFile *LocalBrowserModel::GetSave()
 	return stamp.get();
 }
 
-std::unique_ptr<SaveFile> LocalBrowserModel::TakeSave()
+std::shared_ptr<SaveFile> LocalBrowserModel::TakeSave()
 {
 	return std::move(stamp);
 }

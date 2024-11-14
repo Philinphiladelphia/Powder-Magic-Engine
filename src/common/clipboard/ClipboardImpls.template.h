@@ -1,5 +1,5 @@
 #ifdef CLIPBOARD_IMPLS_DECLARE
-# define IMPL_DEFINE(subsystem, factory) std::unique_ptr<ClipboardImpl> factory();
+# define IMPL_DEFINE(subsystem, factory) std::shared_ptr<ClipboardImpl> factory();
 #endif
 #ifdef CLIPBOARD_IMPLS_DEFINE
 # define IMPL_DEFINE(subsystem, factory) { subsystem, factory },

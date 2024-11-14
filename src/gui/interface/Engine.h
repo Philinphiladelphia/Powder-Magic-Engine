@@ -100,7 +100,7 @@ namespace ui
 		struct FrozenGraphics
 		{
 			int fadeTicks;
-			std::unique_ptr<pixel []> screen;
+			std::shared_ptr<pixel []> screen;
 		};
 		constexpr static int maxFadeTicks = 20;
 		std::stack<FrozenGraphics> frozenGraphics;

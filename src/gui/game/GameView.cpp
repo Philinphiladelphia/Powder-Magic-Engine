@@ -915,7 +915,7 @@ void GameView::NotifyBrushChanged(GameModel * sender)
 
 ByteString GameView::TakeScreenshot(int captureUI, int fileType)
 {
-	std::unique_ptr<VideoBuffer> screenshot;
+	std::shared_ptr<VideoBuffer> screenshot;
 	if (captureUI)
 	{
 		screenshot = std::make_unique<VideoBuffer>(*rendererFrame);

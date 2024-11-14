@@ -1,6 +1,6 @@
 #include "Tool.h"
 
-std::unique_ptr<VideoBuffer> Tool::GetTexture(Vec2<int> size)
+std::shared_ptr<VideoBuffer> Tool::GetTexture(Vec2<int> size)
 {
 	return textureGen ? textureGen(ToolID, size) : nullptr;
 }

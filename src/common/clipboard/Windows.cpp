@@ -57,14 +57,14 @@ namespace Clipboard
 			}
 			std::vector<char> saveData;
 			SerializeClipboard(saveData);
-			auto handle = std::unique_ptr<void, decltype(&::GlobalFree)>(::GlobalAlloc(GMEM_MOVEABLE, saveData.size()), GlobalFree);
+			auto handle = std::shared_ptr<void, decltype(&::GlobalFree)>(::GlobalAlloc(GMEM_MOVEABLE, saveData.size()), GlobalFree);
 			if (!handle)
 			{
 				std::cerr << "cannot transfer save data: GlobalAlloc failed: " << ::GetLastError() << std::endl;
 				return;
 			}
 			{
-				auto data = std::unique_ptr<void, decltype(&::GlobalUnlock)>(::GlobalLock(handle.get()), ::GlobalUnlock);
+				auto data = std::shared_ptr<void, decltype(&::GlobalUnlock)>(::GlobalLock(handle.get()), ::GlobalUnlock);
 				auto base = reinterpret_cast<char *>(data.get());
 				std::copy(saveData.begin(), saveData.end(), base);
 			}
@@ -208,7 +208,7 @@ namespace Clipboard
 				return GetClipboardDataFailed{};
 			}
 			auto size = ::GlobalSize(handle);
-			auto data = std::unique_ptr<void, decltype(&::GlobalUnlock)>(::GlobalLock(handle), ::GlobalUnlock);
+			auto data = std::shared_ptr<void, decltype(&::GlobalUnlock)>(::GlobalLock(handle), ::GlobalUnlock);
 			if (!data)
 			{
 				std::cerr << "cannot get save from clipboard: GlobalLock failed: " << ::GetLastError() << std::endl;
@@ -224,7 +224,7 @@ namespace Clipboard
 		}
 	};
 
-	std::unique_ptr<ClipboardImpl> WindowsClipboardFactory()
+	std::shared_ptr<ClipboardImpl> WindowsClipboardFactory()
 	{
 		return std::make_unique<WindowsClipboardImpl>();
 	}

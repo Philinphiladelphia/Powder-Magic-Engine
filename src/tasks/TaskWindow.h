@@ -11,7 +11,7 @@ namespace ui
 
 class Task;
 class TaskWindow: public ui::Window, public TaskListener {
-	std::unique_ptr<Task> task;
+	std::shared_ptr<Task> task;
 	PTString title;
 	int progress;
 	float intermediatePos;

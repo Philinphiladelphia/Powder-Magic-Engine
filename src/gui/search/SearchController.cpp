@@ -48,7 +48,7 @@ const SaveInfo *SearchController::GetLoadedSave() const
 	return searchModel->GetLoadedSave();
 }
 
-std::unique_ptr<SaveInfo> SearchController::TakeLoadedSave()
+std::shared_ptr<SaveInfo> SearchController::TakeLoadedSave()
 {
 	return searchModel->TakeLoadedSave();
 }
@@ -239,7 +239,7 @@ void SearchController::OpenSaveDone()
 	}
 }
 
-void SearchController::OpenSave(int saveID, int saveDate, std::unique_ptr<VideoBuffer> thumbnail)
+void SearchController::OpenSave(int saveID, int saveDate, std::shared_ptr<VideoBuffer> thumbnail)
 {
 	delete activePreview;
 	Graphics * g = searchView->GetGraphics();

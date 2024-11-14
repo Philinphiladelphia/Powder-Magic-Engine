@@ -43,24 +43,24 @@ public:
 
 struct HistoryEntry
 {
-	std::unique_ptr<Snapshot> snap;
-	std::unique_ptr<SnapshotDelta> delta;
+	std::shared_ptr<Snapshot> snap;
+	std::shared_ptr<SnapshotDelta> delta;
 
 	~HistoryEntry();
 };
 
 class GameModel
 {
-	std::unique_ptr<http::ExecVoteRequest> execVoteRequest;
+	std::shared_ptr<http::ExecVoteRequest> execVoteRequest;
 
 private:
 	std::vector<Notification*> notifications;
-	std::unique_ptr<GameSave> placeSave;
-	std::unique_ptr<GameSave> transformedPlaceSave;
+	std::shared_ptr<GameSave> placeSave;
+	std::shared_ptr<GameSave> transformedPlaceSave;
 	std::deque<PTString> consoleLog;
 	std::vector<GameView*> observers;
 
-	std::vector<std::unique_ptr<Tool>> tools;
+	std::vector<std::shared_ptr<Tool>> tools;
 
 	void SanitizeToolsets();
 	void DeselectTool(ByteString identifier);
@@ -69,13 +69,13 @@ private:
 	Simulation * sim;
 	Renderer * ren;
 	RendererSettings rendererSettings;
-	std::vector<std::unique_ptr<Menu>> menuList;
+	std::vector<std::shared_ptr<Menu>> menuList;
 	std::vector<QuickOption*> quickOptions;
 	int activeMenu;
 	int currentBrush;
-	std::vector<std::unique_ptr<Brush>> brushList;
-	std::unique_ptr<SaveInfo> currentSave;
-	std::unique_ptr<SaveFile> currentFile;
+	std::vector<std::shared_ptr<Brush>> brushList;
+	std::shared_ptr<SaveInfo> currentSave;
+	std::shared_ptr<SaveFile> currentFile;
 	Tool *lastTool = nullptr;
 	Tool **activeTools = nullptr;
 	std::array<Tool *, NUM_TOOLINDICES> decoToolset;
@@ -83,7 +83,7 @@ private:
 	User currentUser;
 	float toolStrength;
 	std::deque<HistoryEntry> history;
-	std::unique_ptr<Snapshot> historyCurrent;
+	std::shared_ptr<Snapshot> historyCurrent;
 	unsigned int historyPosition;
 	unsigned int undoHistoryLimit;
 	bool mouseClickRequired;
@@ -185,7 +185,7 @@ public:
 	void HistoryRestore();
 	bool HistoryCanForward() const;
 	void HistoryForward();
-	void HistoryPush(std::unique_ptr<Snapshot> last);
+	void HistoryPush(std::shared_ptr<Snapshot> last);
 	unsigned int GetUndoHistoryLimit();
 	void SetUndoHistoryLimit(unsigned int undoHistoryLimit_);
 
@@ -200,13 +200,13 @@ public:
 	Tool *GetToolFromIdentifier(ByteString const &identifier);
 	std::optional<int> GetToolIndex(Tool *tool);
 	std::vector<Tool *> GetActiveMenuToolList();
-	void AllocTool(std::unique_ptr<Tool> tool);
+	void AllocTool(std::shared_ptr<Tool> tool);
 	void AllocElementTool(int element);
 	void UpdateElementTool(int element);
 	void AllocCustomGolTool(const CustomGOLData &gd);
 	void FreeTool(Tool *tool);
 
-	const std::vector<std::unique_ptr<Tool>> &GetTools()
+	const std::vector<std::shared_ptr<Tool>> &GetTools()
 	{
 		return tools;
 	}
@@ -223,11 +223,11 @@ public:
 
 	void SetVote(int direction);
 	SaveInfo *GetSave(); // non-owning
-	std::unique_ptr<SaveInfo> TakeSave();
+	std::shared_ptr<SaveInfo> TakeSave();
 	const SaveFile *GetSaveFile() const;
-	std::unique_ptr<SaveFile> TakeSaveFile();
-	void SetSave(std::unique_ptr<SaveInfo> newSave, bool invertIncludePressure);
-	void SetSaveFile(std::unique_ptr<SaveFile> newSave, bool invertIncludePressure);
+	std::shared_ptr<SaveFile> TakeSaveFile();
+	void SetSave(std::shared_ptr<SaveInfo> newSave, bool invertIncludePressure);
+	void SetSaveFile(std::shared_ptr<SaveFile> newSave, bool invertIncludePressure);
 	void AddObserver(GameView * observer);
 
 	void SetPaused(bool pauseState);
@@ -267,8 +267,8 @@ public:
 	ui::Point AdjustZoomCoords(ui::Point position);
 	void SetZoomWindowPosition(ui::Point position);
 	ui::Point GetZoomWindowPosition();
-	void SetClipboard(std::unique_ptr<GameSave> save);
-	void SetPlaceSave(std::unique_ptr<GameSave> save);
+	void SetClipboard(std::shared_ptr<GameSave> save);
+	void SetPlaceSave(std::shared_ptr<GameSave> save);
 	void TransformPlaceSave(Mat2<int> transform, Vec2<int> nudge);
 	void Log(PTString message, bool printToFile);
 	std::deque<PTString> GetLog();

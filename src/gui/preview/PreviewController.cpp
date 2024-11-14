@@ -18,7 +18,7 @@
 #include "gui/login/LoginView.h"
 #include "Config.h"
 
-PreviewController::PreviewController(int saveID, int saveDate, SavePreviewType savePreviewType, std::function<void ()> onDone_, std::unique_ptr<VideoBuffer> thumbnail):
+PreviewController::PreviewController(int saveID, int saveDate, SavePreviewType savePreviewType, std::function<void ()> onDone_, std::shared_ptr<VideoBuffer> thumbnail):
 	saveId(saveID),
 	loginWindow(NULL),
 	HasExited(false)
@@ -73,7 +73,7 @@ const SaveInfo *PreviewController::GetSaveInfo() const
 	return previewModel->GetSaveInfo();
 }
 
-std::unique_ptr<SaveInfo> PreviewController::TakeSaveInfo()
+std::shared_ptr<SaveInfo> PreviewController::TakeSaveInfo()
 {
 	return previewModel->TakeSaveInfo();
 }

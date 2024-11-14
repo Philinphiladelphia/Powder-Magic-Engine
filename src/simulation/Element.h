@@ -62,7 +62,7 @@ public:
 
 	bool (*CtypeDraw) (CTYPEDRAW_FUNC_ARGS);
 
-	std::unique_ptr<VideoBuffer> (*IconGenerator)(int, Vec2<int>);
+	std::shared_ptr<VideoBuffer> (*IconGenerator)(int, Vec2<int>);
 
 	Particle DefaultProperties;
 

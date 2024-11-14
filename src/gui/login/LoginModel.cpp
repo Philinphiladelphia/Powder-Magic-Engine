@@ -94,5 +94,5 @@ void LoginModel::notifyStatusChanged()
 
 LoginModel::~LoginModel()
 {
-	// Satisfy std::unique_ptr
+	// Satisfy std::shared_ptr
 }

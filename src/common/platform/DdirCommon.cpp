@@ -8,7 +8,7 @@ namespace Platform
 {
 ByteString DefaultDdir()
 {
-	auto ddir = std::unique_ptr<char, decltype(&SDL_free)>(SDL_GetPrefPath(NULL, APPDATA), SDL_free);
+	auto ddir = std::shared_ptr<char>(SDL_GetPrefPath(NULL, APPDATA));
 	return ddir.get();
 }
 }

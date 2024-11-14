@@ -20,7 +20,7 @@ public:
 	inline int SaveID() { return saveId; }
 
 	bool HasExited;
-	PreviewController(int saveID, int saveDate, SavePreviewType savePreviewType, std::function<void ()> onDone, std::unique_ptr<VideoBuffer> thumbnail);
+	PreviewController(int saveID, int saveDate, SavePreviewType savePreviewType, std::function<void ()> onDone, std::shared_ptr<VideoBuffer> thumbnail);
 	void Exit();
 	void DoOpen();
 	void OpenInBrowser();
@@ -28,7 +28,7 @@ public:
 	bool GetDoOpen();
 	bool GetFromUrl();
 	const SaveInfo *GetSaveInfo() const;
-	std::unique_ptr<SaveInfo> TakeSaveInfo();
+	std::shared_ptr<SaveInfo> TakeSaveInfo();
 	PreviewView * GetView() { return previewView; }
 	void Update();
 	void FavouriteSave();

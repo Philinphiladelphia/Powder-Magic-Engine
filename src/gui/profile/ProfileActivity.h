@@ -27,8 +27,8 @@ class ProfileActivity: public WindowActivity {
 	PTString doErrorMessage;
 	void setUserInfo(UserInfo newInfo);
 
-	std::unique_ptr<http::SaveUserInfoRequest> saveUserInfoRequest;
-	std::unique_ptr<http::GetUserInfoRequest> getUserInfoRequest;
+	std::shared_ptr<http::SaveUserInfoRequest> saveUserInfoRequest;
+	std::shared_ptr<http::GetUserInfoRequest> getUserInfoRequest;
 
 public:
 	ProfileActivity(ByteString username);

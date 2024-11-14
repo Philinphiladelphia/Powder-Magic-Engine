@@ -29,7 +29,7 @@ class PreviewView: public ui::Window
 {
 	PreviewController *c{};
 	MissingElements missingElements;
-	std::unique_ptr<VideoBuffer> savePreview;
+	std::shared_ptr<VideoBuffer> savePreview;
 	ui::Button *openButton{};
 	ui::Button *browserOpenButton{};
 	ui::Button *favButton{};
@@ -81,12 +81,12 @@ class PreviewView: public ui::Window
 	void ShowLoadError();
 	void UpdateLoadStatus();
 
-	std::unique_ptr<http::AddCommentRequest> addCommentRequest;
-	std::unique_ptr<http::ReportSaveRequest> reportSaveRequest;
+	std::shared_ptr<http::AddCommentRequest> addCommentRequest;
+	std::shared_ptr<http::ReportSaveRequest> reportSaveRequest;
 
 public:
 	void AttachController(PreviewController * controller);
-	PreviewView(std::unique_ptr<VideoBuffer> newSavePreviev);
+	PreviewView(std::shared_ptr<VideoBuffer> newSavePreviev);
 	void NotifySaveChanged(PreviewModel * sender);
 	void NotifyCommentsChanged(PreviewModel * sender);
 	void NotifyCommentsPageChanged(PreviewModel * sender);

@@ -3,7 +3,7 @@
 
 namespace Clipboard
 {
-	void SetClipboardData(std::unique_ptr<GameSave> data)
+	void SetClipboardData(std::shared_ptr<GameSave> data)
 	{
 	}
 

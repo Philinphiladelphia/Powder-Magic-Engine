@@ -20,13 +20,13 @@ namespace ui
 class LoadFilesTask;
 class FileBrowserActivity: public TaskListener, public WindowActivity
 {
-	using OnSelected = std::function<void (std::unique_ptr<SaveFile>)>;
+	using OnSelected = std::function<void (std::shared_ptr<SaveFile>)>;
 
 	LoadFilesTask * loadFiles;
 	OnSelected onSelected;
 	ui::ScrollPanel * itemList;
 	ui::Label * infoText;
-	std::vector<std::unique_ptr<SaveFile>> files;
+	std::vector<std::shared_ptr<SaveFile>> files;
 	bool createButtons = false;
 	std::vector<ui::Component*> components;
 	std::vector<ui::Component*> componentsQueue;

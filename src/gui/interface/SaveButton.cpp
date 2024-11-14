@@ -413,7 +413,7 @@ void SaveButton::DoSelection()
 		actionCallback.selected();
 }
 
-std::unique_ptr<VideoBuffer> SaveButton::CloneThumbnail() const
+std::shared_ptr<VideoBuffer> SaveButton::CloneThumbnail() const
 {
 	if (thumbnail)
 	{

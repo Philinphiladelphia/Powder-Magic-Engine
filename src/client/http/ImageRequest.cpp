@@ -9,7 +9,7 @@ namespace http
 	{
 	}
 
-	std::unique_ptr<VideoBuffer> ImageRequest::Finish()
+	std::shared_ptr<VideoBuffer> ImageRequest::Finish()
 	{
 		auto [ status, data ] = Request::Finish();
 		ParseResponse(data, status, responseData);

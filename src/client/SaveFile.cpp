@@ -40,7 +40,7 @@ const GameSave *SaveFile::GetGameSave() const
 	return gameSave.get();
 }
 
-std::unique_ptr<GameSave> SaveFile::TakeGameSave()
+std::shared_ptr<GameSave> SaveFile::TakeGameSave()
 {
 	return std::move(gameSave);
 }
@@ -53,7 +53,7 @@ void SaveFile::LazyUnload()
 	}
 }
 
-void SaveFile::SetGameSave(std::unique_ptr<GameSave> newGameSave)
+void SaveFile::SetGameSave(std::shared_ptr<GameSave> newGameSave)
 {
 	gameSave = std::move(newGameSave);
 }

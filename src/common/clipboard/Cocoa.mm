@@ -69,7 +69,7 @@ namespace Clipboard
 		}
 	};
 
-	std::unique_ptr<ClipboardImpl> CocoaClipboardFactory()
+	std::shared_ptr<ClipboardImpl> CocoaClipboardFactory()
 	{
 		return std::make_unique<CocoaClipboardImpl>();
 	}

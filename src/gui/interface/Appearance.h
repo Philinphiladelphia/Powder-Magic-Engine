@@ -49,7 +49,7 @@ namespace ui
 		Icon icon;
 
 		VideoBuffer const *GetTexture();
-		void SetTexture(std::unique_ptr<VideoBuffer> texture);
+		void SetTexture(std::shared_ptr<VideoBuffer> texture);
 
 		Appearance();
 	};

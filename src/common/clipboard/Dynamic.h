@@ -40,7 +40,7 @@ namespace Clipboard
 		virtual std::optional<PTString> Explanation() = 0;
 	};
 
-	extern std::unique_ptr<GameSave> clipboardData;
+	extern std::shared_ptr<GameSave> clipboardData;
 
 	void SerializeClipboard(std::vector<char> &saveData);
 

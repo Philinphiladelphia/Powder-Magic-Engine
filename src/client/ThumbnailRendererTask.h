@@ -9,11 +9,11 @@ class GameSave;
 class VideoBuffer;
 class ThumbnailRendererTask : public AbandonableTask
 {
-	std::unique_ptr<GameSave> save;
+	std::shared_ptr<GameSave> save;
 	Vec2<int> size;
 	RendererSettings::DecorationLevel decorationLevel;
 	bool fire;
-	std::unique_ptr<VideoBuffer> thumbnail;
+	std::shared_ptr<VideoBuffer> thumbnail;
 
 	static int queueSize;
 
@@ -22,7 +22,7 @@ public:
 	virtual ~ThumbnailRendererTask();
 
 	virtual bool doWork() override;
-	std::unique_ptr<VideoBuffer> Finish();
+	std::shared_ptr<VideoBuffer> Finish();
 
 	static int QueueSize();
 };

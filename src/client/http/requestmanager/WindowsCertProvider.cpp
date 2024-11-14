@@ -24,7 +24,7 @@ namespace http
 						::CertCloseStore(p, 0);
 					}
 				};
-				using StorePtr = std::unique_ptr<void, StoreDeleter>;
+				using StorePtr = std::shared_ptr<void, StoreDeleter>;
 				struct ContextDeleter
 				{
 					typedef PCCERT_CONTEXT pointer;
@@ -34,7 +34,7 @@ namespace http
 						::CertFreeCertificateContext(p);
 					}
 				};
-				using ContextPtr = std::unique_ptr<void, ContextDeleter>;
+				using ContextPtr = std::shared_ptr<void, ContextDeleter>;
 
 				auto die = [](ByteString message) {
 					std::cerr << "failed to enumerate system certificates: " << message << ": " << GetLastError() << std::endl;

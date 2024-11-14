@@ -44,12 +44,12 @@ public:
 	void Selected(int saveID, bool selected);
 	void SelectAllSaves();
 	void InstantOpen(bool instant);
-	void OpenSave(int saveID, int saveDate, std::unique_ptr<VideoBuffer> thumbnail);
+	void OpenSave(int saveID, int saveDate, std::shared_ptr<VideoBuffer> thumbnail);
 	void Update();
 	void ClearSelection();
 	void RemoveSelected();
 	void UnpublishSelected(bool publish);
 	void FavouriteSelected();
 	const SaveInfo *GetLoadedSave() const;
-	std::unique_ptr<SaveInfo> TakeLoadedSave();
+	std::shared_ptr<SaveInfo> TakeLoadedSave();
 };

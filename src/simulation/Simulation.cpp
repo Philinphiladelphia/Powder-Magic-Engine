@@ -310,7 +310,7 @@ void Simulation::Load(const GameSave *save, bool includePressure, Vec2<int> bloc
 	}
 }
 
-std::unique_ptr<GameSave> Simulation::Save(bool includePressure, Rect<int> partR) // particle coordinates
+std::shared_ptr<GameSave> Simulation::Save(bool includePressure, Rect<int> partR) // particle coordinates
 {
 	auto blockR = RectBetween(partR.TopLeft() / CELL, partR.BottomRight() / CELL);
 	auto blockP = blockR.pos;
@@ -665,7 +665,7 @@ bool Simulation::flood_water(int x, int y, int i)
 		return false;
 
 	// Bitmap for checking where we've already looked
-	auto bitmapPtr = std::unique_ptr<char[]>(new char[XRES * YRES]);
+	auto bitmapPtr = std::shared_ptr<char[]>(new char[XRES * YRES]);
 	char *bitmap = bitmapPtr.get();
 	std::fill(&bitmap[0], &bitmap[0] + XRES * YRES, 0);
 

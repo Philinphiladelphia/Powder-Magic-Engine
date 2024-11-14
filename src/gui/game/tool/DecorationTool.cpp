@@ -4,7 +4,7 @@
 #include "simulation/Simulation.h"
 #include "gui/game/GameView.h"
 
-std::unique_ptr<VideoBuffer> DecorationTool::GetIcon(int ToolID, Vec2<int> size)
+std::shared_ptr<VideoBuffer> DecorationTool::GetIcon(int ToolID, Vec2<int> size)
 {
 	auto texture = std::make_unique<VideoBuffer>(size);
 

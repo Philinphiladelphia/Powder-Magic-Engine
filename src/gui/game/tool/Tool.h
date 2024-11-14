@@ -16,7 +16,7 @@ struct Particle;
 class Tool
 {
 public:
-	std::unique_ptr<VideoBuffer> (*textureGen)(int, Vec2<int>) = nullptr;
+	std::shared_ptr<VideoBuffer> (*textureGen)(int, Vec2<int>) = nullptr;
 
 	int ToolID = 0;
 	PTString Name = "NULL";
@@ -34,7 +34,7 @@ public:
 	Tool() = default;
 
 	Tool(int id, PTString name, PTString description,
-		RGB<uint8_t> colour, ByteString identifier, std::unique_ptr<VideoBuffer> (*textureGen)(int, Vec2<int>) = NULL, bool blocky = false
+		RGB<uint8_t> colour, ByteString identifier, std::shared_ptr<VideoBuffer> (*textureGen)(int, Vec2<int>) = NULL, bool blocky = false
 	):
 		textureGen(textureGen),
 		ToolID(id),
@@ -51,7 +51,7 @@ public:
 	virtual ~Tool()
 	{}
 
-	std::unique_ptr<VideoBuffer> GetTexture(Vec2<int>);
+	std::shared_ptr<VideoBuffer> GetTexture(Vec2<int>);
 	virtual void Click(Simulation * sim, Brush const &brush, ui::Point position);
 	virtual void Draw(Simulation * sim, Brush const &brush, ui::Point position);
 	virtual void DrawLine(Simulation * sim, Brush const &brush, ui::Point position1, ui::Point position2, bool dragging);

@@ -74,7 +74,7 @@ void Renderer::render_gravlensing(const RendererFrame &source)
 	}
 }
 
-std::unique_ptr<VideoBuffer> Renderer::WallIcon(int wallID, Vec2<int> size)
+std::shared_ptr<VideoBuffer> Renderer::WallIcon(int wallID, Vec2<int> size)
 {
 	auto &sd = SimulationData::CRef();
 	auto &wtypes = sd.wtypes;

@@ -437,7 +437,7 @@ void GameModel::HistoryForward()
 	}
 }
 
-void GameModel::HistoryPush(std::unique_ptr<Snapshot> last)
+void GameModel::HistoryPush(std::shared_ptr<Snapshot> last)
 {
 	Snapshot *rebaseOnto = nullptr;
 	if (historyPosition)
@@ -647,7 +647,7 @@ SaveInfo *GameModel::GetSave() // non-owning
 	return currentSave.get();
 }
 
-std::unique_ptr<SaveInfo> GameModel::TakeSave()
+std::shared_ptr<SaveInfo> GameModel::TakeSave()
 {
 	// we don't notify listeners because we'll get a new save soon anyway
 	return std::move(currentSave);
@@ -678,7 +678,7 @@ void GameModel::SaveToSimParameters(const GameSave &saveData)
 	sim->ensureDeterminism = saveData.ensureDeterminism;
 }
 
-void GameModel::SetSave(std::unique_ptr<SaveInfo> newSave, bool invertIncludePressure)
+void GameModel::SetSave(std::shared_ptr<SaveInfo> newSave, bool invertIncludePressure)
 {
 	currentSave = std::move(newSave);
 	currentFile.reset();
@@ -724,13 +724,13 @@ const SaveFile *GameModel::GetSaveFile() const
 	return currentFile.get();
 }
 
-std::unique_ptr<SaveFile> GameModel::TakeSaveFile()
+std::shared_ptr<SaveFile> GameModel::TakeSaveFile()
 {
 	// we don't notify listeners because we'll get a new save soon anyway
 	return std::move(currentFile);
 }
 
-void GameModel::SetSaveFile(std::unique_ptr<SaveFile> newSave, bool invertIncludePressure)
+void GameModel::SetSaveFile(std::shared_ptr<SaveFile> newSave, bool invertIncludePressure)
 {
 	currentFile = std::move(newSave);
 	currentSave.reset();
@@ -1046,7 +1046,7 @@ void GameModel::ClearSimulation()
 	UpdateQuickOptions();
 }
 
-void GameModel::SetPlaceSave(std::unique_ptr<GameSave> save)
+void GameModel::SetPlaceSave(std::shared_ptr<GameSave> save)
 {
 	transformedPlaceSave.reset();
 	placeSave = std::move(save);
@@ -1067,7 +1067,7 @@ void GameModel::TransformPlaceSave(Mat2<int> transform, Vec2<int> nudge)
 	notifyTransformedPlaceSaveChanged();
 }
 
-void GameModel::SetClipboard(std::unique_ptr<GameSave> save)
+void GameModel::SetClipboard(std::shared_ptr<GameSave> save)
 {
 	Clipboard::SetClipboardData(std::move(save));
 }
@@ -1569,7 +1569,7 @@ void GameModel::DeselectTool(ByteString identifier)
 	SanitizeToolsets();
 }
 
-void GameModel::AllocTool(std::unique_ptr<Tool> tool)
+void GameModel::AllocTool(std::shared_ptr<Tool> tool)
 {
 	std::optional<int> index;
 	for (int i = 0; i < int(tools.size()); ++i)

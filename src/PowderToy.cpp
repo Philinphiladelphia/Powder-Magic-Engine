@@ -232,16 +232,16 @@ int GuessBestScale()
 struct ExplicitSingletons
 {
 	// These need to be listed in the order they are populated in main.
-	std::unique_ptr<GlobalPrefs> globalPrefs;
+	std::shared_ptr<GlobalPrefs> globalPrefs;
 	http::RequestManagerPtr requestManager;
-	std::unique_ptr<Client> client;
-	std::unique_ptr<SaveRenderer> saveRenderer;
-	std::unique_ptr<Favorite> favorite;
-	std::unique_ptr<ui::Engine> engine;
-	std::unique_ptr<SimulationData> simulationData;
-	std::unique_ptr<GameController> gameController;
+	std::shared_ptr<Client> client;
+	std::shared_ptr<SaveRenderer> saveRenderer;
+	std::shared_ptr<Favorite> favorite;
+	std::shared_ptr<ui::Engine> engine;
+	std::shared_ptr<SimulationData> simulationData;
+	std::shared_ptr<GameController> gameController;
 };
-static std::unique_ptr<ExplicitSingletons> explicitSingletons;
+static std::shared_ptr<ExplicitSingletons> explicitSingletons;
 
 int Main(int argc, char *argv[])
 {

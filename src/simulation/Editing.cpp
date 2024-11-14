@@ -12,7 +12,7 @@
 #include <iostream>
 #include <cmath>
 
-std::unique_ptr<Snapshot> Simulation::CreateSnapshot() const
+std::shared_ptr<Snapshot> Simulation::CreateSnapshot() const
 {
 	auto snap = std::make_unique<Snapshot>();
 	snap->AirPressure    .insert   (snap->AirPressure    .begin(), &pv  [0][0]      , &pv  [0][0] + NCELL);
@@ -960,7 +960,7 @@ int Simulation::FloodParts(int x, int y, int fullc, int cm, int flags)
 	int created_something = 0;
 
 	// Bitmap for checking where we've already looked
-	auto bitmapPtr = std::unique_ptr<char[]>(new char[XRES * YRES]);
+	auto bitmapPtr = std::shared_ptr<char[]>(new char[XRES * YRES]);
 	char *bitmap = bitmapPtr.get();
 	std::fill(&bitmap[0], &bitmap[0] + XRES * YRES, 0);
 

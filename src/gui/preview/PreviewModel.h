@@ -21,7 +21,7 @@ class PreviewModel
 	bool fromUrl = false;
 	bool canOpen = true;
 	std::vector<PreviewView*> observers;
-	std::unique_ptr<SaveInfo> saveInfo;
+	std::shared_ptr<SaveInfo> saveInfo;
 	std::optional<std::vector<char>> saveData;
 	std::optional<std::vector<Comment>> saveComments;
 	void notifySaveChanged();
@@ -29,10 +29,10 @@ class PreviewModel
 	void notifyCommentsPageChanged();
 	void notifyCommentBoxEnabledChanged();
 
-	std::unique_ptr<http::GetSaveDataRequest> saveDataDownload;
-	std::unique_ptr<http::GetSaveRequest> saveInfoDownload;
-	std::unique_ptr<http::GetCommentsRequest> commentsDownload;
-	std::unique_ptr<http::FavouriteSaveRequest> favouriteSaveRequest;
+	std::shared_ptr<http::GetSaveDataRequest> saveDataDownload;
+	std::shared_ptr<http::GetSaveRequest> saveInfoDownload;
+	std::shared_ptr<http::GetCommentsRequest> commentsDownload;
+	std::shared_ptr<http::FavouriteSaveRequest> favouriteSaveRequest;
 	int saveID;
 	int saveDate;
 
@@ -45,7 +45,7 @@ class PreviewModel
 
 public:
 	const SaveInfo *GetSaveInfo() const;
-	std::unique_ptr<SaveInfo> TakeSaveInfo();
+	std::shared_ptr<SaveInfo> TakeSaveInfo();
 	const std::vector<Comment> *GetComments() const
 	{
 		return saveComments ? &*saveComments : nullptr;

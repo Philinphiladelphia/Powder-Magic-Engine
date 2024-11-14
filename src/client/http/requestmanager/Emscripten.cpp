@@ -340,10 +340,10 @@ namespace http
 			handle->responseHeaders.resize(headerCount);
 			for (auto i = 0; i < headerCount; ++i)
 			{
-				handle->responseHeaders[i].name = ByteString(std::unique_ptr<char, decltype(&free)>((char *)EM_ASM_PTR({
+				handle->responseHeaders[i].name = ByteString(std::shared_ptr<char, decltype(&free)>((char *)EM_ASM_PTR({
 					return stringToNewUTF8(Module.emscriptenRequestManager.requests[$0].responseHeaders[$1].name);
 				}, handle->id, i), free).get());
-				handle->responseHeaders[i].value = ByteString(std::unique_ptr<char, decltype(&free)>((char *)EM_ASM_PTR({
+				handle->responseHeaders[i].value = ByteString(std::shared_ptr<char, decltype(&free)>((char *)EM_ASM_PTR({
 					return stringToNewUTF8(Module.emscriptenRequestManager.requests[$0].responseHeaders[$1].value);
 				}, handle->id, i), free).get());
 			}

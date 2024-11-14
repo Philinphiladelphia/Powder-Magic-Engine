@@ -223,7 +223,7 @@ void SignWindow::OnDraw()
 	g->DrawRect(RectSized(Position, Size), 0xC8C8C8_rgb);
 }
 
-std::unique_ptr<VideoBuffer> SignTool::GetIcon(int toolID, Vec2<int> size)
+std::shared_ptr<VideoBuffer> SignTool::GetIcon(int toolID, Vec2<int> size)
 {
 	auto texture = std::make_unique<VideoBuffer>(size);
 	texture->DrawRect(size.OriginRect(), 0xA0A0A0_rgb);

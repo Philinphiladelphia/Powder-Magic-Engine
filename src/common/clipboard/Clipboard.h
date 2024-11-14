@@ -8,7 +8,7 @@ class GameSave;
 namespace Clipboard
 {
 	const ByteString clipboardFormatName = "application/vnd.powdertoy.save";
-	void SetClipboardData(std::unique_ptr<GameSave> data);
+	void SetClipboardData(std::shared_ptr<GameSave> data);
 	const GameSave *GetClipboardData();
 	void Init();
 	bool GetEnabled();

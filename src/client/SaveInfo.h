@@ -27,7 +27,7 @@ public:
 	bool Published;
 
 	std::list<ByteString> tags;
-	std::unique_ptr<GameSave> gameSave;
+	std::shared_ptr<GameSave> gameSave;
 
 	SaveInfo(int _id, time_t _createdDate, time_t _updatedDate, int _votesUp, int _votesDown, ByteString _userName, PTString _name);
 
@@ -64,8 +64,8 @@ public:
 	std::list<ByteString> GetTags() const;
 
 	const GameSave *GetGameSave() const;
-	std::unique_ptr<GameSave> TakeGameSave();
-	void SetGameSave(std::unique_ptr<GameSave> newGameSave);
+	std::shared_ptr<GameSave> TakeGameSave();
+	void SetGameSave(std::shared_ptr<GameSave> newGameSave);
 
-	std::unique_ptr<SaveInfo> CloneInfo() const;
+	std::shared_ptr<SaveInfo> CloneInfo() const;
 };

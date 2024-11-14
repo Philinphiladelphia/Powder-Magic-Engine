@@ -71,7 +71,7 @@ struct SnapshotDelta
 
 	SingleDiff<Json::Value> Authors;
 
-	static std::unique_ptr<SnapshotDelta> FromSnapshots(const Snapshot &oldSnap, const Snapshot &newSnap);
-	std::unique_ptr<Snapshot> Forward(const Snapshot &oldSnap);
-	std::unique_ptr<Snapshot> Restore(const Snapshot &newSnap);
+	static std::shared_ptr<SnapshotDelta> FromSnapshots(const Snapshot &oldSnap, const Snapshot &newSnap);
+	std::shared_ptr<Snapshot> Forward(const Snapshot &oldSnap);
+	std::shared_ptr<Snapshot> Restore(const Snapshot &newSnap);
 };

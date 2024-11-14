@@ -37,7 +37,7 @@ struct LuaStateDeleter
 		lua_close(L);
 	}
 };
-using LuaStatePtr = std::unique_ptr<lua_State, LuaStateDeleter>;
+using LuaStatePtr = std::shared_ptr<lua_State>;
 
 enum UpdateMode
 {
@@ -109,7 +109,7 @@ public:
 	long unsigned int luaExecutionStart = 0;
 
 	std::vector<LuaSmartRef> gameControllerEventHandlers; // must come after luaState
-	std::unique_ptr<http::Request> scriptManagerDownload;
+	std::shared_ptr<http::Request> scriptManagerDownload;
 	int luaHookTimeout;
 
 	std::map<LuaComponent *, LuaSmartRef> grabbedComponents; // must come after luaState

@@ -22,19 +22,19 @@ class ThumbnailRendererTask;
 
 class LocalSaveActivity: public WindowActivity
 {
-	using OnSaved = std::function<void (std::unique_ptr<SaveFile>)>;
-	std::unique_ptr<PlaneAdapter<std::vector<pixel_rgba>>> saveToDiskImage = format::PixelsFromPNG(
+	using OnSaved = std::function<void (std::shared_ptr<SaveFile>)>;
+	std::shared_ptr<PlaneAdapter<std::vector<pixel_rgba>>> saveToDiskImage = format::PixelsFromPNG(
 		std::vector<char>(save_local_png, save_local_png + save_local_png_size)
 	);
 
-	std::unique_ptr<SaveFile> save;
+	std::shared_ptr<SaveFile> save;
 	ThumbnailRendererTask *thumbnailRenderer;
-	std::unique_ptr<VideoBuffer> thumbnail;
+	std::shared_ptr<VideoBuffer> thumbnail;
 	ui::Textbox * filenameField;
 	OnSaved onSaved;
 
 public:
-	LocalSaveActivity(std::unique_ptr<SaveFile> newSave, OnSaved onSaved = nullptr);
+	LocalSaveActivity(std::shared_ptr<SaveFile> newSave, OnSaved onSaved = nullptr);
 	void saveWrite(ByteString finalFilename);
 	void Save();
 	void OnDraw() override;

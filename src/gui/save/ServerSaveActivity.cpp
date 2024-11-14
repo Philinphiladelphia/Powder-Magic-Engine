@@ -56,7 +56,7 @@ public:
 	}
 };
 
-ServerSaveActivity::ServerSaveActivity(std::unique_ptr<SaveInfo> newSave, OnUploaded onUploaded_) :
+ServerSaveActivity::ServerSaveActivity(std::shared_ptr<SaveInfo> newSave, OnUploaded onUploaded_) :
 	WindowActivity(ui::Point(-1, -1), ui::Point(440, 200)),
 	thumbnailRenderer(nullptr),
 	save(std::move(newSave)),
@@ -153,7 +153,7 @@ ServerSaveActivity::ServerSaveActivity(std::unique_ptr<SaveInfo> newSave, OnUplo
 	}
 }
 
-ServerSaveActivity::ServerSaveActivity(std::unique_ptr<SaveInfo> newSave, bool saveNow, OnUploaded onUploaded_) :
+ServerSaveActivity::ServerSaveActivity(std::shared_ptr<SaveInfo> newSave, bool saveNow, OnUploaded onUploaded_) :
 	WindowActivity(ui::Point(-1, -1), ui::Point(200, 50)),
 	thumbnailRenderer(nullptr),
 	save(std::move(newSave)),

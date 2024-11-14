@@ -16,7 +16,7 @@ namespace Platform
 ByteString GetCwd()
 {
 	ByteString cwd;
-	auto cwdPtr = std::unique_ptr<wchar_t, decltype(&free)>(_wgetcwd(NULL, 0), free);
+	auto cwdPtr = std::shared_ptr<wchar_t, decltype(&free)>(_wgetcwd(NULL, 0), free);
 	if (cwdPtr)
 	{
 		cwd = WinNarrow(cwdPtr.get());

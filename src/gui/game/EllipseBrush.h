@@ -64,7 +64,7 @@ public:
 		return bitmap;
 	}
 
-	std::unique_ptr<Brush> Clone() const override
+	std::shared_ptr<Brush> Clone() const override
 	{
 		return std::make_unique<EllipseBrush>(*this);
 	}

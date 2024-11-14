@@ -27,11 +27,11 @@ namespace http
 		}
 	}
 
-	std::unique_ptr<SaveInfo> GetSaveRequest::Finish()
+	std::shared_ptr<SaveInfo> GetSaveRequest::Finish()
 	{
 		auto [ status, data ] = Request::Finish();
 		ParseResponse(data, status, responseData);
-		std::unique_ptr<SaveInfo> saveInfo;
+		std::shared_ptr<SaveInfo> saveInfo;
 		try
 		{
 			Json::Value document;

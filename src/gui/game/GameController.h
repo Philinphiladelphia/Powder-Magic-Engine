@@ -56,8 +56,8 @@ private:
 	TagsController * tagsWindow;
 	LocalBrowserController * localBrowser;
 	OptionsController * options;
-	std::vector<std::unique_ptr<DebugInfo>> debugInfo;
-	std::unique_ptr<Snapshot> beforeRestore;
+	std::vector<std::shared_ptr<DebugInfo>> debugInfo;
+	std::shared_ptr<Snapshot> beforeRestore;
 	unsigned int debugFlags;
 	
 	void OpenSaveDone();
@@ -146,8 +146,8 @@ public:
 	void SetActiveColourPreset(int preset);
 	void SetColour(ui::Colour colour);
 	void SetToolStrength(float value);
-	void LoadSaveFile(std::unique_ptr<SaveFile> file);
-	void LoadSave(std::unique_ptr<SaveInfo> save);
+	void LoadSaveFile(std::shared_ptr<SaveFile> file);
+	void LoadSave(std::shared_ptr<SaveInfo> save);
 	void OpenSearch(PTString searchText);
 	void OpenLogin();
 	void OpenProfile();
@@ -192,7 +192,7 @@ public:
 	void ToggleNewtonianGravity();
 
 	bool LoadClipboard();
-	void LoadStamp(std::unique_ptr<GameSave> stamp);
+	void LoadStamp(std::shared_ptr<GameSave> stamp);
 
 	void RemoveNotification(Notification * notification);
 

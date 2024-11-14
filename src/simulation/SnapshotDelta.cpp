@@ -199,7 +199,7 @@ void ApplySingleDiff(const SnapshotDelta::SingleDiff<Item> &in, Item &item)
 	}
 }
 
-std::unique_ptr<SnapshotDelta> SnapshotDelta::FromSnapshots(const Snapshot &oldSnap, const Snapshot &newSnap)
+std::shared_ptr<SnapshotDelta> SnapshotDelta::FromSnapshots(const Snapshot &oldSnap, const Snapshot &newSnap)
 {
 	auto ptr = std::make_unique<SnapshotDelta>();
 	auto &delta = *ptr;
@@ -235,7 +235,7 @@ std::unique_ptr<SnapshotDelta> SnapshotDelta::FromSnapshots(const Snapshot &oldS
 	return ptr;
 }
 
-std::unique_ptr<Snapshot> SnapshotDelta::Forward(const Snapshot &oldSnap)
+std::shared_ptr<Snapshot> SnapshotDelta::Forward(const Snapshot &oldSnap)
 {
 	auto ptr = std::make_unique<Snapshot>(oldSnap);
 	auto &newSnap = *ptr;
@@ -269,7 +269,7 @@ std::unique_ptr<Snapshot> SnapshotDelta::Forward(const Snapshot &oldSnap)
 	return ptr;
 }
 
-std::unique_ptr<Snapshot> SnapshotDelta::Restore(const Snapshot &newSnap)
+std::shared_ptr<Snapshot> SnapshotDelta::Restore(const Snapshot &newSnap)
 {
 	auto ptr = std::make_unique<Snapshot>(newSnap);
 	auto &oldSnap = *ptr;

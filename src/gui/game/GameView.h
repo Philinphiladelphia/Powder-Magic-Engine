@@ -127,7 +127,7 @@ private:
 	ui::Point currentMouse;
 	ui::Point mousePosition;
 
-	std::unique_ptr<VideoBuffer> placeSaveThumb;
+	std::shared_ptr<VideoBuffer> placeSaveThumb;
 	Mat2<int> placeSaveTransform = Mat2<int>::Identity;
 	Vec2<int> placeSaveTranslate = Vec2<int>::Zero;
 	void TranslateSave(Vec2<int> addToTranslate);
@@ -169,8 +169,8 @@ private:
 	void RendererThread();
 	void WaitForRendererThread();
 	void DispatchRendererThread();
-	std::unique_ptr<RenderableSimulation> rendererThreadSim;
-	std::unique_ptr<RendererFrame> rendererThreadResult;
+	std::shared_ptr<RenderableSimulation> rendererThreadSim;
+	std::shared_ptr<RendererFrame> rendererThreadResult;
 	int foundParticles = 0;
 	const RendererFrame *rendererFrame = nullptr;
 

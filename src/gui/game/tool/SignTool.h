@@ -17,7 +17,7 @@ public:
 		gameModel(model)
 	{}
 
-	static std::unique_ptr<VideoBuffer> GetIcon(int toolID, Vec2<int> size);
+	static std::shared_ptr<VideoBuffer> GetIcon(int toolID, Vec2<int> size);
 	void Click(Simulation * sim, Brush const &brush, ui::Point position) override;
 	void Draw(Simulation * sim, Brush const &brush, ui::Point position) override { }
 	void DrawLine(Simulation * sim, Brush const &brush, ui::Point position1, ui::Point position2, bool dragging) override { }

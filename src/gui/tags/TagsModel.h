@@ -14,8 +14,8 @@ class SaveInfo;
 
 class TagsView;
 class TagsModel {
-	std::unique_ptr<http::AddTagRequest> addTagRequest;
-	std::unique_ptr<http::RemoveTagRequest> removeTagRequest;
+	std::shared_ptr<http::AddTagRequest> addTagRequest;
+	std::shared_ptr<http::RemoveTagRequest> removeTagRequest;
 	std::map<ByteString, bool> queuedTags;
 	SaveInfo *save = nullptr; // non-owning
 	std::vector<TagsView*> observers;

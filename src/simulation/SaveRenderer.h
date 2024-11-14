@@ -14,12 +14,12 @@ class Renderer;
 
 class SaveRenderer: public ExplicitSingleton<SaveRenderer>
 {
-	std::unique_ptr<Simulation> sim;
-	std::unique_ptr<Renderer> ren;
+	std::shared_ptr<Simulation> sim;
+	std::shared_ptr<Renderer> ren;
 	std::mutex renderMutex;
 
 public:
 	SaveRenderer();
 	~SaveRenderer();
-	std::unique_ptr<VideoBuffer> Render(const GameSave *save, bool fire, RendererSettings rendererSettings);
+	std::shared_ptr<VideoBuffer> Render(const GameSave *save, bool fire, RendererSettings rendererSettings);
 };

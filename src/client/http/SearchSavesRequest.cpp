@@ -85,9 +85,9 @@ namespace http
 	{
 	}
 
-	std::pair<int, std::vector<std::unique_ptr<SaveInfo>>> SearchSavesRequest::Finish()
+	std::pair<int, std::vector<std::shared_ptr<SaveInfo>>> SearchSavesRequest::Finish()
 	{
-		std::vector<std::unique_ptr<SaveInfo>> saves;
+		std::vector<std::shared_ptr<SaveInfo>> saves;
 		auto result = APIRequest::Finish();
 		int count;
 		try

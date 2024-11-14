@@ -10,7 +10,7 @@
 #include "simulation/ElementClasses.h"
 #include "gui/game/Menu.h"
 
-std::unique_ptr<VideoBuffer> SampleTool::GetIcon(int toolID, Vec2<int> size)
+std::shared_ptr<VideoBuffer> SampleTool::GetIcon(int toolID, Vec2<int> size)
 {
 	auto texture = std::make_unique<VideoBuffer>(size);
 	texture->DrawRect(size.OriginRect(), 0xA0A0A0_rgb);

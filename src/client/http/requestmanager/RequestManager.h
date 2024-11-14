@@ -65,7 +65,7 @@ namespace http
 	{
 		void operator ()(RequestManager *ptr) const;
 	};
-	using RequestManagerPtr = std::unique_ptr<RequestManager, RequestManagerDeleter>;
+	using RequestManagerPtr = std::shared_ptr<RequestManager>;
 	class RequestManager : public ExplicitSingleton<RequestManager>
 	{
 	protected:

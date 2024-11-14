@@ -28,9 +28,9 @@ void TickClient()
 struct ExplicitSingletons
 {
 	// These need to be listed in the order they are populated in main.
-	std::unique_ptr<ui::Engine> engine;
+	std::shared_ptr<ui::Engine> engine;
 };
-static std::unique_ptr<ExplicitSingletons> explicitSingletons;
+static std::shared_ptr<ExplicitSingletons> explicitSingletons;
 
 int main(int argc, char * argv[])
 {

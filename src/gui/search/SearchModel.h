@@ -17,22 +17,22 @@ class SearchView;
 class SearchModel
 {
 private:
-	std::unique_ptr<http::SearchSavesRequest> searchSaves;
+	std::shared_ptr<http::SearchSavesRequest> searchSaves;
 	void BeginSearchSaves(int start, int count, PTString query, http::Period period, http::Sort sort, http::Category category);
-	std::vector<std::unique_ptr<SaveInfo>> EndSearchSaves();
+	std::vector<std::shared_ptr<SaveInfo>> EndSearchSaves();
 
 	void BeginGetTags(int start, int count, PTString query);
 	std::vector<std::pair<ByteString, int>> EndGetTags();
-	std::unique_ptr<http::SearchTagsRequest> getTags;
+	std::shared_ptr<http::SearchTagsRequest> getTags;
 
-	std::unique_ptr<SaveInfo> loadedSave;
+	std::shared_ptr<SaveInfo> loadedSave;
 	http::Period currentPeriod;
 	http::Sort currentSort;
 	PTString lastQuery;
 	PTString lastError;
 	std::vector<int> selected;
 	std::vector<SearchView*> observers;
-	std::vector<std::unique_ptr<SaveInfo>> saveList;
+	std::vector<std::shared_ptr<SaveInfo>> saveList;
 	std::vector<std::pair<ByteString, int> > tagList;
 	int currentPage;
 	int resultCount;
@@ -71,9 +71,9 @@ public:
 	bool GetShowOwn() { return showOwn; }
 	void SetShowFavourite(bool show) { if(show!=showFavourite && !searchSaves) { showFavourite = show; } notifyShowFavouriteChanged();  }
 	bool GetShowFavourite() { return showFavourite; }
-	void SetLoadedSave(std::unique_ptr<SaveInfo> save);
+	void SetLoadedSave(std::shared_ptr<SaveInfo> save);
 	const SaveInfo *GetLoadedSave() const;
-	std::unique_ptr<SaveInfo> TakeLoadedSave();
+	std::shared_ptr<SaveInfo> TakeLoadedSave();
 	bool GetSavesLoaded() { return saveListLoaded; }
 	std::vector<int> GetSelected() { return selected; }
 	void ClearSelected() { selected.clear(); notifySelectedChanged(); }

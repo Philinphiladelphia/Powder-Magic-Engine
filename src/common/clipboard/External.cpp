@@ -252,7 +252,7 @@ namespace Clipboard
 		}
 	};
 
-	std::unique_ptr<ClipboardImpl> ExternalClipboardFactory()
+	std::shared_ptr<ClipboardImpl> ExternalClipboardFactory()
 	{
 		return std::make_unique<ExternalClipboardImpl>();
 	}

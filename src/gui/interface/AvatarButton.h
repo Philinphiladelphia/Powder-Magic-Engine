@@ -13,7 +13,7 @@ namespace ui
 {
 class AvatarButton : public Component
 {
-	std::unique_ptr<VideoBuffer> avatar;
+	std::shared_ptr<VideoBuffer> avatar;
 	ByteString name;
 	bool tried;
 
@@ -23,7 +23,7 @@ class AvatarButton : public Component
 	};
 	AvatarButtonAction actionCallback;
 
-	std::unique_ptr<http::ImageRequest> imageRequest;
+	std::shared_ptr<http::ImageRequest> imageRequest;
 
 public:
 	AvatarButton(Point position, Point size, ByteString username);

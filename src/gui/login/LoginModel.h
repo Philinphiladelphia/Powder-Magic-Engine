@@ -20,8 +20,8 @@ enum LoginStatus
 class LoginView;
 class LoginModel
 {
-	std::unique_ptr<http::LoginRequest> loginRequest;
-	std::unique_ptr<http::LogoutRequest> logoutRequest;
+	std::shared_ptr<http::LoginRequest> loginRequest;
+	std::shared_ptr<http::LogoutRequest> logoutRequest;
 	std::vector<LoginView*> observers;
 	PTString statusText;
 	LoginStatus loginStatus = loginIdle;

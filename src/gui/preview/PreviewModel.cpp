@@ -94,7 +94,7 @@ const SaveInfo *PreviewModel::GetSaveInfo() const
 	return saveInfo.get();
 }
 
-std::unique_ptr<SaveInfo> PreviewModel::TakeSaveInfo()
+std::shared_ptr<SaveInfo> PreviewModel::TakeSaveInfo()
 {
 	return std::move(saveInfo);
 }

@@ -15,7 +15,7 @@ namespace Clipboard
 	struct ClipboardImplEntry
 	{
 		SDL_SYSWM_TYPE subsystem;
-		std::unique_ptr<ClipboardImpl> (*factory)();
+		std::shared_ptr<ClipboardImpl> (*factory)();
 	} clipboardImpls[] = {
 #define CLIPBOARD_IMPLS_DEFINE
 #include "ClipboardImpls.h"
@@ -23,8 +23,8 @@ namespace Clipboard
 		{ SDL_SYSWM_UNKNOWN, nullptr },
 	};
 
-	std::unique_ptr<GameSave> clipboardData;
-	static std::unique_ptr<ClipboardImpl> clipboard;
+	std::shared_ptr<GameSave> clipboardData;
+	static std::shared_ptr<ClipboardImpl> clipboard;
 
 	void InvokeClipboardSetClipboardData()
 	{
@@ -46,7 +46,7 @@ namespace Clipboard
 		std::tie(std::ignore, saveData) = clipboardData->Serialise();
 	}
 
-	void SetClipboardData(std::unique_ptr<GameSave> data)
+	void SetClipboardData(std::shared_ptr<GameSave> data)
 	{
 		clipboardData = std::move(data);
 		InvokeClipboardSetClipboardData();

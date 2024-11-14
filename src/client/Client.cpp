@@ -265,7 +265,7 @@ void Client::MoveStampToFront(ByteString stampID)
 	}
 }
 
-std::unique_ptr<SaveFile> Client::GetStamp(ByteString stampID)
+std::shared_ptr<SaveFile> Client::GetStamp(ByteString stampID)
 {
 	ByteString stampFile = ByteString(ByteString::Build(STAMPS_DIR, PATH_SEP_CHAR, stampID, ".stm"));
 	auto saveFile = LoadSaveFile(stampFile);
@@ -308,7 +308,7 @@ void Client::RenameStamp(ByteString stampID, ByteString newName)
 	WriteStamps();
 }
 
-ByteString Client::AddStamp(std::unique_ptr<GameSave> saveData)
+ByteString Client::AddStamp(std::shared_ptr<GameSave> saveData)
 {
 	auto now = (uint64_t)time(NULL);
 	if (lastStampTime != now)
@@ -406,10 +406,10 @@ const std::vector<ByteString> &Client::GetStamps() const
 	return stampIDs;
 }
 
-std::unique_ptr<SaveFile> Client::LoadSaveFile(ByteString filename)
+std::shared_ptr<SaveFile> Client::LoadSaveFile(ByteString filename)
 {
 	ByteString err;
-	std::unique_ptr<SaveFile> file;
+	std::shared_ptr<SaveFile> file;
 	if (Platform::FileExists(filename))
 	{
 		file = std::make_unique<SaveFile>(filename);

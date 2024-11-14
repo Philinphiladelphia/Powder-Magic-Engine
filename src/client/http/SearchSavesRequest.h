@@ -10,6 +10,6 @@ namespace http
 	public:
 		SearchSavesRequest(int start, int count, ByteString query, Period period, Sort sort, Category category);
 
-		std::pair<int, std::vector<std::unique_ptr<SaveInfo>>> Finish();
+		std::pair<int, std::vector<std::shared_ptr<SaveInfo>>> Finish();
 	};
 }

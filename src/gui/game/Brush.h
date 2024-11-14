@@ -59,7 +59,7 @@ protected:
 public:
 	virtual ~Brush() = default;
 	virtual void AdjustSize(int delta, bool logarithmic, bool keepX, bool keepY);
-	virtual std::unique_ptr<Brush> Clone() const = 0;
+	virtual std::shared_ptr<Brush> Clone() const = 0;
 
 	ui::Point GetSize() const
 	{

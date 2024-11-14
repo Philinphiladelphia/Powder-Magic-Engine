@@ -34,7 +34,7 @@ void LocalBrowserController::OpenSave(int index)
 	browserModel->OpenSave(index);
 }
 
-std::unique_ptr<SaveFile> LocalBrowserController::TakeSave()
+std::shared_ptr<SaveFile> LocalBrowserController::TakeSave()
 {
 	return browserModel->TakeSave();
 }

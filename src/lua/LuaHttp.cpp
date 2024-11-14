@@ -18,7 +18,7 @@ public:
 	};
 
 private:
-	std::unique_ptr<http::Request> request;
+	std::shared_ptr<http::Request> request;
 	bool dead = false;
 	RequestType type;
 

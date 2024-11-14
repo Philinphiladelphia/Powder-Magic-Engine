@@ -16,7 +16,7 @@
 
 #include "Config.h"
 
-LocalSaveActivity::LocalSaveActivity(std::unique_ptr<SaveFile> newSave, OnSaved onSaved_) :
+LocalSaveActivity::LocalSaveActivity(std::shared_ptr<SaveFile> newSave, OnSaved onSaved_) :
 	WindowActivity(ui::Point(-1, -1), ui::Point(220, 200)),
 	save(std::move(newSave)),
 	thumbnailRenderer(nullptr),

@@ -38,7 +38,7 @@ namespace ui
 		return texture.get();
 	}
 
-	void Appearance::SetTexture(std::unique_ptr<VideoBuffer> texture)
+	void Appearance::SetTexture(std::shared_ptr<VideoBuffer> texture)
 	{
 		this->texture = std::move(texture);
 	}

@@ -26,8 +26,8 @@ private:
 	PTString messageOfTheDay;
 	std::vector<ServerNotification> serverNotifications;
 
-	std::unique_ptr<http::StartupRequest> versionCheckRequest;
-	std::unique_ptr<http::StartupRequest> alternateVersionCheckRequest;
+	std::shared_ptr<http::StartupRequest> versionCheckRequest;
+	std::shared_ptr<http::StartupRequest> alternateVersionCheckRequest;
 	bool usingAltUpdateServer;
 	bool updateAvailable;
 	std::optional<UpdateInfo> updateInfo;
@@ -49,7 +49,7 @@ private:
 	// Save stealing info
 	Json::Value authors;
 
-	std::unique_ptr<Prefs> stamps;
+	std::shared_ptr<Prefs> stamps;
 	void MigrateStampsDef();
 	void WriteStamps();
 
@@ -89,15 +89,15 @@ public:
 	void AddListener(ClientListener * listener);
 	void RemoveListener(ClientListener * listener);
 
-	std::unique_ptr<SaveFile> GetStamp(ByteString stampID);
+	std::shared_ptr<SaveFile> GetStamp(ByteString stampID);
 	void DeleteStamp(ByteString stampID);
 	void RenameStamp(ByteString stampID, ByteString newName);
-	ByteString AddStamp(std::unique_ptr<GameSave> saveData);
+	ByteString AddStamp(std::shared_ptr<GameSave> saveData);
 	void RescanStamps();
 	const std::vector<ByteString> &GetStamps() const;
 	void MoveStampToFront(ByteString stampID);
 
-	std::unique_ptr<SaveFile> LoadSaveFile(ByteString filename);
+	std::shared_ptr<SaveFile> LoadSaveFile(ByteString filename);
 
 	void SetAuthUser(User user);
 	User GetAuthUser();

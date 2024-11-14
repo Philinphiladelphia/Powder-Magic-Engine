@@ -8,9 +8,9 @@ class SaveFile;
 class LocalBrowserView;
 class LocalBrowserModel {
 	std::vector<ByteString> selected;
-	std::unique_ptr<SaveFile> stamp;
+	std::shared_ptr<SaveFile> stamp;
 	std::vector<ByteString> stampIDs;
-	std::vector<std::unique_ptr<SaveFile>> savesList;
+	std::vector<std::shared_ptr<SaveFile>> savesList;
 	std::vector<LocalBrowserView*> observers;
 	int currentPage = 0;
 	bool stampToFront = true;
@@ -26,7 +26,7 @@ public:
 	void UpdateSavesList(int pageNumber);
 	void RescanStamps();
 	const SaveFile *GetSave();
-	std::unique_ptr<SaveFile> TakeSave();
+	std::shared_ptr<SaveFile> TakeSave();
 	void OpenSave(int index);
 	bool GetMoveToFront();
 	void SetMoveToFront(bool move);

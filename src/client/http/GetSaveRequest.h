@@ -11,6 +11,6 @@ namespace http
 	public:
 		GetSaveRequest(int saveID, int saveDate);
 
-		std::unique_ptr<SaveInfo> Finish();
+		std::shared_ptr<SaveInfo> Finish();
 	};
 }

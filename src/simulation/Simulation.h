@@ -75,7 +75,7 @@ class Simulation : public RenderableSimulation
 {
 public:
 	GravityPtr grav;
-	std::unique_ptr<Air> air;
+	std::shared_ptr<Air> air;
 
 	RNG rng;
 
@@ -129,11 +129,11 @@ public:
 	int sandcolour_interface;
 
 	void Load(const GameSave *save, bool includePressure, Vec2<int> blockP); // block coordinates
-	std::unique_ptr<GameSave> Save(bool includePressure, Rect<int> partR); // particle coordinates
+	std::shared_ptr<GameSave> Save(bool includePressure, Rect<int> partR); // particle coordinates
 	void SaveSimOptions(GameSave &gameSave);
 	SimulationSample GetSample(int x, int y);
 
-	std::unique_ptr<Snapshot> CreateSnapshot() const;
+	std::shared_ptr<Snapshot> CreateSnapshot() const;
 	void Restore(const Snapshot &snap);
 
 	int is_blocking(int t, int x, int y) const;

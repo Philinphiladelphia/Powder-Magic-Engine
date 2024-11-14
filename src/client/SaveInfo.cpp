@@ -140,17 +140,17 @@ const GameSave *SaveInfo::GetGameSave() const
 	return gameSave.get();
 }
 
-std::unique_ptr<GameSave> SaveInfo::TakeGameSave()
+std::shared_ptr<GameSave> SaveInfo::TakeGameSave()
 {
 	return std::move(gameSave);
 }
 
-void SaveInfo::SetGameSave(std::unique_ptr<GameSave> newGameSave)
+void SaveInfo::SetGameSave(std::shared_ptr<GameSave> newGameSave)
 {
 	gameSave = std::move(newGameSave);
 }
 
-std::unique_ptr<SaveInfo> SaveInfo::CloneInfo() const
+std::shared_ptr<SaveInfo> SaveInfo::CloneInfo() const
 {
 	auto clone = std::make_unique<SaveInfo>(id, createdDate, updatedDate, votesUp, votesDown, vote, userName, name, Description, Published, tags);
 	clone->Favourite = false;

@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
 		return 1;
 	}
 
-	std::unique_ptr<GameSave> gameSave;
+	std::shared_ptr<GameSave> gameSave;
 	try
 	{
 		gameSave = std::make_unique<GameSave>(fileData, false);

@@ -153,7 +153,7 @@ void ElementSearchActivity::searchTools(PTString query)
 		if(!firstResult)
 			firstResult = tool;
 
-		std::unique_ptr<VideoBuffer> tempTexture = tool->GetTexture(Vec2(26, 14));
+		std::shared_ptr<VideoBuffer> tempTexture = tool->GetTexture(Vec2(26, 14));
 		ToolButton * tempButton;
 
 		if(tempTexture)

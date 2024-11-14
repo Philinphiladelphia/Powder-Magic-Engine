@@ -88,7 +88,7 @@ public:
 		bool operator <(const GradientStop &other) const;
 	};
 	static std::vector<RGB<uint8_t>> Gradient(std::vector<GradientStop> stops, int resolution);
-	static std::unique_ptr<VideoBuffer> WallIcon(int wallID, Vec2<int> size);
+	static std::shared_ptr<VideoBuffer> WallIcon(int wallID, Vec2<int> size);
 	static const std::vector<RenderPreset> renderModePresets;
 
 #define RENDERER_TABLE(name) \

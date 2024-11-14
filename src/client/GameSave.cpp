@@ -456,8 +456,8 @@ void GameSave::readOPS(const std::vector<char> &data)
 	bson b;
 	b.data = NULL;
 	auto bson_deleter = [](bson * b) { bson_destroy(b); };
-	// Use unique_ptr with a custom deleter to ensure that bson_destroy is called even when an exception is thrown
-	std::unique_ptr<bson, decltype(bson_deleter)> b_ptr(&b, bson_deleter);
+	// Use shared_ptr with a custom deleter to ensure that bson_destroy is called even when an exception is thrown
+	std::shared_ptr<bson> b_ptr(&b);
 
 	//Block sizes
 	auto blockP = Vec2{ 0, 0 };
@@ -2473,8 +2473,8 @@ std::pair<bool, std::vector<char>> GameSave::serialiseOPS() const
 	bson b;
 	b.data = NULL;
 	auto bson_deleter = [](bson * b) { bson_destroy(b); };
-	// Use unique_ptr with a custom deleter to ensure that bson_destroy is called even when an exception is thrown
-	std::unique_ptr<bson, decltype(bson_deleter)> b_ptr(&b, bson_deleter);
+	// Use shared_ptr with a custom deleter to ensure that bson_destroy is called even when an exception is thrown
+	std::shared_ptr<bson> b_ptr(&b);
 
 	set_bson_err_handler([](const char* err) { throw BuildException("BSON error when parsing save: " + ByteString(err).FromUtf8()); });
 	bson_init(&b);

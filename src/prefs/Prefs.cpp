@@ -18,7 +18,7 @@ void Prefs::Read()
 		return;
 	}
 	Json::CharReaderBuilder rbuilder;
-	std::unique_ptr<Json::CharReader> const reader(rbuilder.newCharReader());
+	std::shared_ptr<Json::CharReader> const reader(rbuilder.newCharReader());
 	ByteString errs;
 	if (!data.size())
 	{

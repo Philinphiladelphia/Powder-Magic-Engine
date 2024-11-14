@@ -62,7 +62,7 @@ PlaneAdapter<std::vector<unsigned char>> BitmapBrush::GenerateBitmap() const
 	return bitmap;
 }
 
-std::unique_ptr<Brush> BitmapBrush::Clone() const
+std::shared_ptr<Brush> BitmapBrush::Clone() const
 {
 	return std::make_unique<BitmapBrush>(*this);
 }

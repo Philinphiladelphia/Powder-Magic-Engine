@@ -13,5 +13,5 @@ public:
 	virtual ~BitmapBrush() override = default;
 	PlaneAdapter<std::vector<unsigned char>> GenerateBitmap() const override;
 
-	std::unique_ptr<Brush> Clone() const override;
+	std::shared_ptr<Brush> Clone() const override;
 };

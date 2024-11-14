@@ -39,9 +39,9 @@ void SearchModel::BeginSearchSaves(int start, int count, PTString query, http::P
 	searchSaves->Start();
 }
 
-std::vector<std::unique_ptr<SaveInfo>> SearchModel::EndSearchSaves()
+std::vector<std::shared_ptr<SaveInfo>> SearchModel::EndSearchSaves()
 {
-	std::vector<std::unique_ptr<SaveInfo>> saveArray;
+	std::vector<std::shared_ptr<SaveInfo>> saveArray;
 	try
 	{
 		std::tie(resultCount, saveArray) = searchSaves->Finish();
@@ -127,7 +127,7 @@ bool SearchModel::UpdateSaveList(int pageNumber, PTString query)
 	return false;
 }
 
-void SearchModel::SetLoadedSave(std::unique_ptr<SaveInfo> save)
+void SearchModel::SetLoadedSave(std::shared_ptr<SaveInfo> save)
 {
 	loadedSave = std::move(save);
 }
@@ -137,7 +137,7 @@ const SaveInfo *SearchModel::GetLoadedSave() const
 	return loadedSave.get();
 }
 
-std::unique_ptr<SaveInfo> SearchModel::TakeLoadedSave()
+std::shared_ptr<SaveInfo> SearchModel::TakeLoadedSave()
 {
 	return std::move(loadedSave);
 }

@@ -417,7 +417,7 @@ bool GameController::LoadClipboard()
 	return true;
 }
 
-void GameController::LoadStamp(std::unique_ptr<GameSave> stamp)
+void GameController::LoadStamp(std::shared_ptr<GameSave> stamp)
 {
 	gameModel->SetPlaceSave(std::move(stamp));
 }
@@ -1259,13 +1259,13 @@ void GameController::OpenLocalSaveWindow(bool asCurrent)
 	}
 }
 
-void GameController::LoadSaveFile(std::unique_ptr<SaveFile> file)
+void GameController::LoadSaveFile(std::shared_ptr<SaveFile> file)
 {
 	gameModel->SetSaveFile(std::move(file), gameView->ShiftBehaviour());
 }
 
 
-void GameController::LoadSave(std::unique_ptr<SaveInfo> save)
+void GameController::LoadSave(std::shared_ptr<SaveInfo> save)
 {
 	gameModel->SetSave(std::move(save), gameView->ShiftBehaviour());
 }

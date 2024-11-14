@@ -15,9 +15,9 @@ namespace format
 	ByteString UnixtimeToDateMini(time_t unixtime);
 	PTString CleanString(PTString dirtyString, bool ascii, bool color, bool newlines, bool numeric = false);
 	std::vector<char> PixelsToPPM(PlaneAdapter<std::vector<pixel>> const &);
-	std::unique_ptr<std::vector<char>> PixelsToPNG(PlaneAdapter<std::vector<pixel>> const &);
-	std::unique_ptr<PlaneAdapter<std::vector<pixel_rgba>>> PixelsFromPNG(std::vector<char> const &);
-	std::unique_ptr<PlaneAdapter<std::vector<pixel>>> PixelsFromPNG(std::vector<char> const &, RGB<uint8_t> background);
+	std::shared_ptr<std::vector<char>> PixelsToPNG(PlaneAdapter<std::vector<pixel>> const &);
+	std::shared_ptr<PlaneAdapter<std::vector<pixel_rgba>>> PixelsFromPNG(std::vector<char> const &);
+	std::shared_ptr<PlaneAdapter<std::vector<pixel>>> PixelsFromPNG(std::vector<char> const &, RGB<uint8_t> background);
 	void RenderTemperature(StringBuilder &sb, float temp, int scale);
 	float StringToTemperature(PTString str, int defaultScale);
 }

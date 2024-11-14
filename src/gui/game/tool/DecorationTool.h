@@ -12,7 +12,7 @@ public:
 	RGBA<uint8_t> Colour;
 	GameView *gameView;
 
-	std::unique_ptr<VideoBuffer> GetIcon(int toolID, Vec2<int> size);
+	std::shared_ptr<VideoBuffer> GetIcon(int toolID, Vec2<int> size);
 
 	DecorationTool(GameView *newGameView, int decoMode, PTString name, PTString description, RGB<uint8_t> colour, ByteString identifier):
 		Tool(decoMode, name, description, colour, identifier),

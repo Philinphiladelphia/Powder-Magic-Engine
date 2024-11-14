@@ -44,7 +44,7 @@ bool ThumbnailRendererTask::doWork()
 	}
 }
 
-std::unique_ptr<VideoBuffer> ThumbnailRendererTask::Finish()
+std::shared_ptr<VideoBuffer> ThumbnailRendererTask::Finish()
 {
 	auto ptr = std::move(thumbnail);
 	AbandonableTask::Finish();

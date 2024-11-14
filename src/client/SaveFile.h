@@ -10,8 +10,8 @@ public:
 
 	const GameSave *LazyGetGameSave();
 	const GameSave *GetGameSave() const;
-	std::unique_ptr<GameSave> TakeGameSave();
-	void SetGameSave(std::unique_ptr<GameSave> newSameSave);
+	std::shared_ptr<GameSave> TakeGameSave();
+	void SetGameSave(std::shared_ptr<GameSave> newSameSave);
 	const PTString &GetDisplayName() const;
 	void SetDisplayName(PTString displayName);
 	const ByteString &GetName() const;
@@ -21,7 +21,7 @@ public:
 
 	void LazyUnload();
 private:
-	std::unique_ptr<GameSave> gameSave;
+	std::shared_ptr<GameSave> gameSave;
 	ByteString filename;
 	PTString displayName;
 	PTString loadingError;

@@ -122,7 +122,7 @@ std::vector<char> format::PixelsToPPM(PlaneAdapter<std::vector<pixel>> const &in
 	return data;
 }
 
-static std::unique_ptr<PlaneAdapter<std::vector<uint32_t>>> readPNG(
+static std::shared_ptr<PlaneAdapter<std::vector<uint32_t>>> readPNG(
 	std::vector<char> const &data,
 	// If omitted,
 	//   RGB data is returned with A=0xFF
@@ -137,7 +137,7 @@ static std::unique_ptr<PlaneAdapter<std::vector<uint32_t>>> readPNG(
 	auto deleter = [&info](png_struct *png) {
 		png_destroy_read_struct(&png, &info, NULL);
 	};
-	auto png = std::unique_ptr<png_struct, decltype(deleter)>(
+	auto png = std::shared_ptr<png_struct>(
 		png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL,
 			[](png_structp png, png_const_charp msg) {
 				fprintf(stderr, "PNG error: %s\n", msg);
@@ -218,23 +218,23 @@ static std::unique_ptr<PlaneAdapter<std::vector<uint32_t>>> readPNG(
 	return output;
 }
 
-std::unique_ptr<PlaneAdapter<std::vector<pixel_rgba>>> format::PixelsFromPNG(std::vector<char> const &data)
+std::shared_ptr<PlaneAdapter<std::vector<pixel_rgba>>> format::PixelsFromPNG(std::vector<char> const &data)
 {
 	return readPNG(data, std::nullopt);
 }
 
-std::unique_ptr<PlaneAdapter<std::vector<pixel>>> format::PixelsFromPNG(std::vector<char> const &data, RGB<uint8_t> background)
+std::shared_ptr<PlaneAdapter<std::vector<pixel>>> format::PixelsFromPNG(std::vector<char> const &data, RGB<uint8_t> background)
 {
 	return readPNG(data, background);
 }
 
-std::unique_ptr<std::vector<char>> format::PixelsToPNG(PlaneAdapter<std::vector<pixel>> const &input)
+std::shared_ptr<std::vector<char>> format::PixelsToPNG(PlaneAdapter<std::vector<pixel>> const &input)
 {
 	png_infop info = nullptr;
 	auto deleter = [&info](png_struct *png) {
 		png_destroy_write_struct(&png, &info);
 	};
-	auto png = std::unique_ptr<png_struct, decltype(deleter)>(
+	auto png = std::shared_ptr<png_struct>(
 		png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL,
 			[](png_structp png, png_const_charp msg) {
 				fprintf(stderr, "PNG error: %s\n", msg);
