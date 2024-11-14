@@ -1,13 +1,13 @@
 #pragma once
-#include "common/String.h"
+#include "common/PTString.h"
 #include "Component.h"
 #include <functional>
 
 namespace ui
 {
 class Checkbox: public ui::Component {
-	String text;
-	String toolTip;
+	PTString text;
+	PTString toolTip;
 	bool checked;
 	bool isMouseOver;
 	struct CheckboxAction
@@ -17,11 +17,11 @@ class Checkbox: public ui::Component {
 	CheckboxAction actionCallback;
 
 public:
-	Checkbox(ui::Point position, ui::Point size, String text, String toolTip);
+	Checkbox(ui::Point position, ui::Point size, PTString text, PTString toolTip);
 	virtual ~Checkbox() = default;
 	
-	void SetText(String text);
-	String GetText();
+	void SetText(PTString text);
+	PTString GetText();
 	void SetIcon(Icon icon);
 	void Draw(const Point& screenPos) override;
 	void OnMouseEnter(int x, int y) override;

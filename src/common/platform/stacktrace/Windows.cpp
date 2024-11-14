@@ -13,7 +13,7 @@ namespace Platform
 {
 struct SymbolInfo
 {
-	String name;
+	PTString name;
 	uintptr_t displacement;
 };
 static std::optional<SymbolInfo> GetSymbolInfo(HANDLE process, uintptr_t offset)
@@ -32,7 +32,7 @@ static std::optional<SymbolInfo> GetSymbolInfo(HANDLE process, uintptr_t offset)
 
 struct ModuleInfo
 {
-	String name;
+	PTString name;
 	uintptr_t displacement;
 };
 static std::optional<ModuleInfo> GetModuleInfo(HANDLE process, uintptr_t offset)
@@ -47,7 +47,7 @@ static std::optional<ModuleInfo> GetModuleInfo(HANDLE process, uintptr_t offset)
 	return std::nullopt;
 }
 
-std::optional<std::vector<String>> StackTrace()
+std::optional<std::vector<PTString>> StackTrace()
 {
 	static std::mutex mx;
 	std::unique_lock lk(mx);
@@ -103,7 +103,7 @@ std::optional<std::vector<String>> StackTrace()
 	return std::nullopt;
 #endif
 
-	std::vector<String> res;
+	std::vector<PTString> res;
 	for (auto i = 0; i < 100; ++i)
 	{
 		if (!StackWalk64(machine, process, thread, &frame, &context, NULL, SymFunctionTableAccess64, SymGetModuleBase64, NULL))

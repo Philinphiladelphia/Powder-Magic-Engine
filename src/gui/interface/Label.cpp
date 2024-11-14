@@ -9,7 +9,7 @@
 
 using namespace ui;
 
-Label::Label(Point position, Point size, String labelText):
+Label::Label(Point position, Point size, PTString labelText):
 	Component(position, size),
 	textColour(255, 255, 255),
 	selectionIndexL(textWrapper.IndexBegin()),
@@ -39,7 +39,7 @@ void Label::SetMultiline(bool status)
 	TextPosition(displayTextWrapper.WrappedText());
 }
 
-void Label::SetText(String newText)
+void Label::SetText(PTString newText)
 {
 	this->text = newText;
 	updateTextWrapper();
@@ -73,7 +73,7 @@ void Label::updateTextWrapper()
 	}
 }
 
-String Label::GetText()
+PTString Label::GetText()
 {
 	return this->text;
 }
@@ -225,7 +225,7 @@ void Label::updateSelection()
 	}
 }
 
-void Label::SetDisplayText(String newText)
+void Label::SetDisplayText(PTString newText)
 {
 	displayText = newText;
 	ClearSelection();

@@ -6,7 +6,7 @@ namespace http
 	class ReportSaveRequest : public APIRequest
 	{
 	public:
-		ReportSaveRequest(int saveID, String message);
+		ReportSaveRequest(int saveID, PTString message);
 
 		void Finish();
 	};

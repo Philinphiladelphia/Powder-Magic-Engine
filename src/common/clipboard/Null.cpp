@@ -29,7 +29,7 @@ namespace Clipboard
 	{
 	}
 
-	std::optional<String> Explanation()
+	std::optional<PTString> Explanation()
 	{
 		return std::nullopt;
 	}

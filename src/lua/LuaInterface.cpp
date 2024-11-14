@@ -25,10 +25,10 @@ template<class Type>
 struct PickIfTypeHelper;
 
 template<>
-struct PickIfTypeHelper<String>
+struct PickIfTypeHelper<PTString>
 {
 	static constexpr auto LuaType = LUA_TSTRING;
-	static String Get(lua_State *L, int index) { return tpt_lua_checkString(L, index); }
+	static PTString Get(lua_State *L, int index) { return tpt_lua_checkString(L, index); }
 };
 
 template<>
@@ -46,8 +46,8 @@ static Type PickIfType(lua_State *L, int index, Type defaultValue)
 
 static int beginMessageBox(lua_State *L)
 {
-	auto title = PickIfType(L, 1, String("Title"));
-	auto message = PickIfType(L, 2, String("Message"));
+	auto title = PickIfType(L, 1, PTString("Title"));
+	auto message = PickIfType(L, 2, PTString("Message"));
 	auto large = PickIfType(L, 3, false);
 	auto cb = std::make_shared<LuaSmartRef>(); // * Bind to main lua state (might be different from L).
 	if (lua_gettop(L))
@@ -75,7 +75,7 @@ static int beginMessageBox(lua_State *L)
 
 static int beginThrowError(lua_State *L)
 {
-	auto errorMessage = PickIfType(L, 1, String("Error text"));
+	auto errorMessage = PickIfType(L, 1, PTString("Error text"));
 	auto cb = std::make_shared<LuaSmartRef>(); // * Bind to main lua state (might be different from L).
 	if (lua_gettop(L))
 	{
@@ -102,16 +102,16 @@ static int beginThrowError(lua_State *L)
 
 static int beginInput(lua_State *L)
 {
-	auto title = PickIfType(L, 1, String("Title"));
-	auto prompt = PickIfType(L, 2, String("Enter some text:"));
-	auto text = PickIfType(L, 3, String(""));
-	auto shadow = PickIfType(L, 4, String(""));
+	auto title = PickIfType(L, 1, PTString("Title"));
+	auto prompt = PickIfType(L, 2, PTString("Enter some text:"));
+	auto text = PickIfType(L, 3, PTString(""));
+	auto shadow = PickIfType(L, 4, PTString(""));
 	auto cb = std::make_shared<LuaSmartRef>(); // * Bind to main lua state (might be different from L).
 	if (lua_gettop(L))
 	{
 		cb->Assign(L, lua_gettop(L));
 	}
-	auto handle = [cb](std::optional<String> input) {
+	auto handle = [cb](std::optional<PTString> input) {
 		auto *lsi = GetLSI();
 		auto L = lsi->L;
 		cb->Push(L);
@@ -135,7 +135,7 @@ static int beginInput(lua_State *L)
 			lua_pop(L, 1);
 		}
 	};
-	new TextPrompt(title, prompt, text, shadow, false, { [handle](const String &input) {
+	new TextPrompt(title, prompt, text, shadow, false, { [handle](const PTString &input) {
 		handle(input);
 	}, [handle]() {
 		handle(std::nullopt);
@@ -145,9 +145,9 @@ static int beginInput(lua_State *L)
 
 static int beginConfirm(lua_State *L)
 {
-	auto title = PickIfType(L, 1, String("Title"));
-	auto message = PickIfType(L, 2, String("Message"));
-	auto buttonText = PickIfType(L, 3, String("Confirm"));
+	auto title = PickIfType(L, 1, PTString("Title"));
+	auto message = PickIfType(L, 2, PTString("Message"));
+	auto buttonText = PickIfType(L, 3, PTString("Confirm"));
 	auto cb = std::make_shared<LuaSmartRef>(); // * Bind to main lua state (might be different from L).
 	if (lua_gettop(L))
 	{

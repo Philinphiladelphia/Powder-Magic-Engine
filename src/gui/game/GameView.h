@@ -1,5 +1,5 @@
 #pragma once
-#include "common/String.h"
+#include "common/PTString.h"
 #include "gui/interface/Window.h"
 #include "simulation/Sample.h"
 #include "graphics/FindingElement.h"
@@ -66,16 +66,16 @@ private:
 	int lastMenu;
 
 	int toolTipPresence;
-	String toolTip;
+	PTString toolTip;
 	bool isToolTipFadingIn;
 	ui::Point toolTipPosition;
 	int infoTipPresence;
-	String infoTip;
+	PTString infoTip;
 	int buttonTipShow;
-	String buttonTip;
+	PTString buttonTip;
 	bool isButtonTipFadingIn;
 	int introText;
-	String introTextMessage;
+	PTString introTextMessage;
 
 	bool doScreenshot;
 	int screenshotIndex;
@@ -97,7 +97,7 @@ private:
 
 	std::vector<ToolButton*> toolButtons;
 	std::vector<ui::Component*> notificationComponents;
-	std::deque<std::pair<String, int> > logEntries;
+	std::deque<std::pair<PTString, int> > logEntries;
 	ui::Button * scrollBar;
 	ui::Button * searchButton;
 	ui::Button * reloadButton;
@@ -226,14 +226,14 @@ public:
 	void NotifyPlaceSaveChanged(GameModel * sender);
 	void NotifyTransformedPlaceSaveChanged(GameModel *sender);
 	void NotifyNotificationsChanged(GameModel * sender);
-	void NotifyLogChanged(GameModel * sender, String entry);
+	void NotifyLogChanged(GameModel * sender, PTString entry);
 	void NotifyToolTipChanged(GameModel * sender);
 	void NotifyInfoTipChanged(GameModel * sender);
 	void NotifyQuickOptionsChanged(GameModel * sender);
 	void NotifyLastToolChanged(GameModel * sender);
 
 
-	void ToolTip(ui::Point senderPosition, String toolTip) override;
+	void ToolTip(ui::Point senderPosition, PTString toolTip) override;
 
 	void OnMouseMove(int x, int y, int dx, int dy) override;
 	void OnMouseDown(int x, int y, unsigned button) override;
@@ -253,8 +253,8 @@ public:
 	void DoMouseDown(int x, int y, unsigned button) override;
 	void DoMouseUp(int x, int y, unsigned button) override;
 	void DoMouseWheel(int x, int y, int d) override;
-	void DoTextInput(String text) override;
-	void DoTextEditing(String text) override;
+	void DoTextInput(PTString text) override;
+	void DoTextEditing(PTString text) override;
 	void DoKeyPress(int key, int scan, bool repeat, bool shift, bool ctrl, bool alt) override;
 	void DoKeyRelease(int key, int scan, bool repeat, bool shift, bool ctrl, bool alt) override;
 

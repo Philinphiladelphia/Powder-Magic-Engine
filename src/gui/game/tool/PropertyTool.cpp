@@ -14,7 +14,7 @@
 class PropertyWindow: public ui::Window
 {
 	void HandlePropertyChange();
-	std::optional<std::pair<int, String>> TakePropertyFrom(const Simulation *sim, std::optional<int> i) const;
+	std::optional<std::pair<int, PTString>> TakePropertyFrom(const Simulation *sim, std::optional<int> i) const;
 
 public:
 	ui::DropDown * property;
@@ -62,7 +62,7 @@ sim(sim_)
 	auto &properties = Particle::GetProperties();
 	for (int i = 0; i < int(properties.size()); i++)
 	{
-		property->AddOption(std::pair<String, int>(properties[i].Name.FromAscii(), i));
+		property->AddOption(std::pair<PTString, int>(properties[i].Name.FromAscii(), i));
 	}
 
 	textField = new ui::Textbox(ui::Point(8, 46), ui::Point(Size.X-16, 16), "", "[value]");
@@ -76,7 +76,7 @@ sim(sim_)
 	{
 		auto &prefs = GlobalPrefs::Ref();
 		auto propertyIndex = prefs.Get("Prop.Type", 0);
-		auto valueString = prefs.Get("Prop.Value", String(""));
+		auto valueString = prefs.Get("Prop.Value", PTString(""));
 		auto taken = TakePropertyFrom(sim, takePropertyFrom);
 		if (taken)
 		{
@@ -92,7 +92,7 @@ sim(sim_)
 	MakeActiveWindow();
 }
 
-std::optional<std::pair<int, String>> PropertyWindow::TakePropertyFrom(const Simulation *sim, std::optional<int> i) const
+std::optional<std::pair<int, PTString>> PropertyWindow::TakePropertyFrom(const Simulation *sim, std::optional<int> i) const
 {
 	auto toolConfiguration = tool->GetConfiguration();
 	if (!toolConfiguration || !i)

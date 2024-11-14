@@ -3,8 +3,8 @@
 #include "prefs/GlobalPrefs.h"
 
 ConsoleModel::ConsoleModel() {
-	std::vector<String> previousHistory = GlobalPrefs::Ref().Get("Console.History", std::vector<String>{});
-	for(std::vector<String>::reverse_iterator iter = previousHistory.rbegin(), end = previousHistory.rend(); iter != end; ++iter)
+	std::vector<PTString> previousHistory = GlobalPrefs::Ref().Get("Console.History", std::vector<PTString>{});
+	for(std::vector<PTString>::reverse_iterator iter = previousHistory.rbegin(), end = previousHistory.rend(); iter != end; ++iter)
 	{
 		if(previousCommands.size()<25)
 		{
@@ -46,7 +46,7 @@ void ConsoleModel::AddLastCommand(ConsoleCommand command)
 	if(previousCommands.size()>25)
 		previousCommands.pop_front();
 	currentCommandIndex = previousCommands.size();
-	GlobalPrefs::Ref().Set("Console.History", std::vector<String>(previousCommands.begin(), previousCommands.end()));
+	GlobalPrefs::Ref().Set("Console.History", std::vector<PTString>(previousCommands.begin(), previousCommands.end()));
 	notifyPreviousCommandsChanged();
 }
 

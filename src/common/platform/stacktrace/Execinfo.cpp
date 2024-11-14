@@ -8,7 +8,7 @@
 
 namespace Platform
 {
-std::optional<std::vector<String>> StackTrace()
+std::optional<std::vector<PTString>> StackTrace()
 {
 	std::array<void *, 100> buf;
 	auto used = backtrace(buf.data(), buf.size());
@@ -16,7 +16,7 @@ std::optional<std::vector<String>> StackTrace()
 	Defer freeStrs([strs]() {
 		free(strs);
 	});
-	std::vector<String> res;
+	std::vector<PTString> res;
 	for (auto i = 0; i < used; ++i)
 	{
 		if (strs)
@@ -45,7 +45,7 @@ std::optional<std::vector<String>> StackTrace()
 		}
 		else
 		{
-			res.push_back(String::Build("0x", Format::Hex(), uintptr_t(buf[i])));
+			res.push_back(PTString::Build("0x", Format::Hex(), uintptr_t(buf[i])));
 		}
 	}
 	return res;

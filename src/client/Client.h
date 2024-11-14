@@ -1,5 +1,5 @@
 #pragma once
-#include "common/String.h"
+#include "common/PTString.h"
 #include "common/ExplicitSingleton.h"
 #include "StartupInfo.h"
 #include "User.h"
@@ -23,7 +23,7 @@ namespace http
 }
 class Client: public ExplicitSingleton<Client> {
 private:
-	String messageOfTheDay;
+	PTString messageOfTheDay;
 	std::vector<ServerNotification> serverNotifications;
 
 	std::unique_ptr<http::StartupRequest> versionCheckRequest;
@@ -80,8 +80,8 @@ public:
 	void AddServerNotification(ServerNotification notification);
 	std::vector<ServerNotification> GetServerNotifications();
 
-	void SetMessageOfTheDay(String message);
-	String GetMessageOfTheDay();
+	void SetMessageOfTheDay(PTString message);
+	PTString GetMessageOfTheDay();
 
 	void Initialize();
 	bool IsFirstRun();
@@ -103,5 +103,5 @@ public:
 	User GetAuthUser();
 	void Tick();
 	
-	String DoMigration(ByteString fromDir, ByteString toDir);
+	PTString DoMigration(ByteString fromDir, ByteString toDir);
 };

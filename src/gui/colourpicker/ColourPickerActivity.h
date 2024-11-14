@@ -1,6 +1,6 @@
 #pragma once
 
-#include "common/String.h"
+#include "common/PTString.h"
 #include "Activity.h"
 #include "gui/interface/Colour.h"
 

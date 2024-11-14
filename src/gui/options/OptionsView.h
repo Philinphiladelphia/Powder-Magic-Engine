@@ -1,5 +1,5 @@
 #pragma once
-#include "common/String.h"
+#include "common/PTString.h"
 #include "gui/interface/Window.h"
 #include "gui/interface/ScrollPanel.h"
 
@@ -46,7 +46,7 @@ class OptionsView: public ui::Window
 	float customGravityX, customGravityY;
 	void UpdateAmbientAirTempPreview(float airTemp, bool isValid);
 	void AmbientAirTempToTextBox(float airTemp);
-	void UpdateAirTemp(String temp, bool isDefocus);
+	void UpdateAirTemp(PTString temp, bool isDefocus);
 public:
 	OptionsView();
 	void NotifySettingsChanged(OptionsModel * sender);

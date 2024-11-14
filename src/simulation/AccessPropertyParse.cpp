@@ -7,7 +7,7 @@
 #include "gui/game/GameController.h"
 #include <iostream>
 
-AccessProperty AccessProperty::Parse(int prop, String value)
+AccessProperty AccessProperty::Parse(int prop, PTString value)
 {
 	AccessProperty changeProperty;
 	auto &sd = SimulationData::CRef();

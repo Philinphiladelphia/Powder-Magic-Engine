@@ -22,7 +22,7 @@ LuaCheckbox::LuaCheckbox(lua_State *L) :
 	int posY = luaL_optinteger(L, 2, 0);
 	int sizeX = luaL_optinteger(L, 3, 10);
 	int sizeY = luaL_optinteger(L, 4, 10);
-	String text = tpt_lua_optString(L, 5, "");
+	PTString text = tpt_lua_optString(L, 5, "");
 
 	checkbox = new ui::Checkbox(ui::Point(posX, posY), ui::Point(sizeX, sizeY), text, "");
 	component = checkbox;

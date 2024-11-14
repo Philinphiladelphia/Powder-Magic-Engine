@@ -63,7 +63,7 @@ namespace Clipboard
 			return gdc;
 		}
 
-		std::optional<String> Explanation() final override
+		std::optional<PTString> Explanation() final override
 		{
 			return std::nullopt;
 		}

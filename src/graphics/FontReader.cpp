@@ -81,7 +81,7 @@ static bool InitFontData()
 	return true;
 }
 
-unsigned char const *FontReader::lookupChar(String::value_type ch)
+unsigned char const *FontReader::lookupChar(PTString::value_type ch)
 {
 	if (!font_data)
 	{
@@ -104,7 +104,7 @@ unsigned char const *FontReader::lookupChar(String::value_type ch)
 		return lookupChar(0xFFFD);
 }
 
-FontReader::FontReader(String::value_type ch):
+FontReader::FontReader(PTString::value_type ch):
 	FontReader(lookupChar(ch))
 {
 }

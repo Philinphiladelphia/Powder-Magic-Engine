@@ -1,5 +1,5 @@
 #pragma once
-#include "common/String.h"
+#include "common/PTString.h"
 #include <cstdint>
 #include <string>
 #include <vector>
@@ -70,7 +70,7 @@ namespace Platform
 
 	int InvokeMain(int argc, char *argv[]);
 
-	std::optional<std::vector<String>> StackTrace();
+	std::optional<std::vector<PTString>> StackTrace();
 
 	void MarkPresentable();
 }

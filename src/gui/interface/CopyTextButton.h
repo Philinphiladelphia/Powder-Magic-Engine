@@ -8,7 +8,7 @@ class CopyTextButton : public Button
 {
 	ui::Label *copyTextLabel;
 public:
-	CopyTextButton(Point position, Point size, String buttonText, Label *copyTextLabel_);
+	CopyTextButton(Point position, Point size, PTString buttonText, Label *copyTextLabel_);
 
 	void OnMouseClick(int x, int y, unsigned int button) override;
 

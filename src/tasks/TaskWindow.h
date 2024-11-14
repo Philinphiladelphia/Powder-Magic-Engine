@@ -12,16 +12,16 @@ namespace ui
 class Task;
 class TaskWindow: public ui::Window, public TaskListener {
 	std::unique_ptr<Task> task;
-	String title;
+	PTString title;
 	int progress;
 	float intermediatePos;
 	bool done;
 	bool closeOnDone;
 	ui::Label *statusLabel{};
 	ui::ProgressBar *progressBar{};
-	String progressStatus;
+	PTString progressStatus;
 public:
-	TaskWindow(String title_, Task * task_, bool closeOnDone = true);
+	TaskWindow(PTString title_, Task * task_, bool closeOnDone = true);
 	void NotifyStatus(Task * task) override;
 	void NotifyDone(Task * task) override;
 	void NotifyProgress(Task * task) override;

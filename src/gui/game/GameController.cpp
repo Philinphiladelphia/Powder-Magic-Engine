@@ -230,7 +230,7 @@ int GameController::GetSignAt(int x, int y)
 }
 
 // assumed to already be a valid sign
-String GameController::GetSignText(int signID)
+PTString GameController::GetSignText(int signID)
 {
 	return gameModel->GetSimulation()->signs[signID].text;
 }
@@ -257,7 +257,7 @@ void GameController::Install()
 {
 	if constexpr (CAN_INSTALL)
 	{
-		new ConfirmPrompt("Install " + String(APPNAME), "Do you wish to install " + String(APPNAME) + " on this computer?\nThis allows you to open save files and saves directly from the website.", { [] {
+		new ConfirmPrompt("Install " + PTString(APPNAME), "Do you wish to install " + PTString(APPNAME) + " on this computer?\nThis allows you to open save files and saves directly from the website.", { [] {
 			if (Platform::Install())
 			{
 				new InformationMessage("Success", "Installation completed", false);
@@ -270,7 +270,7 @@ void GameController::Install()
 	}
 	else
 	{
-		new InformationMessage("No installation necessary", "You don't need to install " + String(APPNAME) + " on this platform", false);
+		new InformationMessage("No installation necessary", "You don't need to install " + PTString(APPNAME) + " on this platform", false);
 	}
 }
 
@@ -549,7 +549,7 @@ bool GameController::MouseUp(int x, int y, unsigned button, MouseupReason reason
 			if (foundSignID != -1)
 			{
 				sign &foundSign = gameModel->GetSimulation()->signs[foundSignID];
-				String str = foundSign.text;
+				PTString str = foundSign.text;
 				auto si = gameModel->GetSimulation()->signs[foundSignID].split();
 				if (si.first)
 				{
@@ -587,12 +587,12 @@ bool GameController::MouseWheel(int x, int y, int d)
 	return commandInterface->HandleEvent(MouseWheelEvent{ x, y, d });
 }
 
-bool GameController::TextInput(String text)
+bool GameController::TextInput(PTString text)
 {
 	return commandInterface->HandleEvent(TextInputEvent{ text });
 }
 
-bool GameController::TextEditing(String text)
+bool GameController::TextEditing(PTString text)
 {
 	return commandInterface->HandleEvent(TextEditingEvent{ text });
 }
@@ -1186,7 +1186,7 @@ void GameController::SetReplaceModeFlags(int flags)
 	gameModel->GetSimulation()->replaceModeFlags = flags;
 }
 
-void GameController::OpenSearch(String searchText)
+void GameController::OpenSearch(PTString searchText)
 {
 	if(!search)
 		search = new SearchController([this] {
@@ -1519,7 +1519,7 @@ void GameController::ClearSim()
 	gameModel->ClearSimulation();
 }
 
-String GameController::ElementResolve(int type, int ctype)
+PTString GameController::ElementResolve(int type, int ctype)
 {
 	// "NONE" should never be displayed in the HUD
 	if (!type)
@@ -1528,7 +1528,7 @@ String GameController::ElementResolve(int type, int ctype)
 	return sd.ElementResolve(type, ctype);
 }
 
-String GameController::BasicParticleInfo(Particle const &sample_part)
+PTString GameController::BasicParticleInfo(Particle const &sample_part)
 {
 	auto &sd = SimulationData::CRef();
 	return sd.BasicParticleInfo(sample_part);
@@ -1554,13 +1554,13 @@ bool GameController::IsValidElement(int type)
 	return type && sd.IsElement(type);
 }
 
-String GameController::WallName(int type)
+PTString GameController::WallName(int type)
 {
 	auto &sd = SimulationData::CRef();
 	if(type >= 0 && type < UI_WALLCOUNT)
 		return sd.wtypes[type].name;
 	else
-		return String();
+		return PTString();
 }
 
 ByteString GameController::TakeScreenshot(int captureUI, int fileType)
@@ -1585,7 +1585,7 @@ void GameController::NotifyNewNotification(Client * sender, ServerNotification n
 	{
 		ByteString link;
 	public:
-		LinkNotification(ByteString link_, String message) : Notification(message), link(link_) {}
+		LinkNotification(ByteString link_, PTString message) : Notification(message), link(link_) {}
 		virtual ~LinkNotification() {}
 
 		void Action() override
@@ -1602,7 +1602,7 @@ void GameController::NotifyUpdateAvailable(Client * sender)
 	{
 		GameController * c;
 	public:
-		UpdateNotification(GameController * c, String message) : Notification(message), c(c) {}
+		UpdateNotification(GameController * c, PTString message) : Notification(message), c(c) {}
 		virtual ~UpdateNotification() {}
 
 		void Action() override

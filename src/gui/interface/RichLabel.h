@@ -21,9 +21,9 @@ namespace ui
 		std::vector<RichTextRegion> regions;
 
 	public:
-		RichLabel(Point position, Point size, String text);
+		RichLabel(Point position, Point size, PTString text);
 
-		void SetText(String newText) override;
+		void SetText(PTString newText) override;
 		void OnMouseDown(int x, int y, unsigned button) override;
 	};
 }

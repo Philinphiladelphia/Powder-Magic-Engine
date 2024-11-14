@@ -21,8 +21,8 @@ void ElementPopulationDebug::Draw()
 	int yBottom = YRES-10;
 	int xStart = 10;
 
-	String maxValString;
-	String halfValString;
+	PTString maxValString;
+	PTString halfValString;
 
 
 	float maxVal = 255;
@@ -40,8 +40,8 @@ void ElementPopulationDebug::Draw()
 	maxAverage = (maxAverage*(1.0f-0.015f)) + (0.015f*maxVal);
 	scale = 255.0f/maxAverage;
 
-	maxValString = String::Build(maxAverage);
-	halfValString = String::Build(maxAverage/2);
+	maxValString = PTString::Build(maxAverage);
+	halfValString = PTString::Build(maxAverage/2);
 
 
 	g->BlendFilledRect(RectSized(Vec2{ xStart-5, yBottom - 263 }, Vec2{ bars+10+Graphics::TextSize(maxValString).X+9, 255 + 13 }), 0x000000_rgb .WithAlpha(180));

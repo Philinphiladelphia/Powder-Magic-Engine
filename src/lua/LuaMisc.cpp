@@ -54,11 +54,11 @@ void LuaMisc::Tick(lua_State *L)
 			};
 			struct GetFailed
 			{
-				String error;
+				PTString error;
 			};
 			struct RunFailed
 			{
-				String error;
+				PTString error;
 			};
 			using Value = std::variant<
 				Ok,
@@ -98,7 +98,7 @@ void LuaMisc::Tick(lua_State *L)
 			ByteString filename = "autorun.lua";
 			if (!Platform::WriteFile(std::vector<char>(scriptData.begin(), scriptData.end()), filename))
 			{
-				complete({ Status::GetFailed{ String::Build("Unable to write to ", filename.FromUtf8()) } });
+				complete({ Status::GetFailed{ PTString::Build("Unable to write to ", filename.FromUtf8()) } });
 				return;
 			}
 			if (tpt_lua_dostring(L, ByteString::Build("dofile('", filename, "')")))
@@ -119,7 +119,7 @@ static int flog(lua_State *L)
 {
 	auto *lsi = GetLSI();
 	int args = lua_gettop(L);
-	String text;
+	PTString text;
 	bool hasText = false;
 	for(int i = 1; i <= args; i++)
 	{

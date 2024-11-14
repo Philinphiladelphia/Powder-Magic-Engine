@@ -1,5 +1,5 @@
 #include "Platform.h"
-#include "common/String.h"
+#include "common/PTString.h"
 #include "Config.h"
 #include <SDL.h>
 #include <memory>

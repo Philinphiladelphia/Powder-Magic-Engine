@@ -45,9 +45,9 @@ SaveButton::SaveButton(Point position, Point size, SaveInfo *newSave /* non-owni
 			name += "...";
 		}
 
-		String votes, icon;
+		PTString votes, icon;
 
-		votes = String::Build(save->GetVotesUp()-save->GetVotesDown());
+		votes = PTString::Build(save->GetVotesUp()-save->GetVotesDown());
 		icon += 0xE03B;
 		for (size_t j = 1; j < votes.length(); j++)
 			icon += 0xE03C;
@@ -56,12 +56,12 @@ SaveButton::SaveButton(Point position, Point size, SaveInfo *newSave /* non-owni
 
 		votesBackground = icon;
 
-		for (String::iterator iter = icon.begin(), end = icon.end(); iter != end; ++iter)
+		for (PTString::iterator iter = icon.begin(), end = icon.end(); iter != end; ++iter)
 			*iter -= 14; // 0xE039 -> 0xE02B
 
 		votesBackground2 = icon;
 
-		for (String::iterator iter = votes.begin(), end = votes.end(); iter != end; ++iter)
+		for (PTString::iterator iter = votes.begin(), end = votes.end(); iter != end; ++iter)
 			if(*iter != '-')
 				*iter += 0xDFFF; // 0x30 -> 0xE02F
 

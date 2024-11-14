@@ -1,8 +1,8 @@
 #pragma once
-#include "common/String.h"
+#include "common/PTString.h"
 
 struct ServerNotification
 {
-	String text;
+	PTString text;
 	ByteString link;
 };

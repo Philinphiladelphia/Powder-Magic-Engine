@@ -4,12 +4,12 @@
 
 using namespace ui;
 
-RichLabel::RichLabel(Point position, Point size, String text) : Label(position, size, "")
+RichLabel::RichLabel(Point position, Point size, PTString text) : Label(position, size, "")
 {
 	SetText(text);
 }
 
-void RichLabel::SetText(String newText)
+void RichLabel::SetText(PTString newText)
 {
 	Label::SetText(newText);
 	std::vector<RichTextRegion> newRegions;
@@ -17,7 +17,7 @@ void RichLabel::SetText(String newText)
 	auto it = newText.begin();
 	while (it != newText.end())
 	{
-		auto find = [&newText](auto it, String::value_type ch) {
+		auto find = [&newText](auto it, PTString::value_type ch) {
 			while (it != newText.end())
 			{
 				if (*it == ch)
@@ -36,10 +36,10 @@ void RichLabel::SetText(String newText)
 		{
 			break;
 		}
-		auto action = String(beginRegionIt + 1, beginDataIt);
-		auto data = String(beginDataIt + 1, beginTextIt);
-		auto text = String(beginTextIt + 1, endRegionIt);
-		sb << String(it, beginRegionIt);
+		auto action = PTString(beginRegionIt + 1, beginDataIt);
+		auto data = PTString(beginDataIt + 1, beginTextIt);
+		auto text = PTString(beginTextIt + 1, endRegionIt);
+		sb << PTString(it, beginRegionIt);
 		auto good = false;
 		if (action == "a" && data.size() && text.size())
 		{
@@ -53,11 +53,11 @@ void RichLabel::SetText(String newText)
 		}
 		if (!good)
 		{
-			sb << String(beginRegionIt, endRegionIt + 1);
+			sb << PTString(beginRegionIt, endRegionIt + 1);
 		}
 		it = endRegionIt + 1;
 	}
-	sb << String(it, newText.end());
+	sb << PTString(it, newText.end());
 	auto newDisplayText = sb.Build();
 	Label::SetText(format::CleanString(newDisplayText, false, true, false));
 	Label::SetDisplayText(newDisplayText);

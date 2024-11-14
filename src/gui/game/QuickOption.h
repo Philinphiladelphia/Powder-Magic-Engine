@@ -1,5 +1,5 @@
 #pragma once
-#include "common/String.h"
+#include "common/PTString.h"
 #include <vector>
 
 class GameModel;
@@ -22,9 +22,9 @@ protected:
 	std::vector<QuickOptionListener*> listeners;
 	GameModel * m;
 	Type type;
-	String icon;
-	String description;
-	QuickOption(String icon, String description, GameModel * m, Type type) :
+	PTString icon;
+	PTString description;
+	QuickOption(PTString icon, PTString description, GameModel * m, Type type) :
 		m(m),
 		type(type),
 		icon(icon),
@@ -56,10 +56,10 @@ public:
 	virtual int GetMutli() { return 0;}
 	virtual int GetMultiCount() { return 0;}
 
-	String GetIcon() { return icon; }
-	void SetIcon(String icon) { this->icon = icon; }
-	String GetDescription() { return description; }
-	void SetDescription(String description) { this->description = description; }
+	PTString GetIcon() { return icon; }
+	void SetIcon(PTString icon) { this->icon = icon; }
+	PTString GetDescription() { return description; }
+	void SetDescription(PTString description) { this->description = description; }
 	void Perform()
 	{
 		perform();

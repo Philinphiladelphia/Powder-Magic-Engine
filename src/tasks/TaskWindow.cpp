@@ -12,7 +12,7 @@
 
 #include <algorithm>
 
-TaskWindow::TaskWindow(String title_, Task * task_, bool closeOnDone):
+TaskWindow::TaskWindow(PTString title_, Task * task_, bool closeOnDone):
 	ui::Window(ui::Point(-1, -1), ui::Point(240, 60)),
 	task(task_),
 	title(title_),
@@ -72,7 +72,7 @@ void TaskWindow::NotifyProgress(Task * task)
 {
 	progress = task->GetProgress();
 	if(progress>-1)
-		progressStatus = String::Build(progress, "%");
+		progressStatus = PTString::Build(progress, "%");
 	else
 		progressStatus = "Please wait...";
 	progressBar->SetProgress(progress);

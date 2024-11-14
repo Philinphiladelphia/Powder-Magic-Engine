@@ -1,20 +1,20 @@
 #pragma once
-#include "common/String.h"
+#include "common/PTString.h"
 #include "gui/interface/Point.h"
 #include <variant>
 
 enum ValueType { TypeNumber, TypeFloat, TypePoint, TypeString, TypeNull, TypeFunction };
-typedef std::variant<int, float, String, ui::Point> ValueValue;
+typedef std::variant<int, float, PTString, ui::Point> ValueValue;
 
 class GeneralException
 {
 protected:
-	String exception;
+	PTString exception;
 public:
-	GeneralException(String message){
+	GeneralException(PTString message){
 		exception = message;
 	}
-	String GetExceptionMessage() {
+	PTString GetExceptionMessage() {
 		return exception;
 	}
 };
@@ -48,7 +48,7 @@ public:
 		case TypePoint:
 			return "Point";
 		case TypeString:
-			return "String";
+			return "PTString";
 		case TypeNull:
 			return "Null";
 		case TypeFunction:
@@ -68,7 +68,7 @@ public:
 		case TypePoint:
 			return "Point";
 		case TypeString:
-			return "String";
+			return "PTString";
 		case TypeNull:
 			return "Null";
 		case TypeFunction:
@@ -104,8 +104,8 @@ public:
 class StringType: public AnyType
 {
 public:
-	StringType(String string);
-	String Value();
+	StringType(PTString string);
+	PTString Value();
 };
 
 class PointType: public AnyType

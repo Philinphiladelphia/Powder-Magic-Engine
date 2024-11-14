@@ -20,8 +20,8 @@ class FontEditor: public ui::Window
 
 private:
 	ByteString dataFile;
-	std::map<String::value_type, unsigned char> fontWidths;
-	std::map<String::value_type, std::array<std::array<char, MAX_WIDTH>, FONT_H> > fontPixels;
+	std::map<PTString::value_type, unsigned char> fontWidths;
+	std::map<PTString::value_type, std::array<std::array<char, MAX_WIDTH>, FONT_H> > fontPixels;
 
 	std::vector<unsigned char> fontData;
 	std::vector<unsigned int> fontPtrs;
@@ -35,14 +35,14 @@ private:
 	void ReadDataFile(ByteString dataFile);
 	void WriteDataFile(ByteString dataFile, std::vector<unsigned char> const &fontData, std::vector<unsigned int> const &fontPtrs, std::vector<std::array<unsigned int, 2> > const &fontRanges);
 	static void PackData(
-			std::map<String::value_type, unsigned char> const &fontWidths,
-			std::map<String::value_type, std::array<std::array<char, MAX_WIDTH>, FONT_H> > const &fontPixels,
+			std::map<PTString::value_type, unsigned char> const &fontWidths,
+			std::map<PTString::value_type, std::array<std::array<char, MAX_WIDTH>, FONT_H> > const &fontPixels,
 			std::vector<unsigned char> &fontData,
 			std::vector<unsigned int> &fontPtrs,
 			std::vector<std::array<unsigned int, 2> > &fontRanges);
 	static void UnpackData(
-			std::map<String::value_type, unsigned char> &fontWidths,
-			std::map<String::value_type, std::array<std::array<char, MAX_WIDTH>, FONT_H> > &fontPixels,
+			std::map<PTString::value_type, unsigned char> &fontWidths,
+			std::map<PTString::value_type, std::array<std::array<char, MAX_WIDTH>, FONT_H> > &fontPixels,
 			std::vector<unsigned char> const &fontData,
 			std::vector<unsigned int> const &fontPtrs,
 			std::vector<std::array<unsigned int, 2> > const &fontRanges);
@@ -50,7 +50,7 @@ private:
 	ui::Textbox *currentCharTextbox;
 	ui::Button *savedButton;
 
-	String::value_type currentChar;
+	PTString::value_type currentChar;
 	int fgR, fgG, fgB;
 	int bgR, bgG, bgB;
 

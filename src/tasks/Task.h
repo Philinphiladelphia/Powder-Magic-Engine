@@ -1,5 +1,5 @@
 #pragma once
-#include "common/String.h"
+#include "common/PTString.h"
 #include <thread>
 #include <mutex>
 
@@ -11,8 +11,8 @@ public:
 	int GetProgress();
 	bool GetDone();
 	bool GetSuccess();
-	String GetError();
-	String GetStatus();
+	PTString GetError();
+	PTString GetStatus();
 	virtual void Poll();
 	Task();
 	virtual ~Task();
@@ -21,14 +21,14 @@ protected:
 	int progress;
 	bool done;
 	bool success;
-	String status;
-	String error;
+	PTString status;
+	PTString error;
 
 	int thProgress;
 	bool thDone;
 	bool thSuccess;
-	String thStatus;
-	String thError;
+	PTString thStatus;
+	PTString thError;
 
 	TaskListener *listener;
 	std::mutex taskMutex;
@@ -39,8 +39,8 @@ protected:
 	virtual void doWork_wrapper();
 
 	virtual void notifyProgress(int progress);
-	virtual void notifyError(String error);
-	virtual void notifyStatus(String status);
+	virtual void notifyError(PTString error);
+	virtual void notifyStatus(PTString status);
 
 	virtual void notifyProgressMain();
 	virtual void notifyErrorMain();

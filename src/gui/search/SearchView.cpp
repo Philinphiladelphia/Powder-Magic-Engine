@@ -30,8 +30,8 @@ SearchView::SearchView():
 
 	Client::Ref().AddListener(this);
 
-	nextButton = new ui::Button(ui::Point(WINDOWW-52, WINDOWH-18), ui::Point(50, 16), String("Next ") + 0xE015);
-	previousButton = new ui::Button(ui::Point(2, WINDOWH-18), ui::Point(50, 16), 0xE016 + String(" Prev"));
+	nextButton = new ui::Button(ui::Point(WINDOWW-52, WINDOWH-18), ui::Point(50, 16), PTString("Next ") + 0xE015);
+	previousButton = new ui::Button(ui::Point(2, WINDOWH-18), ui::Point(50, 16), 0xE016 + PTString(" Prev"));
 	tagsLabel  = new ui::Label(ui::Point(270, WINDOWH-18), ui::Point(WINDOWW-540, 16), "\boPopular Tags:");
 	motdLabel  = new ui::RichLabel(ui::Point(51, WINDOWH-18), ui::Point(WINDOWW-102, 16), Client::Ref().GetMessageOfTheDay());
 
@@ -168,7 +168,7 @@ void SearchView::doSearch()
 
 void SearchView::searchHelp()
 {
-	String info =
+	PTString info =
 		"Type in the search bar to begin automatically searching save titles and tags. Search terms are ORed together.\n"
 		"\n"
 		"Sorting: click the \bt\"By Votes\"\bw / \bt\"By Date\"\bw buttons to change the order saves are displayed in\n"
@@ -210,7 +210,7 @@ void SearchView::textChanged()
 	if (num < 0) //0 is allowed so that you can backspace the 1
 		pageTextbox->SetText("1");
 	else if (num > pageCount)
-		pageTextbox->SetText(String::Build(pageCount));
+		pageTextbox->SetText(PTString::Build(pageCount));
 	changed = true;
 	lastChanged = GetTicks()+600;
 }
@@ -242,7 +242,7 @@ SearchView::~SearchView()
 	saveButtons.clear();
 }
 
-void SearchView::Search(String query)
+void SearchView::Search(PTString query)
 {
 	searchField->SetText(query);
 	c->DoSearch(query, true);
@@ -313,7 +313,7 @@ void SearchView::NotifyPageChanged(SearchModel * sender)
 	}
 	else
 	{
-		String pageInfo = String::Build("of ", pageCount);
+		PTString pageInfo = PTString::Build("of ", pageCount);
 		pageCountLabel->SetText(pageInfo);
 		int width = Graphics::TextSize(pageInfo).X - 1;
 
@@ -323,7 +323,7 @@ void SearchView::NotifyPageChanged(SearchModel * sender)
 		//pageCountLabel->Position.X = WINDOWW/2+6;
 		pageLabel->Visible = pageCountLabel->Visible = pageTextbox->Visible = true;
 
-		pageInfo = String::Build(sender->GetPageNum());
+		pageInfo = PTString::Build(sender->GetPageNum());
 		pageTextbox->SetText(pageInfo);
 	}
 	if(sender->GetPageNum() == 1)
@@ -607,8 +607,8 @@ void SearchView::NotifySaveListChanged(SearchModel * sender)
 			saveButton->AddContextMenu(0);
 			saveButton->SetActionCallback({
 				[this, saveButton] { c->OpenSave(saveButton->GetSave()->GetID(), saveButton->GetSave()->GetVersion(), saveButton->CloneThumbnail()); },
-				[this, saveButton] { Search(String::Build("history:", saveButton->GetSave()->GetID())); },
-				[this, saveButton] { Search(String::Build("user:", saveButton->GetSave()->GetUserName().FromUtf8())); },
+				[this, saveButton] { Search(PTString::Build("history:", saveButton->GetSave()->GetID())); },
+				[this, saveButton] { Search(PTString::Build("user:", saveButton->GetSave()->GetUserName().FromUtf8())); },
 				[this, saveButton] { c->Selected(saveButton->GetSave()->GetID(), saveButton->GetSelected()); }
 			});
 			if(Client::Ref().GetAuthUser().UserID)

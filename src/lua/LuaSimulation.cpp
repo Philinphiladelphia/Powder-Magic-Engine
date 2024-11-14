@@ -1528,7 +1528,7 @@ static int addCustomGol(lua_State *L)
 {
 	auto &sd = SimulationData::CRef();
 	int rule;
-	String ruleString;
+	PTString ruleString;
 	if (lua_isnumber(L, 1))
 	{
 		rule = luaL_checkinteger(L, 1);
@@ -1540,7 +1540,7 @@ static int addCustomGol(lua_State *L)
 		ruleString = tpt_lua_checkString(L, 1);
 		rule = ParseGOLString(ruleString);
 	}
-	String nameString = tpt_lua_checkString(L, 2);
+	PTString nameString = tpt_lua_checkString(L, 2);
 	unsigned int color1 = luaL_checkinteger(L, 3);
 	unsigned int color2 = luaL_checkinteger(L, 4);
 
@@ -1698,7 +1698,7 @@ static int signsNewIndex(lua_State *L)
 	if (byteStringEqualsLiteral(key, "text"))
 	{
 		auto temp = tpt_lua_checkString(L, 3);
-		String cleaned = format::CleanString(temp, false, true, true).Substr(0, 45);
+		PTString cleaned = format::CleanString(temp, false, true, true).Substr(0, 45);
 		if (!cleaned.empty())
 			sim->signs[id].text = cleaned;
 		else
@@ -1750,7 +1750,7 @@ static int Sign_new(lua_State *L)
 	if (lsi->sim->signs.size() >= MAXSIGNS)
 		return lua_pushnil(L), 1;
 
-	String text = format::CleanString(tpt_lua_checkString(L, 1), false, true, true).Substr(0, 45);
+	PTString text = format::CleanString(tpt_lua_checkString(L, 1), false, true, true).Substr(0, 45);
 	int x = luaL_checkinteger(L, 2);
 	int y = luaL_checkinteger(L, 3);
 	int ju = luaL_optinteger(L, 4, 1);

@@ -8,7 +8,7 @@ sudo apt install libluajit-5.1-dev libcurl4-openssl-dev libssl-dev libfftw3-dev 
 ```
 
 Make build dir:
-`python3 ~/gunpowder_plot/meson-1.5.1/meson setup builddir`
+python3 ./meson-1.5.1/meson.py setup builddir
 
 Build and compile:
 ```
@@ -16,6 +16,8 @@ meson.py setup build-debug
 cd build-debug
 meson.py compile
 ```
+
+I think ninja is the same as meson compile.
 
 Run:
 `./powder`

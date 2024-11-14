@@ -211,13 +211,13 @@ void Window::DoDraw()
 		Graphics *g = ui::Engine::Ref().g;
 
 		auto invPos = Size - (focusedComponent_->Position + focusedComponent_->Size);
-		String posText = String::Build(
+		PTString posText = PTString::Build(
 			"Position: L ", focusedComponent_->Position.X,
 			", R ", invPos.X,
 			", T: ", focusedComponent_->Position.Y,
 			", B: ", invPos.Y
 		);
-		String sizeText = String::Build(
+		PTString sizeText = PTString::Build(
 			"Size: ", focusedComponent_->Size.X,
 			", ", focusedComponent_->Size.Y
 		);
@@ -398,7 +398,7 @@ void Window::DoKeyRelease(int key, int scan, bool repeat, bool shift, bool ctrl,
 		finalise();
 }
 
-void Window::DoTextInput(String text)
+void Window::DoTextInput(PTString text)
 {
 	if (debugMode)
 		return;
@@ -415,7 +415,7 @@ void Window::DoTextInput(String text)
 		finalise();
 }
 
-void Window::DoTextEditing(String text)
+void Window::DoTextEditing(PTString text)
 {
 	if (focusedComponent_ != NULL)
 	{

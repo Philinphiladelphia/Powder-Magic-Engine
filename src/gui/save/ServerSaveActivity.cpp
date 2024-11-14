@@ -252,7 +252,7 @@ void ServerSaveActivity::Exit()
 
 void ServerSaveActivity::ShowPublishingInfo()
 {
-	String info =
+	PTString info =
 		"In The Powder Toy, one can save simulations to their account in two privacy levels: Published and unpublished. You can choose which one by checking or unchecking the 'publish' checkbox. Saves are unpublished by default, so if you do not check publish nobody will be able to see your saves.\n"
 		"\n"
 		"\btPublished saves\bw will appear on the 'By Date' feed and will be seen by many people. These saves also contribute to your Average Score, which is displayed publicly on your profile page on the website. Publish saves that you want people to see so they can comment and vote on.\n"
@@ -269,7 +269,7 @@ void ServerSaveActivity::ShowPublishingInfo()
 
 void ServerSaveActivity::ShowRules()
 {
-	String rules =
+	PTString rules =
 		"\boSection S: Social and Community Rules\n"
 		"\bwThere are a few rules you should follow while interacting with the community. These rules are enforced by staff members and any issues related to violations of these rules may be brought to our attention by users. This section applies to saves uploaded, comments area, forums, and other areas of the community.\n"
 		"\n"
@@ -343,7 +343,7 @@ void ServerSaveActivity::ShowRules()
 	new InformationMessage("Save Uploading Rules", rules, true);
 }
 
-void ServerSaveActivity::CheckName(String newname)
+void ServerSaveActivity::CheckName(PTString newname)
 {
 	if (newname.length() && newname == save->GetName() && save->GetUserName() == Client::Ref().GetAuthUser().Username)
 		titleLabel->SetText("Modify simulation properties:");

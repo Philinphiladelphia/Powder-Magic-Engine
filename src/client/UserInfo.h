@@ -1,5 +1,5 @@
 #pragma once
-#include "common/String.h"
+#include "common/PTString.h"
 
 class UserInfo
 {
@@ -7,8 +7,8 @@ public:
 	int UserID;
 	int age;
 	ByteString username;
-	String biography;
-	String location;
+	PTString biography;
+	PTString location;
 	ByteString website;
 
 	int saveCount;
@@ -19,7 +19,7 @@ public:
 	int topicReplies;
 	int reputation;
 
-	UserInfo(int id, int age, ByteString username, String biography, String location, ByteString website, int saveCount, float averageScore, int highestScore, int topicCount, int topicReplies, int reputation):
+	UserInfo(int id, int age, ByteString username, PTString biography, PTString location, ByteString website, int saveCount, float averageScore, int highestScore, int topicCount, int topicReplies, int reputation):
 		UserID(id),
 		age(age),
 		username(username),

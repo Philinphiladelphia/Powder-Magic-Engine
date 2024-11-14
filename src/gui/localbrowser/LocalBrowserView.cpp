@@ -17,8 +17,8 @@ LocalBrowserView::LocalBrowserView():
 	lastChanged(0),
 	pageCount(0)
 {
-	nextButton = new ui::Button(ui::Point(WINDOWW-52, WINDOWH-18), ui::Point(50, 16), String("Next ") + 0xE015);
-	previousButton = new ui::Button(ui::Point(2, WINDOWH-18), ui::Point(50, 16), 0xE016 + String(" Prev"));
+	nextButton = new ui::Button(ui::Point(WINDOWW-52, WINDOWH-18), ui::Point(50, 16), PTString("Next ") + 0xE015);
+	previousButton = new ui::Button(ui::Point(2, WINDOWH-18), ui::Point(50, 16), 0xE016 + PTString(" Prev"));
 	undeleteButton = new ui::Button(ui::Point(WINDOWW-122, WINDOWH-18), ui::Point(60, 16), "Rescan");
 	AddComponent(nextButton);
 	AddComponent(previousButton);
@@ -63,7 +63,7 @@ void LocalBrowserView::textChanged()
 	if (num < 0) //0 is allowed so that you can backspace the 1
 		pageTextbox->SetText("1");
 	else if (num > pageCount)
-		pageTextbox->SetText(String::Build(pageCount));
+		pageTextbox->SetText(PTString::Build(pageCount));
 	changed = true;
 	lastChanged = GetTicks()+600;
 }
@@ -87,7 +87,7 @@ void LocalBrowserView::NotifyPageChanged(LocalBrowserModel * sender)
 	}
 	else
 	{
-		String pageInfo = String::Build("of ", pageCount);
+		PTString pageInfo = PTString::Build("of ", pageCount);
 		pageCountLabel->SetText(pageInfo);
 		int width = Graphics::TextSize(pageInfo).X - 1;
 
@@ -97,7 +97,7 @@ void LocalBrowserView::NotifyPageChanged(LocalBrowserModel * sender)
 		//pageCountLabel->Position.X = WINDOWW/2+6;
 		pageLabel->Visible = pageCountLabel->Visible = pageTextbox->Visible = true;
 
-		pageTextbox->SetText(String::Build(sender->GetPageNum() + 1));
+		pageTextbox->SetText(PTString::Build(sender->GetPageNum() + 1));
 	}
 
 	if(sender->GetPageNum() == 0)

@@ -68,22 +68,22 @@ void SaveFile::SetFileName(ByteString fileName)
 	this->filename = fileName;
 }
 
-const String &SaveFile::GetDisplayName() const
+const PTString &SaveFile::GetDisplayName() const
 {
 	return displayName;
 }
 
-void SaveFile::SetDisplayName(String displayName)
+void SaveFile::SetDisplayName(PTString displayName)
 {
 	this->displayName = displayName;
 }
 
-const String &SaveFile::GetError() const
+const PTString &SaveFile::GetError() const
 {
 	return loadingError;
 }
 
-void SaveFile::SetLoadingError(String error)
+void SaveFile::SetLoadingError(PTString error)
 {
 	loadingError = error;
 }

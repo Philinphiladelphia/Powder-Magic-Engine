@@ -1,5 +1,5 @@
 #pragma once
-#include "common/String.h"
+#include "common/PTString.h"
 #include <functional>
 #include <memory>
 
@@ -18,7 +18,7 @@ private:
 	std::function<void ()> onDone;
 
 	double nextQueryTime;
-	String nextQuery;
+	PTString nextQuery;
 	bool nextQueryDone;
 	bool instantOpen;
 	bool doRefresh;
@@ -32,8 +32,8 @@ public:
 	~SearchController();
 	SearchView * GetView() { return searchView; }
 	void Exit();
-	void DoSearch(String query, bool now = false);
-	void DoSearch2(String query);
+	void DoSearch(PTString query, bool now = false);
+	void DoSearch2(PTString query);
 	void Refresh();
 	void SetPage(int page);
 	void SetPageRelative(int offset);

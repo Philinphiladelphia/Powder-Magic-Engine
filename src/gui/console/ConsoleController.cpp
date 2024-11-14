@@ -19,7 +19,7 @@ ConsoleController::ConsoleController(std::function<void ()> onDone_, CommandInte
 	this->commandInterface = commandInterface;
 }
 
-void ConsoleController::EvaluateCommand(String command)
+void ConsoleController::EvaluateCommand(PTString command)
 {
 	if(command.length())
 	{
@@ -37,7 +37,7 @@ void ConsoleController::CloseConsole()
 	consoleView->CloseActiveWindow();
 }
 
-String ConsoleController::FormatCommand(String command)
+PTString ConsoleController::FormatCommand(PTString command)
 {
 	return commandInterface->FormatCommand(command);
 }

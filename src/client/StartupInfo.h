@@ -1,5 +1,5 @@
 #pragma once
-#include "common/String.h"
+#include "common/PTString.h"
 #include "ServerNotification.h"
 #include <vector>
 #include <optional>
@@ -14,7 +14,7 @@ struct UpdateInfo
 	};
 	Channel channel;
 	ByteString file;
-	String changeLog;
+	PTString changeLog;
 	int major = 0;
 	int minor = 0;
 	int build = 0;
@@ -23,7 +23,7 @@ struct UpdateInfo
 struct StartupInfo
 {
 	bool sessionGood = false;
-	String messageOfTheDay;
+	PTString messageOfTheDay;
 	std::vector<ServerNotification> notifications;
 	std::optional<UpdateInfo> updateInfo;
 };

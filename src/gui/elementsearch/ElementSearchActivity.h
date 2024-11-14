@@ -1,6 +1,6 @@
 #pragma once
 #include "Activity.h"
-#include "common/String.h"
+#include "common/PTString.h"
 #include "gui/interface/Point.h"
 #include <vector>
 
@@ -22,13 +22,13 @@ class ElementSearchActivity: public WindowActivity
 	ui::Textbox * searchField;
 	std::vector<ToolButton*> toolButtons;
 	ui::ScrollPanel *scrollPanel = nullptr;
-	String toolTip;
+	PTString toolTip;
 	int toolTipPresence;
 	bool shiftPressed;
 	bool ctrlPressed;
 	bool altPressed;
 	bool isToolTipFadingIn;
-	void searchTools(String query);
+	void searchTools(PTString query);
 
 public:
 	bool exit;
@@ -40,5 +40,5 @@ public:
 	void OnKeyPress(int key, int scan, bool repeat, bool shift, bool ctrl, bool alt) override;
 	void OnKeyRelease(int key, int scan, bool repeat, bool shift, bool ctrl, bool alt) override;
 	void OnDraw() override;
-	void ToolTip(ui::Point senderPosition, String ToolTip) override;
+	void ToolTip(ui::Point senderPosition, PTString ToolTip) override;
 };

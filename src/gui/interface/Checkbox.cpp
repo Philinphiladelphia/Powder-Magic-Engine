@@ -6,7 +6,7 @@
 
 using namespace ui;
 
-Checkbox::Checkbox(ui::Point position, ui::Point size, String text, String toolTip):
+Checkbox::Checkbox(ui::Point position, ui::Point size, PTString text, PTString toolTip):
 	Component(position, size),
 	text(text),
 	toolTip(toolTip),
@@ -16,12 +16,12 @@ Checkbox::Checkbox(ui::Point position, ui::Point size, String text, String toolT
 
 }
 
-void Checkbox::SetText(String text)
+void Checkbox::SetText(PTString text)
 {
 	this->text = text;
 }
 
-String Checkbox::GetText()
+PTString Checkbox::GetText()
 {
 	return text;
 }

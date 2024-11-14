@@ -463,18 +463,7 @@ if get_option('build_powder')
 		link_depends: copied_dlls,
 	)
 	
-	executable(
-		app_exe,
-		sources: powder_files,
-		include_directories: project_inc,
-		cpp_args: project_cpp_args,
-		win_subsystem: is_debug ? 'console' : 'windows',
-		link_args: project_link_args,
-		dependencies: powder_deps,
-		export_dynamic: project_export_dynamic,
-		install: true,
-		link_depends: copied_dlls,
-	)
+
 
 
 # Locate the Python interpreter

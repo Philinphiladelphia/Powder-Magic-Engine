@@ -1,5 +1,5 @@
 #pragma once
-#include "common/String.h"
+#include "common/PTString.h"
 #include <functional>
 
 class CommandInterface;
@@ -14,8 +14,8 @@ class ConsoleController
 public:
 	bool HasDone;
 	ConsoleController(std::function<void ()> onDone, CommandInterface * commandInterface);
-	String FormatCommand(String command);
-	void EvaluateCommand(String command);
+	PTString FormatCommand(PTString command);
+	void EvaluateCommand(PTString command);
 	void NextCommand();
 	void PreviousCommand();
 	void Exit();

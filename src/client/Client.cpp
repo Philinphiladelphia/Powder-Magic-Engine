@@ -8,7 +8,7 @@
 #include "client/SaveInfo.h"
 #include "client/UserInfo.h"
 #include "common/platform/Platform.h"
-#include "common/String.h"
+#include "common/PTString.h"
 #include "graphics/Graphics.h"
 #include "gui/dialogues/ErrorMessage.h"
 #include "prefs/Prefs.h"
@@ -88,13 +88,13 @@ bool Client::IsFirstRun()
 	return firstRun;
 }
 
-void Client::SetMessageOfTheDay(String message)
+void Client::SetMessageOfTheDay(PTString message)
 {
 	messageOfTheDay = message;
 	notifyMessageOfTheDay();
 }
 
-String Client::GetMessageOfTheDay()
+PTString Client::GetMessageOfTheDay()
 {
 	return messageOfTheDay;
 }
@@ -511,7 +511,7 @@ void Client::SaveAuthorInfo(Json::Value *saveInto)
 	}
 }
 
-String Client::DoMigration(ByteString fromDir, ByteString toDir)
+PTString Client::DoMigration(ByteString fromDir, ByteString toDir)
 {
 	if (fromDir.at(fromDir.length() - 1) != '/')
 		fromDir = fromDir + '/';
@@ -541,7 +541,7 @@ String Client::DoMigration(ByteString fromDir, ByteString toDir)
 	std::stack<ByteString> dirsToDelete;
 
 	// Migrate a list of files
-	auto migrateList = [&](std::vector<ByteString> list, ByteString directory, String niceName) {
+	auto migrateList = [&](std::vector<ByteString> list, ByteString directory, PTString niceName) {
 		result << '\n' << niceName << ": ";
 		if (!list.empty() && !directory.empty())
 			Platform::MakeDirectory(toDir + directory);

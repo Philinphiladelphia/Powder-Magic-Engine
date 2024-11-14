@@ -1,5 +1,5 @@
 #pragma once
-#include "common/String.h"
+#include "common/PTString.h"
 
 #include "Component.h"
 #include "graphics/Graphics.h"

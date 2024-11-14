@@ -8,7 +8,7 @@
 
 using namespace ui;
 
-ProgressBar::ProgressBar(Point position, Point size, int startProgress, String startStatus):
+ProgressBar::ProgressBar(Point position, Point size, int startProgress, PTString startStatus):
 	Component(position, size),
 	progress(0),
 	intermediatePos(0.0f),
@@ -30,12 +30,12 @@ int ProgressBar::GetProgress()
 	return progress;
 }
 
-void ProgressBar::SetStatus(String status)
+void ProgressBar::SetStatus(PTString status)
 {
 	progressStatus = status;
 }
 
-String ProgressBar::GetStatus()
+PTString ProgressBar::GetStatus()
 {
 	return progressStatus;
 }

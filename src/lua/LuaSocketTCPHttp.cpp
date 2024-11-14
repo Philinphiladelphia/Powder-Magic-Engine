@@ -2,7 +2,7 @@
 #include "client/http/requestmanager/CurlError.h"
 #include "client/http/requestmanager/RequestManager.h"
 #include "Misc.h"
-#include "common/String.h"
+#include "common/PTString.h"
 #include <curl/curl.h>
 #include <vector>
 #include <stdexcept>

@@ -23,8 +23,8 @@ LuaTextbox::LuaTextbox(lua_State *L) :
 	int posY = luaL_optinteger(L, 2, 0);
 	int sizeX = luaL_optinteger(L, 3, 10);
 	int sizeY = luaL_optinteger(L, 4, 10);
-	String text = tpt_lua_optString(L, 5, "");
-	String placeholder = tpt_lua_optString(L, 6, "");
+	PTString text = tpt_lua_optString(L, 5, "");
+	PTString placeholder = tpt_lua_optString(L, 6, "");
 
 	textbox = new ui::Textbox(ui::Point(posX, posY), ui::Point(sizeX, sizeY), text, placeholder);
 	textbox->Appearance.HorizontalAlign = ui::Appearance::AlignLeft;

@@ -23,7 +23,7 @@ CommandInterface::CommandInterface(GameController *newGameController, GameModel 
 	this->c = newGameController;
 }
 
-void CommandInterface::Log(LogType type, String message)
+void CommandInterface::Log(LogType type, PTString message)
 {
 	m->Log(message, type == LogError || type == LogNotice);
 }
@@ -49,20 +49,20 @@ static std::optional<int> GetPropertyOffset(ByteString key)
 	return std::nullopt;
 }
 
-String CommandInterface::GetLastError()
+PTString CommandInterface::GetLastError()
 {
 	return lastError;
 }
 
-int CommandInterface::PlainCommand(String command)
+int CommandInterface::PlainCommand(PTString command)
 {
 	lastError = "";
-	std::deque<String> words;
+	std::deque<PTString> words;
 	std::deque<AnyType> commandWords;
 	int retCode = -1;
 
 	//Split command into words, put them on the stack
-	for(String word : command.PartitionBy(' '))
+	for(PTString word : command.PartitionBy(' '))
 		words.push_back(word);
 	while(!words.empty())
 	{
@@ -90,7 +90,7 @@ int CommandInterface::PlainCommand(String command)
 struct Function
 {
 	const char32_t *name;
-	AnyType (CommandInterface::*member)(std::deque<String> *);
+	AnyType (CommandInterface::*member)(std::deque<PTString> *);
 };
 static const std::vector<Function> functions = {
 	{ U"set"   , &CommandInterface::tptS_set    },
@@ -104,10 +104,10 @@ static const std::vector<Function> functions = {
 	{ U"quit"  , &CommandInterface::tptS_quit   },
 };
 
-ValueType CommandInterface::testType(String word)
+ValueType CommandInterface::testType(PTString word)
 {
 	size_t i = 0;
-	String::value_type const *rawWord = word.c_str();
+	PTString::value_type const *rawWord = word.c_str();
 	//Function
 	for (auto &function : functions)
 	{
@@ -165,9 +165,9 @@ parseString:
 	return TypeString;
 }
 
-int CommandInterface::parseNumber(String str)
+int CommandInterface::parseNumber(PTString str)
 {
-	String::value_type const *stringData = str.c_str();
+	PTString::value_type const *stringData = str.c_str();
 	char cc;
 	int base = 10;
 	int currentNumber = 0;
@@ -210,11 +210,11 @@ int CommandInterface::parseNumber(String str)
 	return currentNumber;
 }
 
-AnyType CommandInterface::eval(std::deque<String> * words)
+AnyType CommandInterface::eval(std::deque<PTString> * words)
 {
 	if(words->size() < 1)
 		return AnyType(TypeNull, ValueValue());
-	String word = words->front(); words->pop_front();
+	PTString word = words->front(); words->pop_front();
 	ValueType wordType = testType(word);
 	switch(wordType)
 	{
@@ -233,7 +233,7 @@ AnyType CommandInterface::eval(std::deque<String> * words)
 	case TypePoint:
 	{
 		int x, y;
-		if(String::Split comma = word.SplitNumber(x))
+		if(PTString::Split comma = word.SplitNumber(x))
 			if(comma.After().BeginsWith(","))
 				if(comma.After().Substr(1).SplitNumber(y))
 					return PointType(x, y);
@@ -247,14 +247,14 @@ AnyType CommandInterface::eval(std::deque<String> * words)
 	return StringType(word);
 }
 
-String CommandInterface::PlainFormatCommand(String command)
+PTString CommandInterface::PlainFormatCommand(PTString command)
 {
-	std::deque<String> words;
+	std::deque<PTString> words;
 	std::deque<AnyType> commandWords;
-	String outputData;
+	PTString outputData;
 
 	//Split command into words, put them on the stack
-	for(String word : command.PartitionBy(' ', true))
+	for(PTString word : command.PartitionBy(' ', true))
 		words.push_back(word);
 	while(!words.empty())
 	{
@@ -346,7 +346,7 @@ static std::vector<int> EvaluateSelector(Simulation *sim, AnyType selector)
 	return indices;
 }
 
-AnyType CommandInterface::tptS_set(std::deque<String> * words)
+AnyType CommandInterface::tptS_set(std::deque<PTString> * words)
 {
 	//Arguments from stack
 	StringType property = eval(words);
@@ -411,7 +411,7 @@ AnyType CommandInterface::tptS_set(std::deque<String> * words)
 	return NumberType(returnValue);
 }
 
-AnyType CommandInterface::tptS_get(std::deque<String> * words)
+AnyType CommandInterface::tptS_get(std::deque<PTString> * words)
 {
 	StringType property = eval(words);
 	AnyType selector = eval(words);
@@ -450,7 +450,7 @@ AnyType CommandInterface::tptS_get(std::deque<String> * words)
 	return NumberType(std::get<int>(value));
 }
 
-AnyType CommandInterface::tptS_create(std::deque<String> * words)
+AnyType CommandInterface::tptS_create(std::deque<PTString> * words)
 {
 	auto &sd = SimulationData::CRef();
 	//Arguments from stack
@@ -485,7 +485,7 @@ AnyType CommandInterface::tptS_create(std::deque<String> * words)
 	return NumberType(returnValue);
 }
 
-AnyType CommandInterface::tptS_delete(std::deque<String> * words)
+AnyType CommandInterface::tptS_delete(std::deque<PTString> * words)
 {
 	//Arguments from stack
 	AnyType partRef = eval(words);
@@ -512,7 +512,7 @@ AnyType CommandInterface::tptS_delete(std::deque<String> * words)
 	return NumberType(0);
 }
 
-AnyType CommandInterface::tptS_load(std::deque<String> * words)
+AnyType CommandInterface::tptS_load(std::deque<PTString> * words)
 {
 	//Arguments from stack
 	NumberType saveID = eval(words);
@@ -526,7 +526,7 @@ AnyType CommandInterface::tptS_load(std::deque<String> * words)
 		throw GeneralException("Invalid save ID");
 }
 
-AnyType CommandInterface::tptS_bubble(std::deque<String> * words)
+AnyType CommandInterface::tptS_bubble(std::deque<PTString> * words)
 {
 	//Arguments from stack
 	PointType bubblePosA = eval(words);
@@ -561,12 +561,12 @@ AnyType CommandInterface::tptS_bubble(std::deque<String> * words)
 	return NumberType(0);
 }
 
-AnyType CommandInterface::tptS_reset(std::deque<String> * words)
+AnyType CommandInterface::tptS_reset(std::deque<PTString> * words)
 {
 	auto &sd = SimulationData::CRef();
 	//Arguments from stack
 	StringType reset = eval(words);
-	String resetStr = reset.Value();
+	PTString resetStr = reset.Value();
 
 	Simulation * sim = m->GetSimulation();
 
@@ -609,7 +609,7 @@ AnyType CommandInterface::tptS_reset(std::deque<String> * words)
 	return NumberType(0);
 }
 
-AnyType CommandInterface::tptS_quit(std::deque<String> * words)
+AnyType CommandInterface::tptS_quit(std::deque<PTString> * words)
 {
 	ui::Engine::Ref().Exit();
 

@@ -58,11 +58,11 @@ std::optional<ByteString> CallActivityStringFunc(const char *funcName)
 		auto getClassLoaderMth = CHECK(env->GetMethodID(activityCls, "getClassLoader", "()Ljava/lang/ClassLoader;"));
 		auto classLoaderInst   = CHECK(env->CallObjectMethod(activityInst, getClassLoaderMth));
 		auto classLoaderCls    = CHECK(env->FindClass("java/lang/ClassLoader"));
-		auto findClassMth      = CHECK(env->GetMethodID(classLoaderCls, "loadClass", "(Ljava/lang/String;)Ljava/lang/Class;"));
+		auto findClassMth      = CHECK(env->GetMethodID(classLoaderCls, "loadClass", "(Ljava/lang/PTString;)Ljava/lang/Class;"));
 		auto strClassName      = CHECK(env->NewStringUTF(ByteString::Build(APPID, ".PowderActivity").c_str()));
 		Defer deleteStrClassName([env, strClassName]() { env->DeleteLocalRef(strClassName); });
 		auto mPowderActivity   = CHECK((jclass)(env->CallObjectMethod(classLoaderInst, findClassMth, strClassName)));
-		auto funcMth           = CHECK(env->GetMethodID(mPowderActivity, funcName, "()Ljava/lang/String;"));
+		auto funcMth           = CHECK(env->GetMethodID(mPowderActivity, funcName, "()Ljava/lang/PTString;"));
 		auto resultRef         = CHECK((jstring)env->CallObjectMethod(activityInst, funcMth));
 		Defer deleteStr([env, resultRef]() { env->DeleteLocalRef(resultRef); });
 		auto *resultBytes      = CHECK(env->GetStringUTFChars(resultRef, 0));

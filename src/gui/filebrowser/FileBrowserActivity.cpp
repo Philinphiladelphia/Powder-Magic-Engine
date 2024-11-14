@@ -141,7 +141,7 @@ void FileBrowserActivity::SelectSave(int index)
 
 void FileBrowserActivity::DeleteSave(int index)
 {
-	String deleteMessage = "Are you sure you want to delete " + files[index]->GetDisplayName() + ".cps?";
+	PTString deleteMessage = "Are you sure you want to delete " + files[index]->GetDisplayName() + ".cps?";
 	new ConfirmPrompt("Delete Save", deleteMessage, { [this, index]() {
 		auto &file = files[index];
 		Platform::RemoveFile(file->GetName());
@@ -151,7 +151,7 @@ void FileBrowserActivity::DeleteSave(int index)
 
 void FileBrowserActivity::RenameSave(int index)
 {
-	new TextPrompt("Rename", "Change save name", files[index]->GetDisplayName(), "", 0, { [this, index](const String &input) {
+	new TextPrompt("Rename", "Change save name", files[index]->GetDisplayName(), "", 0, { [this, index](const PTString &input) {
 		auto &file = files[index];
 		auto newName = input.ToUtf8();
 		if (newName.length())

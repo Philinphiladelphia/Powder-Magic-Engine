@@ -1,5 +1,5 @@
 #include "CurlError.h"
-#include "common/String.h"
+#include "common/PTString.h"
 #include <wincrypt.h> // crypt32.lib is pulled in by tpt-libs
 #include <iostream>
 #include <memory>

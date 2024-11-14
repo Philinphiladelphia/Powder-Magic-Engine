@@ -1,5 +1,5 @@
 #pragma once
-#include "common/String.h"
+#include "common/PTString.h"
 #include "common/Vec2.h"
 #include "graphics/Pixel.h"
 #include "graphics/VideoBuffer.h"
@@ -19,8 +19,8 @@ public:
 	std::unique_ptr<VideoBuffer> (*textureGen)(int, Vec2<int>) = nullptr;
 
 	int ToolID = 0;
-	String Name = "NULL";
-	String Description = "NULL Tool, does NOTHING";
+	PTString Name = "NULL";
+	PTString Description = "NULL Tool, does NOTHING";
 	ByteString Identifier = "DEFAULT_TOOL_INVALID";
 	RGB<uint8_t> Colour = 0xFFFFFF_rgb;
 	bool Blocky = false;
@@ -33,7 +33,7 @@ public:
 
 	Tool() = default;
 
-	Tool(int id, String name, String description,
+	Tool(int id, PTString name, PTString description,
 		RGB<uint8_t> colour, ByteString identifier, std::unique_ptr<VideoBuffer> (*textureGen)(int, Vec2<int>) = NULL, bool blocky = false
 	):
 		textureGen(textureGen),

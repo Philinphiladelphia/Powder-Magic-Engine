@@ -1,10 +1,10 @@
 #pragma once
-#include "common/String.h"
+#include "common/PTString.h"
 
 struct menu_section
 {
-	String::value_type icon;
-	String name;
+	PTString::value_type icon;
+	PTString name;
 	int itemcount;
 	int doshow;
 };

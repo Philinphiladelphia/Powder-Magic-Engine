@@ -1,5 +1,5 @@
 #pragma once
-#include "common/String.h"
+#include "common/PTString.h"
 #include "client/Search.h"
 #include "Config.h"
 #include <vector>
@@ -18,18 +18,18 @@ class SearchModel
 {
 private:
 	std::unique_ptr<http::SearchSavesRequest> searchSaves;
-	void BeginSearchSaves(int start, int count, String query, http::Period period, http::Sort sort, http::Category category);
+	void BeginSearchSaves(int start, int count, PTString query, http::Period period, http::Sort sort, http::Category category);
 	std::vector<std::unique_ptr<SaveInfo>> EndSearchSaves();
 
-	void BeginGetTags(int start, int count, String query);
+	void BeginGetTags(int start, int count, PTString query);
 	std::vector<std::pair<ByteString, int>> EndGetTags();
 	std::unique_ptr<http::SearchTagsRequest> getTags;
 
 	std::unique_ptr<SaveInfo> loadedSave;
 	http::Period currentPeriod;
 	http::Sort currentSort;
-	String lastQuery;
-	String lastError;
+	PTString lastQuery;
+	PTString lastError;
 	std::vector<int> selected;
 	std::vector<SearchView*> observers;
 	std::vector<std::unique_ptr<SaveInfo>> saveList;
@@ -56,13 +56,13 @@ public:
     void SetShowTags(bool show);
     bool GetShowTags();
 	void AddObserver(SearchView * observer);
-	bool UpdateSaveList(int pageNumber, String query);
+	bool UpdateSaveList(int pageNumber, PTString query);
 	std::vector<SaveInfo *> GetSaveList(); // non-owning
 	std::vector<std::pair<ByteString, int> > GetTagList();
-	String GetLastError() { return lastError; }
+	PTString GetLastError() { return lastError; }
 	int GetPageCount();
 	int GetPageNum() { return currentPage; }
-	String GetLastQuery() { return lastQuery; }
+	PTString GetLastQuery() { return lastQuery; }
 	void SetPeriod(http::Period period) { if(!searchSaves) { currentPeriod = period; } notifyPeriodChanged(); }
 	http::Period GetPeriod() { return currentPeriod; }
 	void SetSort(http::Sort sort) { if(!searchSaves) { currentSort = sort; } notifySortChanged(); }

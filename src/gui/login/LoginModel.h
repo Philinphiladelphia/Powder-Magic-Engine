@@ -1,5 +1,5 @@
 #pragma once
-#include "common/String.h"
+#include "common/PTString.h"
 #include "client/User.h"
 #include <vector>
 #include <memory>
@@ -23,7 +23,7 @@ class LoginModel
 	std::unique_ptr<http::LoginRequest> loginRequest;
 	std::unique_ptr<http::LogoutRequest> logoutRequest;
 	std::vector<LoginView*> observers;
-	String statusText;
+	PTString statusText;
 	LoginStatus loginStatus = loginIdle;
 	void notifyStatusChanged();
 
@@ -31,7 +31,7 @@ public:
 	void Login(ByteString username, ByteString password);
 	void Logout();
 	void AddObserver(LoginView * observer);
-	String GetStatusText();
+	PTString GetStatusText();
 	LoginStatus GetStatus() const
 	{
 		return loginStatus;

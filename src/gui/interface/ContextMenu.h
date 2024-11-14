@@ -11,9 +11,9 @@ class ContextMenuItem
 {
 public:
 	int ID;
-	String Text;
+	PTString Text;
 	bool Enabled;
-	ContextMenuItem(String text, int id, bool enabled) : ID(id), Text(text), Enabled(enabled) {}
+	ContextMenuItem(PTString text, int id, bool enabled) : ID(id), Text(text), Enabled(enabled) {}
 };
 
 class ContextMenu: public ui::Window {
@@ -28,7 +28,7 @@ public:
 	void ActionCallbackItem(ui::Button *sender, int item);
 	void AddItem(ContextMenuItem item);
 	void RemoveItem(int id);
-	void SetItem(int id, String text);
+	void SetItem(int id, PTString text);
 	void Show(ui::Point position);
 	void OnDraw() override;
 	void OnMouseDown(int x, int y, unsigned button) override;

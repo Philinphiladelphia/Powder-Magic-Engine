@@ -1,6 +1,6 @@
 #pragma once
 #include "common/Plane.h"
-#include "common/String.h"
+#include "common/PTString.h"
 #include "common/tpt-rand.h"
 #include "common/Version.h"
 #include "simulation/Sign.h"
@@ -21,7 +21,7 @@ struct ParseException: public std::exception {
 	ByteString message;
 	ParseResult result;
 public:
-	ParseException(ParseResult result, String message): message(message.ToUtf8()), result(result) {}
+	ParseException(ParseResult result, PTString message): message(message.ToUtf8()), result(result) {}
 	const char * what() const throw() override
 	{
 		return message.c_str();
@@ -32,7 +32,7 @@ public:
 struct BuildException: public std::exception {
 	ByteString message;
 public:
-	BuildException(String message): message(message.ToUtf8()) {}
+	BuildException(PTString message): message(message.ToUtf8()) {}
 	const char * what() const throw() override
 	{
 		return message.c_str();

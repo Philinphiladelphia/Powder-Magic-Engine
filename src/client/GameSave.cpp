@@ -496,7 +496,7 @@ void GameSave::readOPS(const std::vector<char> &data)
 		{
 		case BZ2WDecompressOk: break;
 		case BZ2WDecompressNomem: throw ParseException(ParseException::Corrupt, "Cannot allocate memory");
-		default: throw ParseException(ParseException::Corrupt, String::Build("Cannot decompress: status ", int(status)));
+		default: throw ParseException(ParseException::Corrupt, PTString::Build("Cannot decompress: status ", int(status)));
 		}
 
 		bsonDataLen = bsonData.size();
@@ -733,7 +733,7 @@ void GameSave::readOPS(const std::vector<char> &data)
 				}
 				if (effectiveVersion < minimumVersion)
 				{
-					String errorMessage = String::Build("Save from a newer version: Requires version ", minimumVersion[0], ".", minimumVersion[1]);
+					PTString errorMessage = PTString::Build("Save from a newer version: Requires version ", minimumVersion[0], ".", minimumVersion[1]);
 					throw ParseException(ParseException::WrongVersion, errorMessage);
 				}
 				else if (ALLOW_FAKE_NEWER_VERSION && currentVersion < minimumVersion)
@@ -1389,7 +1389,7 @@ void GameSave::readPSv(const std::vector<char> &dataVec)
 	{
 	case BZ2WDecompressOk: break;
 	case BZ2WDecompressNomem: throw ParseException(ParseException::Corrupt, "Cannot allocate memory");
-	default: throw ParseException(ParseException::Corrupt, String::Build("Cannot decompress: status ", int(status)));
+	default: throw ParseException(ParseException::Corrupt, PTString::Build("Cannot decompress: status ", int(status)));
 	}
 
 	setSize(blockS);
@@ -2627,8 +2627,8 @@ std::pair<bool, std::vector<char>> GameSave::serialiseOPS() const
 	switch (auto status = BZ2WCompress(outputData, (char *)finalData, finalDataLen))
 	{
 	case BZ2WCompressOk: break;
-	case BZ2WCompressNomem: throw BuildException(String::Build("Save error, out of memory"));
-	default: throw BuildException(String::Build("Cannot compress: status ", int(status)));
+	case BZ2WCompressNomem: throw BuildException(PTString::Build("Save error, out of memory"));
+	default: throw BuildException(PTString::Build("Cannot compress: status ", int(status)));
 	}
 	auto compressedSize = int(outputData.size());
 

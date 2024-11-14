@@ -1,12 +1,12 @@
 #pragma once
 #include "graphics/Pixel.h"
-#include "common/String.h"
+#include "common/PTString.h"
 
 struct CustomGOLData
 {
 	int rule;
 	RGB<uint8_t> colour1, colour2;
-	String nameString;
+	PTString nameString;
 
 	inline bool operator <(const CustomGOLData &other) const
 	{

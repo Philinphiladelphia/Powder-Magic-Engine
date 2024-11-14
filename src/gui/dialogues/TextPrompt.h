@@ -12,7 +12,7 @@ class TextPrompt : public ui::Window
 {
 	struct TextDialogueCallback
 	{
-		std::function<void (String const &)> text;
+		std::function<void (PTString const &)> text;
 		std::function<void ()> cancel;
 	};
 
@@ -22,7 +22,7 @@ protected:
 	ui::Textbox * textField;
 
 public:
-	TextPrompt(String title, String message, String text, String placeholder, bool multiline, TextDialogueCallback callback_ = {});
+	TextPrompt(PTString title, PTString message, PTString text, PTString placeholder, bool multiline, TextDialogueCallback callback_ = {});
 	virtual ~TextPrompt() = default;
 
 	void OnDraw() override;

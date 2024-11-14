@@ -132,7 +132,7 @@ namespace Clipboard
 		InvokeClipboardSetClipboardData();
 	}
 
-	std::optional<String> Explanation()
+	std::optional<PTString> Explanation()
 	{
 		return clipboard ? clipboard->Explanation() : std::nullopt;
 	}

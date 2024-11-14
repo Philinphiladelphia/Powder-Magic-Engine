@@ -1,5 +1,5 @@
 #pragma once
-#include "common/String.h"
+#include "common/PTString.h"
 #include <vector>
 #include <variant>
 #include <memory>
@@ -37,7 +37,7 @@ namespace Clipboard
 		>;
 		virtual GetClipboardDataResult GetClipboardData() = 0;
 
-		virtual std::optional<String> Explanation() = 0;
+		virtual std::optional<PTString> Explanation() = 0;
 	};
 
 	extern std::unique_ptr<GameSave> clipboardData;

@@ -1,5 +1,5 @@
 #pragma once
-#include "common/String.h"
+#include "common/PTString.h"
 #include "Component.h"
 #include <functional>
 
@@ -14,7 +14,7 @@ class Button : public Component
 	};
 	
 public:
-	Button(Point position = Point(0, 0), Point size = Point(0, 0), String buttonText = String(), String toolTip = String());
+	Button(Point position = Point(0, 0), Point size = Point(0, 0), PTString buttonText = PTString(), PTString toolTip = PTString());
 	virtual ~Button() = default;
 
 	void OnMouseClick(int x, int y, unsigned int button) override;
@@ -27,7 +27,7 @@ public:
 
 	void Draw(const Point& screenPos) override;
 
-	void TextPosition(String) override;
+	void TextPosition(PTString) override;
 	inline bool GetState() { return state; }
 	void DoAction(); //action of button what ever it may be
 	void DoAltAction(); //action of button what ever it may be
@@ -37,15 +37,15 @@ public:
 	void SetToggleState(bool state);
 	inline void SetActionCallback(ButtonAction const &action) { actionCallback = action; }
 	// inline ButtonAction const &GetActionCallback() const { return actionCallback; }
-	void SetText(String buttonText);
+	void SetText(PTString buttonText);
 	void SetIcon(Icon icon);
-	inline String GetText() { return ButtonText; }
-	void SetToolTip(String newToolTip) { toolTip = newToolTip; }
+	inline PTString GetText() { return ButtonText; }
+	void SetToolTip(PTString newToolTip) { toolTip = newToolTip; }
 
 protected:
-	String ButtonText;
-	String toolTip;
-	String buttonDisplayText;
+	PTString ButtonText;
+	PTString toolTip;
+	PTString buttonDisplayText;
 
 	bool isButtonDown, isAltButtonDown, state, isMouseInside, isTogglable, toggle;
 	ButtonAction actionCallback;

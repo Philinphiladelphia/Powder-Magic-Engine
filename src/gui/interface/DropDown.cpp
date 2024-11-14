@@ -42,7 +42,7 @@ public:
 		Graphics * g = GetGraphics();
 		g->DrawFilledRect(RectSized(Position, Size), 0x000000_rgb);
 	}
-	void setOption(String option)
+	void setOption(PTString option)
 	{
 		dropDown->SetOption(option);
 		if (dropDown->actionCallback.change)
@@ -115,16 +115,16 @@ void DropDown::OnMouseLeave(int x, int y)
 	isMouseInside = false;
 }
 
-std::pair<String, int> DropDown::GetOption()
+std::pair<PTString, int> DropDown::GetOption()
 {
 	if(optionIndex!=-1)
 	{
 		return options[optionIndex];
 	}
-	return std::pair<String, int>("", -1);
+	return std::pair<PTString, int>("", -1);
 }
 
-void DropDown::SetOption(String option)
+void DropDown::SetOption(PTString option)
 {
 	for (size_t i = 0; i < options.size(); i++)
 	{
@@ -150,7 +150,7 @@ void DropDown::SetOption(int option)
 	}
 }
 
-void DropDown::AddOption(std::pair<String, int> option)
+void DropDown::AddOption(std::pair<PTString, int> option)
 {
 	for (size_t i = 0; i < options.size(); i++)
 	{
@@ -160,7 +160,7 @@ void DropDown::AddOption(std::pair<String, int> option)
 	options.push_back(option);
 }
 
-void DropDown::RemoveOption(String option)
+void DropDown::RemoveOption(PTString option)
 {
 start:
 	for (size_t i = 0; i < options.size(); i++)
@@ -175,7 +175,7 @@ start:
 	}
 }
 
-void DropDown::SetOptions(std::vector<std::pair<String, int> > options)
+void DropDown::SetOptions(std::vector<std::pair<PTString, int> > options)
 {
 	this->options = options;
 }

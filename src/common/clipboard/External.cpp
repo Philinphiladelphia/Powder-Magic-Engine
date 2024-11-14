@@ -18,7 +18,7 @@ namespace Clipboard
 		ByteString inCommand;
 		ByteString formatsCommand;
 		ByteString outCommand;
-		std::optional<String> explanation;
+		std::optional<PTString> explanation;
 		std::optional<int> defaultForSubsystem;
 	};
 	std::map<ByteString, Preset> builtInPresets = {
@@ -245,7 +245,7 @@ namespace Clipboard
 			return GetClipboardDataChanged{ std::move(*saveDataOpt) };
 		}
 
-		std::optional<String> Explanation() final override
+		std::optional<PTString> Explanation() final override
 		{
 			auto preset = GetPreset();
 			return preset ? preset->explanation : std::nullopt;

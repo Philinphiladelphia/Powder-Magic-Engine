@@ -22,8 +22,8 @@ LuaButton::LuaButton(lua_State *L) :
 	int posY = luaL_optinteger(L, 2, 0);
 	int sizeX = luaL_optinteger(L, 3, 10);
 	int sizeY = luaL_optinteger(L, 4, 10);
-	String text = tpt_lua_optString(L, 5, "");
-	String toolTip = tpt_lua_optString(L, 6, "");
+	PTString text = tpt_lua_optString(L, 5, "");
+	PTString toolTip = tpt_lua_optString(L, 6, "");
 
 	button = new ui::Button(ui::Point(posX, posY), ui::Point(sizeX, sizeY), text, toolTip);
 	component = button;

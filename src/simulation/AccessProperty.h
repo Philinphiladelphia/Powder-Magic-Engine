@@ -1,6 +1,6 @@
 #pragma once
 #include "StructProperty.h"
-#include "common/String.h"
+#include "common/PTString.h"
 #include <stdexcept>
 
 class Simulation;
@@ -17,6 +17,6 @@ struct AccessProperty
 	{
 		using runtime_error::runtime_error;
 	};
-	static AccessProperty Parse(int prop, String value);
+	static AccessProperty Parse(int prop, PTString value);
 };
 

@@ -1,5 +1,5 @@
 #pragma once
-#include "common/String.h"
+#include "common/PTString.h"
 
 #include "Component.h"
 #include "client/http/ThumbnailRequest.h"
@@ -19,10 +19,10 @@ class SaveButton : public Component
 	SaveInfo *save = nullptr; // non-owning
 	std::unique_ptr<VideoBuffer> thumbnail;
 	ui::Point thumbSize = ui::Point(0, 0);
-	String name;
-	String votesString;
-	String votesBackground;
-	String votesBackground2;
+	PTString name;
+	PTString votesString;
+	PTString votesBackground;
+	PTString votesBackground2;
 	int voteBarHeightUp;
 	int voteBarHeightDown;
 	bool wantsDraw;

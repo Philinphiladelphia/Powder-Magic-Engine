@@ -10,10 +10,13 @@ def find_headers(directory):
                 headers.append(os.path.join(root, file))
     return headers
 
-def copy_headers(headers, destination):
+def copy_headers(headers, destination, use_path=True):
     for header in headers:
         # Create the destination path preserving the directory structure
-        dest_path = os.path.join(destination, os.path.relpath(header, start='src'))
+        if (use_path):
+            dest_path = os.path.join(destination, os.path.relpath(header, start='src'))
+        else:
+            dest_path = os.path.join(destination, os.path.relpath(header, start='builddir/src'))
         os.makedirs(os.path.dirname(dest_path), exist_ok=True)
         shutil.copy2(header, dest_path)
 
@@ -36,15 +39,15 @@ if __name__ == "__main__":
 
     base_path = sys.argv[1]
 
-    headers = find_headers('src')
-    copy_headers(headers, os.path.join(base_path, 'include/powder_toy/'))
+    base_headers = find_headers('src')
+    copy_headers(base_headers, os.path.join(base_path, 'include/powder_toy/'))
 
+    extra_headers = find_headers('builddir/src')
+    copy_headers(extra_headers, os.path.join(base_path, 'include/powder_toy/'), False)
 
     # Update the source path for the libraries
     current_dir = os.getcwd()
-    copy_libraries(os.path.join(current_dir, 'builddir'), os.path.join(base_path, 'lib'))
+    copy_libraries(os.path.join(current_dir, 'builddir'), os.path.join(base_path, 'libpath'))
 
-    copy_generated_headers('build/src', os.path.join(base_path, 'include/powder_toy/'))
-
-    for header in headers:
+    for header in extra_headers + base_headers:
         print(header)

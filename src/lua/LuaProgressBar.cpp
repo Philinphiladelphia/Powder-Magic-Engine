@@ -22,7 +22,7 @@ LuaProgressBar::LuaProgressBar(lua_State *L) :
 	int sizeX = luaL_optinteger(L, 3, 10);
 	int sizeY = luaL_optinteger(L, 4, 10);
 	int value = luaL_optinteger(L, 5, 0);
-	String status = tpt_lua_optString(L, 6, "");
+	PTString status = tpt_lua_optString(L, 6, "");
 
 	progressBar = new ui::ProgressBar(ui::Point(posX, posY), ui::Point(sizeX, sizeY), value, status);
 	component = progressBar;

@@ -118,8 +118,8 @@ template<> bool        Prefs::Bipacker<bool>::Unpack(const Json::Value &value) {
 template<> Json::Value Prefs::Bipacker<ByteString>::Pack  (const ByteString  &value) { return Json::Value(value); }
 template<> ByteString  Prefs::Bipacker<ByteString>::Unpack(const Json::Value &value) { return value.asString(); }
 
-template<> Json::Value Prefs::Bipacker<String>::Pack  (const String      &value) { return Json::Value(value.ToUtf8()); }
-template<> String      Prefs::Bipacker<String>::Unpack(const Json::Value &value) { return ByteString(value.asString()).FromUtf8(); }
+template<> Json::Value Prefs::Bipacker<PTString>::Pack  (const PTString      &value) { return Json::Value(value.ToUtf8()); }
+template<> PTString      Prefs::Bipacker<PTString>::Unpack(const Json::Value &value) { return ByteString(value.asString()).FromUtf8(); }
 
 template<> Json::Value     Prefs::Bipacker<User::Elevation>::Pack  (const User::Elevation &value) { return Json::Value(User::ElevationToString(value)); }
 template<> User::Elevation Prefs::Bipacker<User::Elevation>::Unpack(const Json::Value     &value) { return User::ElevationFromString(value.asString()); }
@@ -157,6 +157,6 @@ std::vector<Item> Prefs::Bipacker<std::vector<Item>>::Unpack(const Json::Value &
 	return array;
 }
 
-template struct Prefs::Bipacker<std::vector<String>>;
+template struct Prefs::Bipacker<std::vector<PTString>>;
 template struct Prefs::Bipacker<std::vector<ByteString>>;
 template struct Prefs::Bipacker<std::vector<unsigned int>>;

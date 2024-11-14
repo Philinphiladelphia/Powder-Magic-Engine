@@ -105,11 +105,11 @@ int LuaToLoggableString(lua_State *L, int n)
 	return 1;
 }
 
-String LuaGetError()
+PTString LuaGetError()
 {
 	auto *lsi = GetLSI();
 	LuaToLoggableString(lsi->L, -1);
-	String err = tpt_lua_optString(lsi->L, -1, "failed to execute");
+	PTString err = tpt_lua_optString(lsi->L, -1, "failed to execute");
 	lua_pop(lsi->L, 1);
 	return err;
 }
@@ -240,9 +240,9 @@ void LuaGetProperty(lua_State *L, StructProperty property, intptr_t propertyAddr
 			tpt_lua_pushByteString(L, *((ByteString*)propertyAddress));
 			break;
 		}
-		case StructProperty::String:
+		case StructProperty::PTString:
 		{
-			tpt_lua_pushString(L, *((String*)propertyAddress));
+			tpt_lua_pushString(L, *((PTString*)propertyAddress));
 			break;
 		}
 		case StructProperty::Colour:
@@ -283,8 +283,8 @@ void LuaSetProperty(lua_State *L, StructProperty property, intptr_t propertyAddr
 		case StructProperty::BString:
 			*((ByteString*)propertyAddress) = tpt_lua_checkByteString(L, stackPos);
 			break;
-		case StructProperty::String:
-			*((String*)propertyAddress) = tpt_lua_checkString(L, stackPos);
+		case StructProperty::PTString:
+			*((PTString*)propertyAddress) = tpt_lua_checkString(L, stackPos);
 			break;
 		case StructProperty::Colour:
 			*((unsigned int*)propertyAddress) = int32_truncate(luaL_checknumber(L, stackPos));
@@ -467,7 +467,7 @@ void CommandInterface::OnTick()
 	HandleEvent(TickEvent{});
 }
 
-int CommandInterface::Command(String command)
+int CommandInterface::Command(PTString command)
 {
 	auto *lsi = static_cast<LuaScriptInterface *>(this);
 	auto *L = lsi->L;
@@ -497,7 +497,7 @@ int CommandInterface::Command(String command)
 		if (lua_type(L, -1) != LUA_TFUNCTION)
 		{
 			lastError = LuaGetError();
-			String err = lastError;
+			PTString err = lastError;
 			if (err.Contains("near '<eof>'")) //the idea stolen from lua-5.1.5/lua.c
 				lastError = "...";
 			else
@@ -513,7 +513,7 @@ int CommandInterface::Command(String command)
 			}
 			else
 			{
-				String text = "";
+				PTString text = "";
 				bool hasText = false;
 				for (level++; level <= lua_gettop(L); level++)
 				{
@@ -544,28 +544,28 @@ int CommandInterface::Command(String command)
 	}
 }
 
-static String highlight(String command)
+static PTString highlight(PTString command)
 {
 	StringBuilder result;
 	int pos = 0;
-	String::value_type const*raw = command.c_str();
-	String::value_type c;
+	PTString::value_type const*raw = command.c_str();
+	PTString::value_type c;
 	while ((c = raw[pos]))
 	{
 		if((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || c == '_')
 		{
 			int len = 0;
-			String::value_type w;
-			String::value_type const* wstart = raw+pos;
+			PTString::value_type w;
+			PTString::value_type const* wstart = raw+pos;
 			while((w = wstart[len]) && ((w >= 'A' && w <= 'Z') || (w >= 'a' && w <= 'z') || (w >= '0' && w <= '9') || w == '_'))
 				len++;
-#define CMP(X) (String(wstart, len) == X)
+#define CMP(X) (PTString(wstart, len) == X)
 			if(CMP("and") || CMP("break") || CMP("do") || CMP("else") || CMP("elseif") || CMP("end") || CMP("for") || CMP("function") || CMP("if") || CMP("in") || CMP("local") || CMP("not") || CMP("or") || CMP("repeat") || CMP("return") || CMP("then") || CMP("until") || CMP("while"))
-				result << "\x0F\xB5\x89\x01" << String(wstart, len) << "\bw";
+				result << "\x0F\xB5\x89\x01" << PTString(wstart, len) << "\bw";
 			else if(CMP("false") || CMP("nil") || CMP("true"))
-				result << "\x0F\xCB\x4B\x16" << String(wstart, len) << "\bw";
+				result << "\x0F\xCB\x4B\x16" << PTString(wstart, len) << "\bw";
 			else
-				result << "\x0F\x2A\xA1\x98" << String(wstart, len) << "\bw";
+				result << "\x0F\x2A\xA1\x98" << PTString(wstart, len) << "\bw";
 #undef CMP
 			pos += len;
 		}
@@ -574,18 +574,18 @@ static String highlight(String command)
 			if(c == '0' && raw[pos + 1] == 'x')
 			{
 				int len = 2;
-				String::value_type w;
-				String::value_type const* wstart = raw+pos;
+				PTString::value_type w;
+				PTString::value_type const* wstart = raw+pos;
 				while((w = wstart[len]) && ((w >= '0' && w <= '9') || (w >= 'A' && w <= 'F') || (w >= 'a' && w <= 'f')))
 					len++;
-				result << "\x0F\xD3\x36\x82" << String(wstart, len) << "\bw";
+				result << "\x0F\xD3\x36\x82" << PTString(wstart, len) << "\bw";
 				pos += len;
 			}
 			else
 			{
 				int len = 0;
-				String::value_type w;
-				String::value_type const* wstart = raw+pos;
+				PTString::value_type w;
+				PTString::value_type const* wstart = raw+pos;
 				bool seendot = false;
 				while((w = wstart[len]) && ((w >= '0' && w <= '9') || w == '.'))
 				{
@@ -607,7 +607,7 @@ static String highlight(String command)
 					while((w = wstart[len]) && (w >= '0' && w <= '9'))
 						len++;
 				}
-				result << "\x0F\xD3\x36\x82" << String(wstart, len) << "\bw";
+				result << "\x0F\xD3\x36\x82" << PTString(wstart, len) << "\bw";
 				pos += len;
 			}
 		}
@@ -616,8 +616,8 @@ static String highlight(String command)
 			if(c == '[')
 			{
 				int len = 1, eqs=0;
-				String::value_type w;
-				String::value_type const* wstart = raw + pos;
+				PTString::value_type w;
+				PTString::value_type const* wstart = raw + pos;
 				while((w = wstart[len]) && (w == '='))
 				{
 					eqs++;
@@ -628,7 +628,7 @@ static String highlight(String command)
 					if(w == ']')
 					{
 						int nlen = 1;
-						String::value_type const* cstart = wstart + len;
+						PTString::value_type const* cstart = wstart + len;
 						while((w = cstart[nlen]) && (w == '='))
 							nlen++;
 						if(w == ']' && nlen == eqs+1)
@@ -639,14 +639,14 @@ static String highlight(String command)
 					}
 					len++;
 				}
-				result << "\x0F\xDC\x32\x2F" << String(wstart, len) << "\bw";
+				result << "\x0F\xDC\x32\x2F" << PTString(wstart, len) << "\bw";
 				pos += len;
 			}
 			else
 			{
 				int len = 1;
-				String::value_type w;
-				String::value_type const* wstart = raw+pos;
+				PTString::value_type w;
+				PTString::value_type const* wstart = raw+pos;
 				while((w = wstart[len]) && (w != c))
 				{
 					if(w == '\\' && wstart[len + 1])
@@ -655,7 +655,7 @@ static String highlight(String command)
 				}
 				if(w == c)
 					len++;
-				result << "\x0F\xDC\x32\x2F" << String(wstart, len) << "\bw";
+				result << "\x0F\xDC\x32\x2F" << PTString(wstart, len) << "\bw";
 				pos += len;
 			}
 		}
@@ -664,8 +664,8 @@ static String highlight(String command)
 			if(raw[pos + 2] == '[')
 			{
 				int len = 3, eqs = 0;
-				String::value_type w;
-				String::value_type const* wstart = raw + pos;
+				PTString::value_type w;
+				PTString::value_type const* wstart = raw + pos;
 				while((w = wstart[len]) && (w == '='))
 				{
 					eqs++;
@@ -676,7 +676,7 @@ static String highlight(String command)
 					if(w == ']')
 					{
 						int nlen = 1;
-						String::value_type const* cstart = wstart + len;
+						PTString::value_type const* cstart = wstart + len;
 						while((w = cstart[nlen]) && (w == '='))
 							nlen++;
 						if(w == ']' && nlen == eqs + 1)
@@ -687,17 +687,17 @@ static String highlight(String command)
 					}
 					len++;
 				}
-				result << "\x0F\x85\x99\x01" << String(wstart, len) << "\bw";
+				result << "\x0F\x85\x99\x01" << PTString(wstart, len) << "\bw";
 				pos += len;
 			}
 			else
 			{
 				int len = 2;
-				String::value_type w;
-				String::value_type const* wstart = raw + pos;
+				PTString::value_type w;
+				PTString::value_type const* wstart = raw + pos;
 				while((w = wstart[len]) && (w != '\n'))
 					len++;
-				result << "\x0F\x85\x99\x01" << String(wstart, len) << "\bw";
+				result << "\x0F\x85\x99\x01" << PTString(wstart, len) << "\bw";
 				pos += len;
 			}
 		}
@@ -720,7 +720,7 @@ static String highlight(String command)
 	return result.Build();
 }
 
-String CommandInterface::FormatCommand(String command)
+PTString CommandInterface::FormatCommand(PTString command)
 {
 	if(command.size() && command[0] == '!')
 	{
@@ -746,7 +746,7 @@ void tpt_lua_pushByteString(lua_State *L, const ByteString &str)
 	lua_pushlstring(L, str.data(), str.size());
 }
 
-void tpt_lua_pushString(lua_State *L, const String &str)
+void tpt_lua_pushString(lua_State *L, const PTString &str)
 {
 	tpt_lua_pushByteString(L, str.ToUtf8());
 }
@@ -761,7 +761,7 @@ ByteString tpt_lua_toByteString(lua_State *L, int index)
 	return {};
 }
 
-String tpt_lua_toString(lua_State *L, int index, bool ignoreError)
+PTString tpt_lua_toString(lua_State *L, int index, bool ignoreError)
 {
 	return tpt_lua_toByteString(L, index).FromUtf8(ignoreError);
 }
@@ -776,7 +776,7 @@ ByteString tpt_lua_checkByteString(lua_State *L, int index)
 	return {};
 }
 
-String tpt_lua_checkString(lua_State *L, int index, bool ignoreError)
+PTString tpt_lua_checkString(lua_State *L, int index, bool ignoreError)
 {
 	return tpt_lua_checkByteString(L, index).FromUtf8(ignoreError);
 }
@@ -790,7 +790,7 @@ ByteString tpt_lua_optByteString(lua_State *L, int index, ByteString defaultValu
 	return tpt_lua_checkByteString(L, index);
 }
 
-String tpt_lua_optString(lua_State *L, int index, String defaultValue, bool ignoreError)
+PTString tpt_lua_optString(lua_State *L, int index, PTString defaultValue, bool ignoreError)
 {
 	if (lua_isnoneornil(L, index))
 	{

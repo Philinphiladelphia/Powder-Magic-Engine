@@ -20,12 +20,12 @@ int Task::GetProgress()
 	return progress;
 }
 
-String Task::GetStatus()
+PTString Task::GetStatus()
 {
 	return status;
 }
 
-String Task::GetError()
+PTString Task::GetError()
 {
 	return error;
 }
@@ -47,8 +47,8 @@ void Task::Poll()
 		int newProgress;
 		bool newDone = false;
 		bool newSuccess = false;
-		String newStatus;
-		String newError;
+		PTString newStatus;
+		PTString newError;
 		{
 			std::lock_guard<std::mutex> g(taskMutex);
 			newProgress = thProgress;
@@ -133,13 +133,13 @@ void Task::notifyProgress(int progress)
 	thProgress = progress;
 }
 
-void Task::notifyStatus(String status)
+void Task::notifyStatus(PTString status)
 {
 	std::lock_guard<std::mutex> g(taskMutex);
 	thStatus = status;
 }
 
-void Task::notifyError(String error)
+void Task::notifyError(PTString error)
 {
 	std::lock_guard<std::mutex> g(taskMutex);
 	thError = error;

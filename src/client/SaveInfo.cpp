@@ -1,7 +1,7 @@
 #include "SaveInfo.h"
 #include "GameSave.h"
 
-SaveInfo::SaveInfo(int _id, time_t _createdDate, time_t _updatedDate, int _votesUp, int _votesDown, ByteString _userName, String _name):
+SaveInfo::SaveInfo(int _id, time_t _createdDate, time_t _updatedDate, int _votesUp, int _votesDown, ByteString _userName, PTString _name):
 	id(_id),
 	createdDate(_createdDate),
 	updatedDate(_updatedDate),
@@ -20,7 +20,7 @@ SaveInfo::SaveInfo(int _id, time_t _createdDate, time_t _updatedDate, int _votes
 
 }
 
-SaveInfo::SaveInfo(int _id, time_t _createdDate, time_t _updatedDate, int _votesUp, int _votesDown, int _vote, ByteString _userName, String _name, String description_, bool published_, std::list<ByteString> tags_):
+SaveInfo::SaveInfo(int _id, time_t _createdDate, time_t _updatedDate, int _votesUp, int _votesDown, int _vote, ByteString _userName, PTString _name, PTString description_, bool published_, std::list<ByteString> tags_):
 	id(_id),
 	createdDate(_createdDate),
 	updatedDate(_updatedDate),
@@ -41,20 +41,20 @@ SaveInfo::SaveInfo(int _id, time_t _createdDate, time_t _updatedDate, int _votes
 	tags=tagsSorted;
 }
 
-void SaveInfo::SetName(String name)
+void SaveInfo::SetName(PTString name)
 {
 	this->name = name;
 }
-const String &SaveInfo::GetName() const
+const PTString &SaveInfo::GetName() const
 {
 	return name;
 }
 
-void SaveInfo::SetDescription(String description)
+void SaveInfo::SetDescription(PTString description)
 {
 	Description = description;
 }
-const String &SaveInfo::GetDescription() const
+const PTString &SaveInfo::GetDescription() const
 {
 	return Description;
 }

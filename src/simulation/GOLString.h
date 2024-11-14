@@ -1,8 +1,8 @@
 #pragma once
 
-#include "common/String.h"
+#include "common/PTString.h"
 #include <exception>
 
-bool ValidateGOLName(const String &value);
-int ParseGOLString(const String &value);
-String SerialiseGOLRule(int rule);
+bool ValidateGOLName(const PTString &value);
+int ParseGOLString(const PTString &value);
+PTString SerialiseGOLRule(int rule);

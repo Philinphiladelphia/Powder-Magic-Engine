@@ -1,5 +1,5 @@
 #pragma once
-#include "common/String.h"
+#include "common/PTString.h"
 #include <memory>
 
 class GameSave;
@@ -12,18 +12,18 @@ public:
 	const GameSave *GetGameSave() const;
 	std::unique_ptr<GameSave> TakeGameSave();
 	void SetGameSave(std::unique_ptr<GameSave> newSameSave);
-	const String &GetDisplayName() const;
-	void SetDisplayName(String displayName);
+	const PTString &GetDisplayName() const;
+	void SetDisplayName(PTString displayName);
 	const ByteString &GetName() const;
 	void SetFileName(ByteString fileName);
-	const String &GetError() const;
-	void SetLoadingError(String error);
+	const PTString &GetError() const;
+	void SetLoadingError(PTString error);
 
 	void LazyUnload();
 private:
 	std::unique_ptr<GameSave> gameSave;
 	ByteString filename;
-	String displayName;
-	String loadingError;
+	PTString displayName;
+	PTString loadingError;
 	bool lazyLoad;
 };

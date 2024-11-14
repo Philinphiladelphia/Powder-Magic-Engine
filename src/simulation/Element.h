@@ -15,7 +15,7 @@ class Element
 {
 public:
 	ByteString Identifier;
-	String Name;
+	PTString Name;
 	RGB<uint8_t> Colour;
 	int MenuVisible;
 	int MenuSection;
@@ -40,7 +40,7 @@ public:
 	int Weight;
 	unsigned char HeatConduct;
 	unsigned int LatentHeat;
-	String Description;
+	PTString Description;
 	unsigned int Properties;
 	unsigned int CarriesTypeIn;
 

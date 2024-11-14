@@ -62,7 +62,7 @@ std::vector<StructProperty> const &Element::GetProperties()
 		DoOnce()
 		{
 			properties = {
-				{ "Name",                      StructProperty::String,   offsetof(Element, Name                     ) },
+				{ "Name",                      StructProperty::PTString,   offsetof(Element, Name                     ) },
 				{ "Colour",                    StructProperty::Colour,   offsetof(Element, Colour                   ) },
 				{ "Color",                     StructProperty::Colour,   offsetof(Element, Colour                   ) },
 				{ "MenuVisible",               StructProperty::Integer,  offsetof(Element, MenuVisible              ) },
@@ -87,7 +87,7 @@ std::vector<StructProperty> const &Element::GetProperties()
 				{ "Weight",                    StructProperty::Integer,  offsetof(Element, Weight                   ) },
 				{ "Temperature",               StructProperty::Float,    offsetof(Element, DefaultProperties.temp   ) },
 				{ "HeatConduct",               StructProperty::UChar,    offsetof(Element, HeatConduct              ) },
-				{ "Description",               StructProperty::String,   offsetof(Element, Description              ) },
+				{ "Description",               StructProperty::PTString,   offsetof(Element, Description              ) },
 				{ "State",                     StructProperty::Removed,  0                                            },
 				{ "Properties",                StructProperty::Integer,  offsetof(Element, Properties               ) },
 				{ "LowPressure",               StructProperty::Float,    offsetof(Element, LowPressure              ) },

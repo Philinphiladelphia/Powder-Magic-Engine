@@ -15,7 +15,7 @@ ParticleDebug::ParticleDebug(unsigned int id, Simulation * sim, GameModel * mode
 void ParticleDebug::Debug(int mode, int x, int y)
 {
 	int i = 0;
-	String logmessage;
+	PTString logmessage;
 
 	if (mode == 0)
 	{
@@ -27,7 +27,7 @@ void ParticleDebug::Debug(int mode, int x, int y)
 		if (i == NPART - 1)
 			logmessage = "End of particles reached, updated sim";
 		else
-			logmessage = String::Build("Updated particle #", i);
+			logmessage = PTString::Build("Updated particle #", i);
 	}
 	else if (mode == 1)
 	{
@@ -49,11 +49,11 @@ void ParticleDebug::Debug(int mode, int x, int y)
 	model->UpdateUpTo(i + 1);
 	if (sim->debug_nextToUpdate)
 	{
-		logmessage = String::Build("Updated particles from #", prevToUpdate, " through #", i);
+		logmessage = PTString::Build("Updated particles from #", prevToUpdate, " through #", i);
 	}
 	else
 	{
-		logmessage = String::Build("Updated particles from #", prevToUpdate, " to end");
+		logmessage = PTString::Build("Updated particles from #", prevToUpdate, " to end");
 	}
 	model->Log(logmessage, false);
 }
@@ -88,7 +88,7 @@ bool ParticleDebug::KeyPress(int key, int scan, bool shift, bool ctrl, bool alt,
 				return true;
 			if (sim->debug_nextToUpdate > 0)
 			{
-				String logmessage = String::Build("Updated particles from #", sim->debug_nextToUpdate, " to end due to frame step");
+				PTString logmessage = PTString::Build("Updated particles from #", sim->debug_nextToUpdate, " to end due to frame step");
 				model->UpdateUpTo(NPART);
 				model->Log(logmessage, false);
 			}

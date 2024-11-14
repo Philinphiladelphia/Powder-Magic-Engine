@@ -1,19 +1,19 @@
 #pragma once
-#include "common/String.h"
+#include "common/PTString.h"
 
 class ConsoleCommand
 {
 public:
-	ConsoleCommand(String command, int returnStatus, String returnValue):
+	ConsoleCommand(PTString command, int returnStatus, PTString returnValue):
 		Command(command), ReturnStatus(returnStatus), ReturnValue(returnValue)
 	{
 
 	}
-	String Command;
+	PTString Command;
 	int ReturnStatus;
-	String ReturnValue;
+	PTString ReturnValue;
 
-	operator String() const
+	operator PTString() const
 	{
 		return Command;
 	}

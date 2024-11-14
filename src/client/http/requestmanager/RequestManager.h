@@ -1,6 +1,6 @@
 #pragma once
 #include "common/ExplicitSingleton.h"
-#include "common/String.h"
+#include "common/PTString.h"
 #include "client/http/PostData.h"
 #include <atomic>
 #include <cstdint>

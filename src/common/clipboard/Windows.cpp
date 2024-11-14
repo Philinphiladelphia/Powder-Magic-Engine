@@ -218,7 +218,7 @@ namespace Clipboard
 			return GetClipboardDataChanged{ std::vector<char>(base, base + size) };
 		}
 
-		std::optional<String> Explanation() final override
+		std::optional<PTString> Explanation() final override
 		{
 			return std::nullopt;
 		}

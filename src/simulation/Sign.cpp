@@ -4,7 +4,7 @@
 #include "Simulation.h"
 #include "SimulationData.h"
 
-sign::sign(String text_, int x_, int y_, Justification justification_):
+sign::sign(PTString text_, int x_, int y_, Justification justification_):
 	x(x_),
 	y(y_),
 	ju(justification_),
@@ -12,10 +12,10 @@ sign::sign(String text_, int x_, int y_, Justification justification_):
 {
 }
 
-String sign::getDisplayText(const RenderableSimulation *sim, int &x0, int &y0, int &w, int &h, bool colorize, bool *v95) const
+PTString sign::getDisplayText(const RenderableSimulation *sim, int &x0, int &y0, int &w, int &h, bool colorize, bool *v95) const
 {
 	auto &sd = SimulationData::CRef();
-	String drawable_text;
+	PTString drawable_text;
 	auto si = std::make_pair(0, Type::Normal);
 	if (text.find('{') == text.npos)
 	{
@@ -47,16 +47,16 @@ String sign::getDisplayText(const RenderableSimulation *sim, int &x0, int &y0, i
 				aheat = sim->hv[y/CELL][x/CELL] - 273.15f;
 			}
 
-			String remaining_text = text;
+			PTString remaining_text = text;
 			StringBuilder formatted_text;
 			while (auto split_left_curly = remaining_text.SplitBy('{'))
 			{
-				String after_left_curly = split_left_curly.After();
+				PTString after_left_curly = split_left_curly.After();
 				if (auto split_right_curly = after_left_curly.SplitBy('}'))
 				{
 					formatted_text << split_left_curly.Before();
 					remaining_text = split_right_curly.After();
-					String between_curlies = split_right_curly.Before();
+					PTString between_curlies = split_right_curly.Before();
 					if (between_curlies == "t" || between_curlies == "temp")
 					{
 						formatted_text << Format::Precision(Format::ShowPoint(part ? part->temp - 273.15f : 0.0f), 2);
@@ -81,13 +81,13 @@ String sign::getDisplayText(const RenderableSimulation *sim, int &x0, int &y0, i
 					}
 					else if (between_curlies == "type")
 					{
-						formatted_text << (part ? sd.BasicParticleInfo(*part) : (formatted_text.Size() ? String::Build("empty") : String::Build("Empty")));
+						formatted_text << (part ? sd.BasicParticleInfo(*part) : (formatted_text.Size() ? PTString::Build("empty") : PTString::Build("Empty")));
 						if (v95)
 							*v95 = true;
 					}
 					else if (between_curlies == "ctype")
 					{
-						formatted_text << (part ? (sd.IsElementOrNone(part->ctype) ? sd.ElementResolve(part->ctype, -1) : String::Build(part->ctype)) : (formatted_text.Size() ? String::Build("empty") : String::Build("Empty")));
+						formatted_text << (part ? (sd.IsElementOrNone(part->ctype) ? sd.ElementResolve(part->ctype, -1) : PTString::Build(part->ctype)) : (formatted_text.Size() ? PTString::Build("empty") : PTString::Build("Empty")));
 						if (v95)
 							*v95 = true;
 					}
@@ -146,7 +146,7 @@ String sign::getDisplayText(const RenderableSimulation *sim, int &x0, int &y0, i
 
 std::pair<int, sign::Type> sign::split() const
 {
-	String::size_type pipe = 0;
+	PTString::size_type pipe = 0;
 	if (text.size() >= 4 && text.front() == '{' && text.back() == '}')
 	{
 		switch (text[1])
@@ -155,7 +155,7 @@ std::pair<int, sign::Type> sign::split() const
 		case 't':
 			if (text[2] == ':' && (pipe = text.find('|', 4)) != text.npos)
 			{
-				for (String::size_type i = 3; i < pipe; ++i)
+				for (PTString::size_type i = 3; i < pipe; ++i)
 				{
 					if (text[i] < '0' || text[i] > '9')
 					{

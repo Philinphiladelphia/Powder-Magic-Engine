@@ -1,5 +1,5 @@
 #pragma once
-#include "common/String.h"
+#include "common/PTString.h"
 #include "Appearance.h"
 #include "Point.h"
 
@@ -49,7 +49,7 @@ namespace ui
 		ui::Appearance Appearance;
 		//virtual void SetAppearance(ui::Appearance);
 		//ui::Appearance GetAppearance();
-		virtual void TextPosition(String);
+		virtual void TextPosition(PTString);
 
 		void Refresh();
 
@@ -183,8 +183,8 @@ namespace ui
 		///
 		virtual void OnKeyRelease(int key, int scan, bool repeat, bool shift, bool ctrl, bool alt);
 
-		virtual void OnTextInput(String text);
-		virtual void OnTextEditing(String text);
+		virtual void OnTextInput(PTString text);
+		virtual void OnTextEditing(PTString text);
 
 		virtual void OnFocus();
 		virtual void OnDefocus();

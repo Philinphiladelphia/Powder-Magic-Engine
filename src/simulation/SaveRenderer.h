@@ -5,7 +5,7 @@
 #include <vector>
 #include "common/ExplicitSingleton.h"
 #include "graphics/RendererSettings.h"
-#include "common/String.h"
+#include "common/PTString.h"
 
 class GameSave;
 class VideoBuffer;

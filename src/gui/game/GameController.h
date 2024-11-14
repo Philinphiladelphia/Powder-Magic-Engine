@@ -75,15 +75,15 @@ public:
 	GameView * GetView();
 	GameModel * GetModel();
 	int GetSignAt(int x, int y);
-	String GetSignText(int signID);
+	PTString GetSignText(int signID);
 	std::pair<int, sign::Type> GetSignSplit(int signID);
 
 	bool MouseMove(int x, int y, int dx, int dy);
 	bool MouseDown(int x, int y, unsigned button);
 	bool MouseUp(int x, int y, unsigned button, MouseupReason reason);
 	bool MouseWheel(int x, int y, int d);
-	bool TextInput(String text);
-	bool TextEditing(String text);
+	bool TextInput(PTString text);
+	bool TextEditing(PTString text);
 	bool KeyPress(int key, int scan, bool repeat, bool shift, bool ctrl, bool alt);
 	bool KeyRelease(int key, int scan, bool repeat, bool shift, bool ctrl, bool alt);
 	void Tick();
@@ -148,7 +148,7 @@ public:
 	void SetToolStrength(float value);
 	void LoadSaveFile(std::unique_ptr<SaveFile> file);
 	void LoadSave(std::unique_ptr<SaveInfo> save);
-	void OpenSearch(String searchText);
+	void OpenSearch(PTString searchText);
 	void OpenLogin();
 	void OpenProfile();
 	void OpenTags();
@@ -175,10 +175,10 @@ public:
 	bool MouseInZoom(ui::Point position);
 	ui::Point PointTranslate(ui::Point point);
 	ui::Point NormaliseBlockCoord(ui::Point point);
-	String ElementResolve(int type, int ctype);
-	String BasicParticleInfo(Particle const &sample_part);
+	PTString ElementResolve(int type, int ctype);
+	PTString BasicParticleInfo(Particle const &sample_part);
 	bool IsValidElement(int type);
-	String WallName(int type);
+	PTString WallName(int type);
 	ByteString TakeScreenshot(int captureUI, int fileType);
 	int Record(bool record);
 

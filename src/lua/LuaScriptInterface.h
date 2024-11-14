@@ -25,7 +25,7 @@ class Simulation;
 class LuaComponent;
 
 int LuaToLoggableString(lua_State *L, int n);
-String LuaGetError();
+PTString LuaGetError();
 void LuaGetProperty(lua_State *L, StructProperty property, intptr_t propertyAddress);
 void LuaSetProperty(lua_State *L, StructProperty property, intptr_t propertyAddress, int stackPos);
 void LuaSetParticleProperty(lua_State *L, int particleID, StructProperty property, intptr_t propertyAddress, int stackPos);
@@ -102,7 +102,7 @@ public:
 	EventTraits eventTraits = eventTraitNone;
 
 	bool luacon_hasLastError = false;
-	String lastCode;
+	PTString lastCode;
 
 	bool currentCommand = false;
 	int textInputRefcount = 0;
@@ -122,19 +122,19 @@ public:
 };
 
 void tpt_lua_pushByteString(lua_State *L, const ByteString &str);
-void tpt_lua_pushString(lua_State *L, const String &str);
+void tpt_lua_pushString(lua_State *L, const PTString &str);
 
 // TODO: toByteStringView once we have a ByteStringView (or std::string_view, if we get rid of ByteString)
 ByteString tpt_lua_toByteString(lua_State *L, int index);
-String tpt_lua_toString(lua_State *L, int index, bool ignoreError = true);
+PTString tpt_lua_toString(lua_State *L, int index, bool ignoreError = true);
 
 // TODO: toByteStringView once we have a ByteStringView (or std::string_view, if we get rid of ByteString)
 ByteString tpt_lua_checkByteString(lua_State *L, int index);
-String tpt_lua_checkString(lua_State *L, int index, bool ignoreError = true);
+PTString tpt_lua_checkString(lua_State *L, int index, bool ignoreError = true);
 
 // TODO: toByteStringView once we have a ByteStringView (or std::string_view, if we get rid of ByteString)
 ByteString tpt_lua_optByteString(lua_State *L, int index, ByteString defaultValue = {});
-String tpt_lua_optString(lua_State *L, int index, String defaultValue = {}, bool ignoreError = true);
+PTString tpt_lua_optString(lua_State *L, int index, PTString defaultValue = {}, bool ignoreError = true);
 
 int tpt_lua_loadstring(lua_State *L, const ByteString &str);
 int tpt_lua_dostring(lua_State *L, const ByteString &str);

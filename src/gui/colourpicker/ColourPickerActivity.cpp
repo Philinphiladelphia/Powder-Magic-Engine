@@ -115,11 +115,11 @@ ColourPickerActivity::ColourPickerActivity(ui::Colour initialColour, OnPicked on
 
 void ColourPickerActivity::UpdateTextboxes(int r, int g, int b, int a)
 {
-	rValue->SetText(String::Build(r));
-	gValue->SetText(String::Build(g));
-	bValue->SetText(String::Build(b));
-	aValue->SetText(String::Build(a));
-	hexValue->SetText(String::Build(Format::Hex(), Format::Uppercase(), Format::Width(2), a, r, g, b));
+	rValue->SetText(PTString::Build(r));
+	gValue->SetText(PTString::Build(g));
+	bValue->SetText(PTString::Build(b));
+	aValue->SetText(PTString::Build(a));
+	hexValue->SetText(PTString::Build(Format::Hex(), Format::Uppercase(), Format::Width(2), a, r, g, b));
 }
 
 void ColourPickerActivity::UpdateSliders()

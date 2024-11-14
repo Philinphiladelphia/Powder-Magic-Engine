@@ -1,15 +1,15 @@
 #pragma once
-#include "common/String.h"
+#include "common/PTString.h"
 
 class Tool;
 class Menu
 {
-	String::value_type icon;
-	String description;
+	PTString::value_type icon;
+	PTString description;
 	std::vector<Tool*> tools;
 	bool visible;
 public:
-	Menu(String::value_type icon_, String description_, int visible_);
+	Menu(PTString::value_type icon_, PTString description_, int visible_);
 	virtual ~Menu();
 
 	std::vector<Tool*> GetToolList()
@@ -17,12 +17,12 @@ public:
 		return tools;
 	}
 
-	String::value_type GetIcon()
+	PTString::value_type GetIcon()
 	{
 		return icon;
 	}
 
-	String GetDescription()
+	PTString GetDescription()
 	{
 		return description;
 	}

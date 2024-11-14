@@ -229,7 +229,7 @@ void RasterDrawMethods<Derived>::BlendRGBAImage(pixel_rgba const *data, Rect<int
 }
 
 template<typename Derived>
-int RasterDrawMethods<Derived>::BlendChar(Vec2<int> pos, String::value_type ch, RGBA<uint8_t> colour)
+int RasterDrawMethods<Derived>::BlendChar(Vec2<int> pos, PTString::value_type ch, RGBA<uint8_t> colour)
 {
 	FontReader reader(ch);
 	auto const rect = RectSized(Vec2(0, -2), Vec2(reader.GetWidth(), FONT_H));
@@ -239,7 +239,7 @@ int RasterDrawMethods<Derived>::BlendChar(Vec2<int> pos, String::value_type ch, 
 }
 
 template<typename Derived>
-int RasterDrawMethods<Derived>::AddChar(Vec2<int> pos, String::value_type ch, RGBA<uint8_t> colour)
+int RasterDrawMethods<Derived>::AddChar(Vec2<int> pos, PTString::value_type ch, RGBA<uint8_t> colour)
 {
 	FontReader reader(ch);
 	RGB<uint8_t> const c = colour.NoAlpha();
@@ -250,7 +250,7 @@ int RasterDrawMethods<Derived>::AddChar(Vec2<int> pos, String::value_type ch, RG
 }
 
 template<typename Derived>
-Vec2<int> RasterDrawMethods<Derived>::BlendText(Vec2<int> orig_pos, String const &str, RGBA<uint8_t> orig_colour)
+Vec2<int> RasterDrawMethods<Derived>::BlendText(Vec2<int> orig_pos, PTString const &str, RGBA<uint8_t> orig_colour)
 {
 	bool underline = false;
 	bool invert = false;
@@ -316,7 +316,7 @@ Vec2<int> RasterDrawMethods<Derived>::BlendText(Vec2<int> orig_pos, String const
 }
 
 template<typename Derived>
-Vec2<int> RasterDrawMethods<Derived>::BlendTextOutline(Vec2<int> pos, String const &str, RGBA<uint8_t> colour)
+Vec2<int> RasterDrawMethods<Derived>::BlendTextOutline(Vec2<int> pos, PTString const &str, RGBA<uint8_t> colour)
 {
 	BlendText(pos + Vec2(-1, -1), str, 0x000000_rgb .WithAlpha(0x78));
 	BlendText(pos + Vec2(-1, +1), str, 0x000000_rgb .WithAlpha(0x78));
@@ -334,13 +334,13 @@ void RasterDrawMethods<Derived>::Clear()
 }
 
 template<typename Derived>
-int RasterDrawMethods<Derived>::CharWidth(String::value_type ch)
+int RasterDrawMethods<Derived>::CharWidth(PTString::value_type ch)
 {
 	return FontReader(ch).GetWidth();
 }
 
 template<typename Derived>
-Vec2<int> RasterDrawMethods<Derived>::TextSize(String const &str)
+Vec2<int> RasterDrawMethods<Derived>::TextSize(PTString const &str)
 {
 	Vec2<int> size = Vec2(0, FONT_H - 2);
 	int curX = 0; // characters have 1px of spacing between them
@@ -376,7 +376,7 @@ Vec2<int> RasterDrawMethods<Derived>::TextSize(String const &str)
 }
 
 template<typename Derived>
-String::const_iterator RasterDrawMethods<Derived>::TextFit(String const &str, int width)
+PTString::const_iterator RasterDrawMethods<Derived>::TextFit(PTString const &str, int width)
 {
 	int curX = 0;
 	for (size_t i = 0; i < str.length(); i++)

@@ -3,7 +3,7 @@
 #include <memory>
 #include <vector>
 #include "common/Plane.h"
-#include "common/String.h"
+#include "common/PTString.h"
 #include "gui/interface/Point.h"
 #include "Icons.h"
 #include "Pixel.h"

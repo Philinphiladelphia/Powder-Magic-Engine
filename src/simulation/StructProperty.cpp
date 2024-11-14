@@ -24,22 +24,22 @@ bool StructProperty::operator ==(const StructProperty &other) const
 	       Offset == other.Offset;
 }
 
-String StructProperty::ToString(const PropertyValue &value) const
+PTString StructProperty::ToString(const PropertyValue &value) const
 {
-	::String str;
+	::PTString str;
 	switch (Type)
 	{
 	case StructProperty::Float:
-		str = String::Build(std::get<float>(value));
+		str = PTString::Build(std::get<float>(value));
 		break;
 
 	case StructProperty::ParticleType:
 	case StructProperty::Integer:
-		str = String::Build(std::get<int>(value));
+		str = PTString::Build(std::get<int>(value));
 		break;
 
 	case StructProperty::UInteger:
-		str = String::Build(std::get<unsigned int>(value));
+		str = PTString::Build(std::get<unsigned int>(value));
 		break;
 
 	default:

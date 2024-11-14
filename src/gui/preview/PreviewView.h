@@ -2,7 +2,7 @@
 #include <memory>
 #include <set>
 #include <vector>
-#include "common/String.h"
+#include "common/PTString.h"
 #include "gui/interface/Window.h"
 #include "simulation/MissingElements.h"
 
@@ -56,7 +56,7 @@ class PreviewView: public ui::Window
 	bool userIsAuthor;
 	bool doOpen;
 	bool doError;
-	String doErrorMessage;
+	PTString doErrorMessage;
 	bool showAvatars;
 	bool prevPage;
 	bool isSubmittingComment = false;
@@ -69,13 +69,13 @@ class PreviewView: public ui::Window
 	float commentBoxSizeY;
 	bool commentHelpText;
 
-	std::set<String> swearWords;
+	std::set<PTString> swearWords;
 
 	void displayComments();
 	void commentBoxAutoHeight();
 	void submitComment();
 	void CheckCommentSubmitEnabled();
-	bool CheckSwearing(String text);
+	bool CheckSwearing(PTString text);
 	void CheckComment();
 	void ShowMissingCustomElements();
 	void ShowLoadError();
@@ -91,7 +91,7 @@ public:
 	void NotifyCommentsChanged(PreviewModel * sender);
 	void NotifyCommentsPageChanged(PreviewModel * sender);
 	void NotifyCommentBoxEnabledChanged(PreviewModel * sender);
-	void SaveLoadingError(String errorMessage);
+	void SaveLoadingError(PTString errorMessage);
 	void OnDraw() override;
 	void DoDraw() override;
 	void OnTick(float dt) override;

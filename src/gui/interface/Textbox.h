@@ -18,20 +18,20 @@ struct TextboxDefocusAction
 class Textbox : public Label
 {
 	void AfterTextChange(bool changed);
-	void InsertText(String text);
+	void InsertText(PTString text);
 	void StartTextEditing();
 	void StopTextEditing();
 
 public:
 	bool ReadOnly;
 	enum ValidInput { All, Multiline, Numeric, Number }; // Numeric doesn't delete trailing 0's
-	Textbox(Point position, Point size, String textboxText = String(), String textboxPlaceholder = String());
+	Textbox(Point position, Point size, PTString textboxText = PTString(), PTString textboxPlaceholder = PTString());
 	virtual ~Textbox() = default;
 
-	void SetText(String text) override;
-	String GetText() override;
+	void SetText(PTString text) override;
+	PTString GetText() override;
 
-	virtual void SetPlaceholder(String text);
+	virtual void SetPlaceholder(PTString text);
 
 	void SetBorder(bool border) { this->border = border; }
 	void SetHidden(bool hidden);
@@ -49,7 +49,7 @@ public:
 	void TabFocus();
 	//Determines if the given character is valid given the input type
 	bool CharacterValid(int character);
-	bool StringValid(String text);
+	bool StringValid(PTString text);
 
 	void Tick(float dt) override;
 	void OnContextMenuAction(int item) override;
@@ -59,8 +59,8 @@ public:
 	void OnKeyPress(int key, int scan, bool repeat, bool shift, bool ctrl, bool alt) override;
 	void OnVKeyPress(int key, int scan, bool repeat, bool shift, bool ctrl, bool alt);
 	void OnKeyRelease(int key, int scan, bool repeat, bool shift, bool ctrl, bool alt) override;
-	void OnTextInput(String text) override;
-	void OnTextEditing(String text) override;
+	void OnTextInput(PTString text) override;
+	void OnTextEditing(PTString text) override;
 	void OnDefocus() override;
 	void Draw(const Point& screenPos) override;
 
@@ -75,19 +75,19 @@ protected:
 	int cursor, cursorPositionX, cursorPositionY;
 	TextboxAction actionCallback;
 	TextboxDefocusAction defocusCallback;
-	String backingText;
-	String placeHolder;
+	PTString backingText;
+	PTString placeHolder;
 
 	// * Cursor state to reset to before inserting actual input in StopTextEditing.
 	int selectionIndexLSave1;
 	int selectionIndexHSave1;
-	String backingTextSave1;
+	PTString backingTextSave1;
 	int cursorSave1;
 
 	// * Cursor state to reset to before inserting a candidate string in OnTextEditing.
 	int selectionIndexLSave2;
 	int selectionIndexHSave2;
-	String backingTextSave2;
+	PTString backingTextSave2;
 	int cursorSave2;
 
 	Point inputRectPosition;

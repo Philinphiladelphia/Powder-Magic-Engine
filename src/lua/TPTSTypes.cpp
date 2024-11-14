@@ -35,16 +35,16 @@ AnyType::operator StringType()
 {
 	if(type == TypeNumber)
 	{
-		return StringType(String::Build(((NumberType *)this)->Value()));
+		return StringType(PTString::Build(((NumberType *)this)->Value()));
 	}
-	else if(type == TypeString && std::holds_alternative<String>(value))
+	else if(type == TypeString && std::holds_alternative<PTString>(value))
 	{
-		return StringType(std::get<String>(value));
+		return StringType(std::get<PTString>(value));
 	}
 	else if (type == TypePoint && std::holds_alternative<ui::Point>(value))
 	{
 		ui::Point thisPoint = std::get<ui::Point>(value);
-		return StringType(String::Build(thisPoint.X, ",", thisPoint.Y));
+		return StringType(PTString::Build(thisPoint.X, ",", thisPoint.Y));
 	}
 	else
 		throw InvalidConversionException(type, TypeString);
@@ -60,9 +60,9 @@ AnyType::operator PointType()
 	else if(type == TypeString)
 	{
 		int x, y;
-		if(String::Split comma = std::get<String>(value).SplitNumber(x))
+		if(PTString::Split comma = std::get<PTString>(value).SplitNumber(x))
 			if(comma.After().BeginsWith(","))
-				if(String::Split end = comma.After().Substr(1).SplitNumber(y))
+				if(PTString::Split end = comma.After().Substr(1).SplitNumber(y))
 					if(!end.After().size())
 						return PointType(x, y);
 		throw InvalidConversionException(type, TypePoint);
@@ -95,16 +95,16 @@ float FloatType::Value()
 	return std::get<float>(value);
 }
 
-//String type
+//PTString type
 
-StringType::StringType(String string):	AnyType(TypeString, ValueValue())
+StringType::StringType(PTString string):	AnyType(TypeString, ValueValue())
 {
 	value = string;
 }
 
-String StringType::Value()
+PTString StringType::Value()
 {
-	return std::get<String>(value);
+	return std::get<PTString>(value);
 }
 
 //Point type

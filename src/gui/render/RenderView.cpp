@@ -26,7 +26,7 @@ RenderView::RenderView():
 	toolTipPresence(0),
 	isToolTipFadingIn(false)
 {
-	auto addPresetButton = [this](int index, Icon icon, ui::Point offset, String tooltip) {
+	auto addPresetButton = [this](int index, Icon icon, ui::Point offset, PTString tooltip) {
 		auto *presetButton = new ui::Button(ui::Point(XRES, YRES) + offset, ui::Point(30, 13), "", tooltip);
 		presetButton->SetIcon(icon);
 		presetButton->SetActionCallback({ [this, index] { c->LoadRenderPreset(index); } });
@@ -44,7 +44,7 @@ RenderView::RenderView():
 	addPresetButton( 0, IconAltAir    , ui::Point(-193, 24), "Alternative Velocity display mode preset");
 	addPresetButton(10, IconLife      , ui::Point(-232,  6), "Life display mode preset");
 
-	auto addRenderModeCheckbox = [this](unsigned int mode, Icon icon, ui::Point offset, String tooltip) {
+	auto addRenderModeCheckbox = [this](unsigned int mode, Icon icon, ui::Point offset, PTString tooltip) {
 		auto *renderModeCheckbox = new ModeCheckbox(ui::Point(0, YRES) + offset, ui::Point(30, 16), "", tooltip);
 		renderModes.push_back(renderModeCheckbox);
 		renderModeCheckbox->mode = mode;
@@ -63,7 +63,7 @@ RenderView::RenderView():
 	addRenderModeCheckbox(RENDER_BASC, IconBasic , ui::Point(65, 22), "Basic rendering, without this, most things will be invisible");
 	addRenderModeCheckbox(RENDER_SPRK, IconEffect, ui::Point(97,  4), "Glow effect on sparks");
 
-	auto addDisplayModeCheckbox = [this](unsigned int mode, Icon icon, ui::Point offset, String tooltip) {
+	auto addDisplayModeCheckbox = [this](unsigned int mode, Icon icon, ui::Point offset, PTString tooltip) {
 		auto *displayModeCheckbox = new ModeCheckbox(ui::Point(0, YRES) + offset, ui::Point(30, 16), "", tooltip);
 		displayModes.push_back(displayModeCheckbox);
 		displayModeCheckbox->mode = mode;
@@ -98,7 +98,7 @@ RenderView::RenderView():
 	addDisplayModeCheckbox(DISPLAY_PERS, IconPersistant, ui::Point(237,  4), "Element paths persist on the screen for a while");
 	line3 = 270;
 
-	auto addColourModeCheckbox = [this](unsigned int mode, Icon icon, ui::Point offset, String tooltip) {
+	auto addColourModeCheckbox = [this](unsigned int mode, Icon icon, ui::Point offset, PTString tooltip) {
 		auto *colourModeCheckbox = new ModeCheckbox(ui::Point(0, YRES) + offset, ui::Point(30, 16), "", tooltip);
 		colourModes.push_back(colourModeCheckbox);
 		colourModeCheckbox->mode = mode;
@@ -244,7 +244,7 @@ void RenderView::OnKeyPress(int key, int scan, bool repeat, bool shift, bool ctr
 	}
 }
 
-void RenderView::ToolTip(ui::Point senderPosition, String toolTip)
+void RenderView::ToolTip(ui::Point senderPosition, PTString toolTip)
 {
 	this->toolTip = toolTip;
 	this->isToolTipFadingIn = true;

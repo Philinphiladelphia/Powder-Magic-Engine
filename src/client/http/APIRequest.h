@@ -1,6 +1,6 @@
 #pragma once
 #include "Request.h"
-#include "common/String.h"
+#include "common/PTString.h"
 #include <json/json.h>
 
 namespace http

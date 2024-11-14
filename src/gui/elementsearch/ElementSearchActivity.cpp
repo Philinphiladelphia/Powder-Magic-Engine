@@ -59,7 +59,7 @@ ElementSearchActivity::ElementSearchActivity(GameController * gameController, st
 	searchTools("");
 }
 
-void ElementSearchActivity::searchTools(String query)
+void ElementSearchActivity::searchTools(PTString query)
 {
 	firstResult = NULL;
 	for (auto &toolButton : toolButtons) {
@@ -71,7 +71,7 @@ void ElementSearchActivity::searchTools(String query)
 	ui::Point viewPosition = { 1, 1 };
 	ui::Point current = ui::Point(0, 0);
 
-	String queryLower = query.ToLower();
+	PTString queryLower = query.ToLower();
 
 	struct Match
 	{
@@ -105,7 +105,7 @@ void ElementSearchActivity::searchTools(String query)
 		}
 	};
 
-	auto pushIfMatches = [ &queryLower, &push ](String infoLower, int toolIndex, int favouritePriority, int haystackRelevance) {
+	auto pushIfMatches = [ &queryLower, &push ](PTString infoLower, int toolIndex, int favouritePriority, int haystackRelevance) {
 		if (infoLower == queryLower)
 		{
 			push(Match{ favouritePriority, toolIndex, haystackRelevance, 0 });
@@ -120,7 +120,7 @@ void ElementSearchActivity::searchTools(String query)
 		}
 	};
 
-	std::map<Tool *, String> menudescriptionLower;
+	std::map<Tool *, PTString> menudescriptionLower;
 	for (auto *menu : gameController->GetMenuList())
 	{
 		for (auto *tool : menu->GetToolList())
@@ -299,7 +299,7 @@ void ElementSearchActivity::OnKeyRelease(int key, int scan, bool repeat, bool sh
 	}
 }
 
-void ElementSearchActivity::ToolTip(ui::Point senderPosition, String toolTip)
+void ElementSearchActivity::ToolTip(ui::Point senderPosition, PTString toolTip)
 {
 	this->toolTip = toolTip;
 	this->isToolTipFadingIn = true;

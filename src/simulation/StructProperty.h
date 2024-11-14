@@ -1,5 +1,5 @@
 #pragma once
-#include "common/String.h"
+#include "common/PTString.h"
 #include <cstdint>
 #include <variant>
 
@@ -20,7 +20,7 @@ struct StructProperty
 		UInteger,
 		Float,
 		BString,
-		String,
+		PTString,
 		UChar,
 		Removed
 	};
@@ -32,7 +32,7 @@ struct StructProperty
 	StructProperty(ByteString name, PropertyType type, intptr_t offset);
 
 	bool operator ==(const StructProperty &other) const;
-	::String ToString(const PropertyValue &value) const;
+	::PTString ToString(const PropertyValue &value) const;
 };
 
 struct StructPropertyAlias

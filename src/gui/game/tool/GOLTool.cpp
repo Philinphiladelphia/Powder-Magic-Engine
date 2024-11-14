@@ -104,8 +104,8 @@ GOLWindow::GOLWindow(GameModel &gameModel_, int toolSelection, int rule, RGB<uin
 	else
 	{
 		auto &prefs = GlobalPrefs::Ref();
-		ruleField->SetText(prefs.Get("CustomGOL.Rule", String("B3/S23")));
-		nameField->SetText(prefs.Get("CustomGOL.Name", String("CGOL")));
+		ruleField->SetText(prefs.Get("CustomGOL.Rule", PTString("B3/S23")));
+		nameField->SetText(prefs.Get("CustomGOL.Name", PTString("CGOL")));
 		highColour.Red = interfaceRng.between(0x80, 0xFF);
 		highColour.Green = interfaceRng.between(0x80, 0xFF);
 		highColour.Blue = interfaceRng.between(0x80, 0xFF);

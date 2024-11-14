@@ -8,13 +8,13 @@ namespace ui
 	{
 		int progress;
 		float intermediatePos;
-		String progressStatus;
+		PTString progressStatus;
 	public:
-	ProgressBar(Point position, Point size, int startProgress = 0, String startStatus = String());
+	ProgressBar(Point position, Point size, int startProgress = 0, PTString startStatus = PTString());
 		void SetProgress(int progress);
 		int GetProgress();
-		void SetStatus(String status);
-		String GetStatus();
+		void SetStatus(PTString status);
+		PTString GetStatus();
 		void Draw(const Point & screenPos) override;
 		void Tick(float dt) override;
 	};

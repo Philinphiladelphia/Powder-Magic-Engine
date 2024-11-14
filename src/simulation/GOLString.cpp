@@ -1,6 +1,6 @@
 #include "GOLString.h"
 
-int ParseGOLString(const String &value)
+int ParseGOLString(const PTString &value)
 {
 	// * Most likely a GOL string.
 	auto it = value.begin() + 1;
@@ -45,7 +45,7 @@ int ParseGOLString(const String &value)
 		{
 			return -1;
 		}
-		states = String(it, value.end()).ToNumber<unsigned int>(true);
+		states = PTString(it, value.end()).ToNumber<unsigned int>(true);
 		if (states < 2 || states > 17)
 		{
 			return -1;
@@ -55,7 +55,7 @@ int ParseGOLString(const String &value)
 	return stay | (begin << 8) | ((states - 2) << 17);
 }
 
-bool ValidateGOLName(const String &value)
+bool ValidateGOLName(const PTString &value)
 {
 	bool nameOk = true;
 	for (auto ch : value)
@@ -68,7 +68,7 @@ bool ValidateGOLName(const String &value)
 	return nameOk;
 }
 
-String SerialiseGOLRule(int rule)
+PTString SerialiseGOLRule(int rule)
 {
 	StringBuilder golName;
 	golName << "B";

@@ -1,7 +1,7 @@
 #include "graphics/Graphics.h"
 #include "graphics/VideoBuffer.h"
 #include "graphics/Renderer.h"
-#include "common/String.h"
+#include "common/PTString.h"
 #include "common/tpt-rand.h"
 #include "Format.h"
 #include "gui/interface/Engine.h"

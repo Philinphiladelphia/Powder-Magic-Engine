@@ -4,7 +4,7 @@
 #include "Favorite.h"
 #include <SDL.h>
 
-ToolButton::ToolButton(ui::Point position, ui::Point size, String text, ByteString toolIdentifier, String toolTip):
+ToolButton::ToolButton(ui::Point position, ui::Point size, PTString text, ByteString toolIdentifier, PTString toolTip):
 	ui::Button(position, size, text, toolTip),
 	toolIdentifier(toolIdentifier)
 {

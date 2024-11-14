@@ -11,11 +11,11 @@
 
 using namespace ui;
 
-Textbox::Textbox(Point position, Point size, String textboxText, String textboxPlaceholder):
+Textbox::Textbox(Point position, Point size, PTString textboxText, PTString textboxPlaceholder):
 	Label(position, size, ""),
 	ReadOnly(false),
 	inputType(All),
-	limit(String::npos),
+	limit(PTString::npos),
 	keyDown(0),
 	characterDown(0),
 	mouseDown(false),
@@ -48,12 +48,12 @@ void Textbox::SetHidden(bool hidden)
 	masked = hidden;
 }
 
-void Textbox::SetPlaceholder(String text)
+void Textbox::SetPlaceholder(PTString text)
 {
 	placeHolder = text;
 }
 
-void Textbox::SetText(String newText)
+void Textbox::SetText(PTString newText)
 {
 	StopTextEditing();
 
@@ -61,7 +61,7 @@ void Textbox::SetText(String newText)
 
 	if(masked)
 	{
-		String maskedText = newText;
+		PTString maskedText = newText;
 		std::fill(maskedText.begin(), maskedText.end(), 0xE00D);
 		Label::SetText(maskedText);
 	}
@@ -93,7 +93,7 @@ size_t Textbox::GetLimit()
 	return limit;
 }
 
-String Textbox::GetText()
+PTString Textbox::GetText()
 {
 	return backingText;
 }
@@ -142,7 +142,7 @@ void Textbox::cutSelection()
 	{
 		if (getLowerSelectionBound() < 0 || getHigherSelectionBound() > (int)backingText.length())
 			return;
-		String toCopy = backingText.Between(getLowerSelectionBound(), getHigherSelectionBound());
+		PTString toCopy = backingText.Between(getLowerSelectionBound(), getHigherSelectionBound());
 		ClipboardPush(format::CleanString(toCopy, false, true, false).ToUtf8());
 		backingText.erase(backingText.begin()+getLowerSelectionBound(), backingText.begin()+getHigherSelectionBound());
 		cursor = getLowerSelectionBound();
@@ -159,7 +159,7 @@ void Textbox::cutSelection()
 
 	if(masked)
 	{
-		String maskedText = backingText;
+		PTString maskedText = backingText;
 		std::fill(maskedText.begin(), maskedText.end(), 0xE00D);
 		Label::SetText(maskedText);
 	}
@@ -181,7 +181,7 @@ void Textbox::pasteIntoSelection()
 {
 	StopTextEditing();
 
-	String newText = format::CleanString(ClipboardPull().FromUtf8(), false, true, inputType != Multiline, inputType == Number || inputType == Numeric);
+	PTString newText = format::CleanString(ClipboardPull().FromUtf8(), false, true, inputType != Multiline, inputType == Number || inputType == Numeric);
 	if (HasSelection())
 	{
 		if (getLowerSelectionBound() < 0 || getHigherSelectionBound() > (int)backingText.length())
@@ -190,7 +190,7 @@ void Textbox::pasteIntoSelection()
 		cursor = getLowerSelectionBound();
 	}
 
-	if (limit != String::npos)
+	if (limit != PTString::npos)
 	{
 		newText = newText.Substr(0, limit-backingText.length());
 	}
@@ -201,7 +201,7 @@ void Textbox::pasteIntoSelection()
 
 	if(masked)
 	{
-		String maskedText = backingText;
+		PTString maskedText = backingText;
 		std::fill(maskedText.begin(), maskedText.end(), 0xE00D);
 		Label::SetText(maskedText);
 	}
@@ -239,9 +239,9 @@ bool Textbox::CharacterValid(int character)
 }
 
 // TODO: proper unicode validation
-bool Textbox::StringValid(String text)
+bool Textbox::StringValid(PTString text)
 {
-	for (String::value_type c : text)
+	for (PTString::value_type c : text)
 		if (!CharacterValid(c))
 			return false;
 	return true;
@@ -450,7 +450,7 @@ void Textbox::AfterTextChange(bool changed)
 
 		if (masked)
 		{
-			String maskedText = backingText;
+			PTString maskedText = backingText;
 			std::fill(maskedText.begin(), maskedText.end(), 0xE00D);
 			Label::SetText(maskedText);
 		}
@@ -469,13 +469,13 @@ void Textbox::AfterTextChange(bool changed)
 		actionCallback.change();
 }
 
-void Textbox::OnTextInput(String text)
+void Textbox::OnTextInput(PTString text)
 {
 	StopTextEditing();
 	InsertText(text);
 }
 
-void Textbox::InsertText(String text)
+void Textbox::InsertText(PTString text)
 {
 	if (StringValid(text) && !ReadOnly)
 	{
@@ -487,7 +487,7 @@ void Textbox::InsertText(String text)
 			cursor = getLowerSelectionBound();
 		}
 
-		if (limit==String::npos || backingText.length() < limit)
+		if (limit==PTString::npos || backingText.length() < limit)
 		{
 			if (cursor == (int)backingText.length())
 			{
@@ -515,7 +515,7 @@ void Textbox::StartTextEditing()
 	selectionIndexHSave1 = selectionIndexH.clear_index;
 	backingTextSave1 = backingText;
 	cursorSave1 = cursor;
-	InsertText(String(""));
+	InsertText(PTString(""));
 	selectionIndexLSave2 = selectionIndexL.clear_index;
 	selectionIndexHSave2 = selectionIndexH.clear_index;
 	backingTextSave2 = backingText;
@@ -541,7 +541,7 @@ void Textbox::StopTextEditing()
 	updateSelection();
 }
 
-void Textbox::OnTextEditing(String text)
+void Textbox::OnTextEditing(PTString text)
 {
 	if (!StringValid(text) || ReadOnly)
 	{

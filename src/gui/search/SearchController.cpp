@@ -99,7 +99,7 @@ SearchController::~SearchController()
 	}
 }
 
-void SearchController::DoSearch(String query, bool now)
+void SearchController::DoSearch(PTString query, bool now)
 {
 	nextQuery = query;
 	if (!now)
@@ -113,7 +113,7 @@ void SearchController::DoSearch(String query, bool now)
 	}
 }
 
-void SearchController::DoSearch2(String query)
+void SearchController::DoSearch2(PTString query)
 {
 	// calls SearchView function to set textbox text, then calls DoSearch
 	searchView->Search(query);
@@ -277,7 +277,7 @@ void SearchController::removeSelectedC()
 		{
 			for (size_t i = 0; i < saves.size(); i++)
 			{
-				notifyStatus(String::Build("Deleting save [", saves[i], "] ..."));
+				notifyStatus(PTString::Build("Deleting save [", saves[i], "] ..."));
 				auto deleteSaveRequest = std::make_unique<http::DeleteSaveRequest>(saves[i]);
 				deleteSaveRequest->Start();
 				deleteSaveRequest->Wait();
@@ -287,7 +287,7 @@ void SearchController::removeSelectedC()
 				}
 				catch (const http::RequestError &ex)
 				{
-					notifyError(String::Build("Failed to delete [", saves[i], "]: ", ByteString(ex.what()).FromAscii()));
+					notifyError(PTString::Build("Failed to delete [", saves[i], "]: ", ByteString(ex.what()).FromAscii()));
 					c->Refresh();
 					return false;
 				}
@@ -307,11 +307,11 @@ void SearchController::removeSelectedC()
 void SearchController::UnpublishSelected(bool publish)
 {
 	StringBuilder desc;
-	desc << "Are you sure you want to " << (publish ? String("publish ") : String("unpublish ")) << searchModel->GetSelected().size() << " save";
+	desc << "Are you sure you want to " << (publish ? PTString("publish ") : PTString("unpublish ")) << searchModel->GetSelected().size() << " save";
 	if (searchModel->GetSelected().size() > 1)
 		desc << "s";
 	desc << "?";
-	new ConfirmPrompt(publish ? String("Publish Saves") : String("Unpublish Saves"), desc.Build(), { [this, publish] {
+	new ConfirmPrompt(publish ? PTString("Publish Saves") : PTString("Unpublish Saves"), desc.Build(), { [this, publish] {
 		unpublishSelectedC(publish);
 	} });
 }
@@ -328,7 +328,7 @@ void SearchController::unpublishSelectedC(bool publish)
 
 		void PublishSave(int saveID)
 		{
-			notifyStatus(String::Build("Publishing save [", saveID, "]"));
+			notifyStatus(PTString::Build("Publishing save [", saveID, "]"));
 			auto publishSaveRequest = std::make_unique<http::PublishSaveRequest>(saveID);
 			publishSaveRequest->Start();
 			publishSaveRequest->Wait();
@@ -337,7 +337,7 @@ void SearchController::unpublishSelectedC(bool publish)
 
 		void UnpublishSave(int saveID)
 		{
-			notifyStatus(String::Build("Unpublishing save [", saveID, "]"));
+			notifyStatus(PTString::Build("Unpublishing save [", saveID, "]"));
 			auto unpublishSaveRequest = std::make_unique<http::UnpublishSaveRequest>(saveID);
 			unpublishSaveRequest->Start();
 			unpublishSaveRequest->Wait();
@@ -363,11 +363,11 @@ void SearchController::unpublishSelectedC(bool publish)
 				{
 					if (publish) // uses html page so error message will be spam
 					{
-						notifyError(String::Build("Failed to publish [", saves[i], "], is this save yours?"));
+						notifyError(PTString::Build("Failed to publish [", saves[i], "], is this save yours?"));
 					}
 					else
 					{
-						notifyError(String::Build("Failed to unpublish [", saves[i], "]: ", ByteString(ex.what()).FromAscii()));
+						notifyError(PTString::Build("Failed to unpublish [", saves[i], "]: ", ByteString(ex.what()).FromAscii()));
 					}
 					c->Refresh();
 					return false;
@@ -380,7 +380,7 @@ void SearchController::unpublishSelectedC(bool publish)
 	};
 
 	std::vector<int> selected = searchModel->GetSelected();
-	new TaskWindow(publish ? String("Publishing Saves") : String("Unpublishing Saves"), new UnpublishSavesTask(selected, this, publish));
+	new TaskWindow(publish ? PTString("Publishing Saves") : PTString("Unpublishing Saves"), new UnpublishSavesTask(selected, this, publish));
 }
 
 void SearchController::FavouriteSelected()
@@ -394,7 +394,7 @@ void SearchController::FavouriteSelected()
 		{
 			for (size_t i = 0; i < saves.size(); i++)
 			{
-				notifyStatus(String::Build("Favouring save [", saves[i], "]"));
+				notifyStatus(PTString::Build("Favouring save [", saves[i], "]"));
 				auto favouriteSaveRequest = std::make_unique<http::FavouriteSaveRequest>(saves[i], true);
 				favouriteSaveRequest->Start();
 				favouriteSaveRequest->Wait();
@@ -404,7 +404,7 @@ void SearchController::FavouriteSelected()
 				}
 				catch (const http::RequestError &ex)
 				{
-					notifyError(String::Build("Failed to favourite [", saves[i], "]: ", ByteString(ex.what()).FromAscii()));
+					notifyError(PTString::Build("Failed to favourite [", saves[i], "]: ", ByteString(ex.what()).FromAscii()));
 					return false;
 				}
 				notifyProgress((i + 1) * 100 / saves.size());
@@ -422,7 +422,7 @@ void SearchController::FavouriteSelected()
 		{
 			for (size_t i = 0; i < saves.size(); i++)
 			{
-				notifyStatus(String::Build("Unfavouring save [", saves[i], "]"));
+				notifyStatus(PTString::Build("Unfavouring save [", saves[i], "]"));
 				auto unfavouriteSaveRequest = std::make_unique<http::FavouriteSaveRequest>(saves[i], false);
 				unfavouriteSaveRequest->Start();
 				unfavouriteSaveRequest->Wait();
@@ -432,7 +432,7 @@ void SearchController::FavouriteSelected()
 				}
 				catch (const http::RequestError &ex)
 				{
-					notifyError(String::Build("Failed to unfavourite [", saves[i], "]: ", ByteString(ex.what()).FromAscii()));
+					notifyError(PTString::Build("Failed to unfavourite [", saves[i], "]: ", ByteString(ex.what()).FromAscii()));
 					return false;
 				}
 				notifyProgress((i + 1) * 100 / saves.size());

@@ -3,7 +3,7 @@
 #include <functional>
 #include <ios>
 
-#include "common/String.h"
+#include "common/PTString.h"
 
 /*
 	The following formatting specifiers can be written into a
@@ -81,7 +81,7 @@ namespace Format
 	};
 	template<> struct FillOverride<void>
 	{
-		String::value_type fill;
+		PTString::value_type fill;
 		inline FillOverride(size_t _fill): fill(_fill) {}
 	};
 
@@ -134,10 +134,10 @@ namespace Format
 	inline FlagsOverride<void, std::ios_base::scientific, std::ios_base::floatfield> Scientific() { return FlagsOverride<void, std::ios_base::scientific, std::ios_base::floatfield>(); }
 	inline FlagsOverride<void, EmptyFmtFlags, std::ios_base::floatfield> FloatDefault() { return FlagsOverride<void, EmptyFmtFlags, std::ios_base::floatfield>(); }
 
-	template<typename T> inline FillOverride<T> Fill(T value, String::value_type fill) { return FillOverride<T>(value, fill); }
+	template<typename T> inline FillOverride<T> Fill(T value, PTString::value_type fill) { return FillOverride<T>(value, fill); }
 	template<typename T> inline WidthOverride<T> Width(T value, size_t width) { return WidthOverride<T>(value, width); }
 	template<typename T> inline PrecisionOverride<T> Precision(T value, size_t precision) { return PrecisionOverride<T>(value, precision); }
-	inline FillOverride<void> Fill(String::value_type fill) { return FillOverride<void>(fill); }
+	inline FillOverride<void> Fill(PTString::value_type fill) { return FillOverride<void>(fill); }
 	inline WidthOverride<void> Width(size_t width) { return WidthOverride<void>(width); }
 	inline PrecisionOverride<void> Precision(size_t precision) { return PrecisionOverride<void>(precision); }
 };
@@ -172,7 +172,7 @@ inline ByteStringBuilder &operator<<(ByteStringBuilder &b, Format::FillOverride<
 
 template<typename T> inline ByteStringBuilder &operator<<(ByteStringBuilder &b, Format::WidthOverride<T> data)
 {
-	String::value_type oldfill = b.fill;
+	PTString::value_type oldfill = b.fill;
 	if(oldfill == ' ')
 		b.fill = '0';
 	size_t oldwidth = b.width;
@@ -240,7 +240,7 @@ inline StringBuilder &operator<<(StringBuilder &b, Format::FillOverride<void> da
 
 template<typename T> inline StringBuilder &operator<<(StringBuilder &b, Format::WidthOverride<T> data)
 {
-	String::value_type oldfill = b.fill;
+	PTString::value_type oldfill = b.fill;
 	if(oldfill == ' ')
 		b.fill = '0';
 	size_t oldwidth = b.width;

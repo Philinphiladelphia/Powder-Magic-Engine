@@ -1,7 +1,7 @@
 #pragma once
 #include "Config.h"
 #include "SimulationConfig.h"
-#include "common/String.h"
+#include "common/PTString.h"
 
 inline ByteString VersionInfo()
 {

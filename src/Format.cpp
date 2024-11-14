@@ -48,7 +48,7 @@ ByteString format::UnixtimeToDateMini(time_t unixtime)
 	}
 }
 
-String format::CleanString(String dirtyString, bool ascii, bool color, bool newlines, bool numeric)
+PTString format::CleanString(PTString dirtyString, bool ascii, bool color, bool newlines, bool numeric)
 {
 	for (size_t i = 0; i < dirtyString.size(); i++)
 	{
@@ -355,7 +355,7 @@ void format::RenderTemperature(StringBuilder &sb, float temp, int scale)
 	}
 }
 
-float format::StringToTemperature(String str, int defaultScale)
+float format::StringToTemperature(PTString str, int defaultScale)
 {
 	auto scale = defaultScale;
 	if (str.size())

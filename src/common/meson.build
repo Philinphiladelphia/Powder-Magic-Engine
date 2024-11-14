@@ -1,5 +1,5 @@
 common_files += files(
-	'String.cpp',
+	'PTString.cpp',
 	'tpt-rand.cpp',
 )
 

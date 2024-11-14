@@ -212,7 +212,7 @@ void Renderer::DrawSigns()
 	{
 		if (currentSign.text.length())
 		{
-			String text = currentSign.getDisplayText(sim, x, y, w, h);
+			PTString text = currentSign.getDisplayText(sim, x, y, w, h);
 			DrawFilledRect(RectSized(Vec2{ x + 1, y + 1 }, Vec2{ w, h - 1 }), 0x000000_rgb);
 			DrawRect(RectSized(Vec2{ x, y }, Vec2{ w+1, h }), 0xC0C0C0_rgb);
 			BlendText({ x+3, y+4 }, text, 0xFFFFFF_rgb .WithAlpha(255));
@@ -519,7 +519,7 @@ void Renderer::render_parts()
 
 					if (mousePos.X>(nx-3) && mousePos.X<(nx+3) && mousePos.Y<(ny+3) && mousePos.Y>(ny-3)) //If mouse is in the head
 					{
-						String hp = String::Build(Format::Width(sim->parts[i].life, 3));
+						PTString hp = PTString::Build(Format::Width(sim->parts[i].life, 3));
 						BlendText(mousePos + Vec2{ -8-2*(sim->parts[i].life<100)-2*(sim->parts[i].life<10), -12 }, hp, 0xFFFFFF_rgb .WithAlpha(255));
 					}
 

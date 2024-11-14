@@ -18,7 +18,7 @@ class RenderView: public ui::Window {
 	std::vector<ModeCheckbox *> renderModes;
 	std::vector<ModeCheckbox *> displayModes;
 	std::vector<ModeCheckbox *> colourModes;
-	String toolTip;
+	PTString toolTip;
 	int toolTipPresence;
 	bool isToolTipFadingIn;
 	int line1, line2, line3, line4;
@@ -36,6 +36,6 @@ public:
 	void OnDraw() override;
 	void OnTick(float dt) override;
 	void OnKeyPress(int key, int scan, bool repeat, bool shift, bool ctrl, bool alt) override;
-	void ToolTip(ui::Point senderPosition, String toolTip) override;
+	void ToolTip(ui::Point senderPosition, PTString toolTip) override;
 	virtual ~RenderView();
 };

@@ -61,7 +61,7 @@ OptionsView::OptionsView() : ui::Window(ui::Point(-1, -1), ui::Point(320, 340))
 	AddComponent(scrollPanel);
 
 	int currentY = 8;
-	auto addLabel = [this, &currentY, &autoWidth](int indent, String text) {
+	auto addLabel = [this, &currentY, &autoWidth](int indent, PTString text) {
 		auto *label = new ui::Label(ui::Point(22 + indent * 15, currentY), ui::Point(1, 16), "");
 		autoWidth(label, 0);
 		label->Appearance.HorizontalAlign = ui::Appearance::AlignLeft;
@@ -72,7 +72,7 @@ OptionsView::OptionsView() : ui::Window(ui::Point(-1, -1), ui::Point(320, 340))
 		scrollPanel->AddChild(label);
 		currentY += label->Size.Y - 1;
 	};
-	auto addCheckbox = [this, &currentY, &autoWidth, &addLabel](int indent, String text, String info, std::function<void ()> action) {
+	auto addCheckbox = [this, &currentY, &autoWidth, &addLabel](int indent, PTString text, PTString info, std::function<void ()> action) {
 		auto *checkbox = new ui::Checkbox(ui::Point(8 + indent * 15, currentY), ui::Point(1, 16), text, "");
 		autoWidth(checkbox, 0);
 		checkbox->SetActionCallback({ action });
@@ -85,7 +85,7 @@ OptionsView::OptionsView() : ui::Window(ui::Point(-1, -1), ui::Point(320, 340))
 		scrollPanel->AddChild(checkbox);
 		return checkbox;
 	};
-	auto addDropDown = [this, &currentY, &autoWidth](String info, std::vector<std::pair<String, int>> options, std::function<void ()> action) {
+	auto addDropDown = [this, &currentY, &autoWidth](PTString info, std::vector<std::pair<PTString, int>> options, std::function<void ()> action) {
 		auto *dropDown = new ui::DropDown(ui::Point(Size.X - 95, currentY), ui::Point(80, 16));
 		scrollPanel->AddChild(dropDown);
 		for (auto &option : options)
@@ -183,14 +183,14 @@ OptionsView::OptionsView() : ui::Window(ui::Point(-1, -1), ui::Point(320, 340))
 				Separator * tempSeparator = new Separator(ui::Point(0, 22), ui::Point(Size.X, 1));
 				AddComponent(tempSeparator);
 
-				labelValues = new ui::Label(ui::Point(0, (radius * 5 / 2) + 37), ui::Point(Size.X, 16), String::Build(Format::Precision(1), "X:", x, " Y:", y, " Total:", std::hypot(x, y)));
+				labelValues = new ui::Label(ui::Point(0, (radius * 5 / 2) + 37), ui::Point(Size.X, 16), PTString::Build(Format::Precision(1), "X:", x, " Y:", y, " Total:", std::hypot(x, y)));
 				labelValues->Appearance.HorizontalAlign = ui::Appearance::AlignCentre;
 				labelValues->Appearance.VerticalAlign = ui::Appearance::AlignMiddle;
 				AddComponent(labelValues);
 
 				gravityDirection->SetValues(x, y);
 				gravityDirection->SetUpdateCallback([this](float x, float y) {
-					labelValues->SetText(String::Build(Format::Precision(1), "X:", x, " Y:", y, " Total:", std::hypot(x, y)));
+					labelValues->SetText(PTString::Build(Format::Precision(1), "X:", x, " Y:", y, " Total:", std::hypot(x, y)));
 				});
 				gravityDirection->SetSnapPoints(5, 5, 2);
 				AddComponent(gravityDirection);
@@ -240,7 +240,7 @@ OptionsView::OptionsView() : ui::Window(ui::Point(-1, -1), ui::Point(320, 340))
 	if (FORCE_WINDOW_FRAME_OPS != forceWindowFrameOpsHandheld)
 	{
 		addSeparator();
-		std::vector<std::pair<String, int>> options;
+		std::vector<std::pair<PTString, int>> options;
 		int currentScale = ui::Engine::Ref().GetScale();
 		int scaleIndex = 1;
 		bool currentScaleValid = false;
@@ -250,7 +250,7 @@ OptionsView::OptionsView() : ui::Window(ui::Point(-1, -1), ui::Point(320, 340))
 			{
 				currentScaleValid = true;
 			}
-			options.push_back({ String::Build(scaleIndex), scaleIndex });
+			options.push_back({ PTString::Build(scaleIndex), scaleIndex });
 			scaleIndex += 1;
 		}
 		while (desktopWidth >= GetGraphics()->Size().X * scaleIndex && desktopHeight >= GetGraphics()->Size().Y * scaleIndex);
@@ -351,7 +351,7 @@ OptionsView::OptionsView() : ui::Window(ui::Point(-1, -1), ui::Point(320, 340))
 			ByteString from = Platform::originalCwd;
 			ByteString to = Platform::sharedCwd;
 			new ConfirmPrompt("Do Migration?", "This will migrate all stamps, saves, and scripts from\n\bt" + from.FromUtf8() + "\bw\nto the shared data directory at\n\bt" + to.FromUtf8() + "\bw\n\n" + "Files that already exist will not be overwritten.", { [from, to]() {
-				String ret = Client::Ref().DoMigration(from, to);
+				PTString ret = Client::Ref().DoMigration(from, to);
 				new InformationMessage("Migration Complete", ret, false);
 			} });
 		} });
@@ -393,7 +393,7 @@ void OptionsView::AmbientAirTempToTextBox(float airTemp)
 	ambientAirTemp->SetText(sb.Build());
 }
 
-void OptionsView::UpdateAirTemp(String temp, bool isDefocus)
+void OptionsView::UpdateAirTemp(PTString temp, bool isDefocus)
 {
 	// Parse air temp and determine validity
 	float airTemp = 0;

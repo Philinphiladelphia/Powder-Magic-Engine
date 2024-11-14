@@ -100,7 +100,7 @@ void TickClient()
 	Client::Ref().Tick();
 }
 
-static void BlueScreen(String detailMessage, std::optional<std::vector<String>> stackTrace)
+static void BlueScreen(PTString detailMessage, std::optional<std::vector<PTString>> stackTrace)
 {
 	auto &engine = ui::Engine::Ref();
 	engine.g->BlendFilledRect(engine.g->Size().OriginRect(), 0x1172A9_rgb .WithAlpha(0xD2));
@@ -129,7 +129,7 @@ static void BlueScreen(String detailMessage, std::optional<std::vector<String>> 
 	{
 		crashInfo << "Stack trace not available\n";
 	}
-	String errorText = crashInfo.Build();
+	PTString errorText = crashInfo.Build();
 	constexpr auto width = 440;
 	ui::TextWrapper tw;
 	tw.Update(errorText, true, width);
@@ -242,12 +242,6 @@ struct ExplicitSingletons
 	std::unique_ptr<GameController> gameController;
 };
 static std::unique_ptr<ExplicitSingletons> explicitSingletons;
-
-int main(int argc, char *argv[])
-{
-	Platform::SetupCrt();
-	return Platform::InvokeMain(argc, argv);
-}
 
 int Main(int argc, char *argv[])
 {
@@ -522,7 +516,7 @@ int Main(int argc, char *argv[])
 	{
 		engine.g->Clear();
 		engine.g->DrawRect(RectSized(engine.g->Size() / 2 - Vec2(100, 25), Vec2(200, 50)), 0xB4B4B4_rgb);
-		String loadingText = "Loading save...";
+		PTString loadingText = "Loading save...";
 		engine.g->BlendText(engine.g->Size() / 2 - Vec2((Graphics::TextSize(loadingText).X - 1) / 2, 5), loadingText, style::Colour::InformationTitle);
 
 		blit(engine.g->Data());

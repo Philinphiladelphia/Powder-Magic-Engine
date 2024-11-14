@@ -1,5 +1,5 @@
 #pragma once
-#include "common/String.h"
+#include "common/PTString.h"
 #include "graphics/Pixel.h"
 #include "gui/WindowFrameOps.h"
 #include "FpsLimit.h"

@@ -166,6 +166,10 @@ if host_platform == 'linux'
 	font_files += files('WindowIcon.cpp')
 endif
 
+
+subdir('godot_interface')
+
+
 subdir('bson')
 subdir('bzip2')
 subdir('client')

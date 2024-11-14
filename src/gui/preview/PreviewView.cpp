@@ -69,7 +69,7 @@ PreviewView::PreviewView(std::unique_ptr<VideoBuffer> newSavePreview):
 	reportButton->Appearance.VerticalAlign = ui::Appearance::AlignMiddle;
 	reportButton->SetIcon(IconReport);
 	reportButton->SetActionCallback({ [this] {
-		new TextPrompt("Report Save", "Things to consider when reporting:\n\bw1)\bg When reporting stolen saves, please include the ID of the original save.\n\bw2)\bg Do not ask for saves to be removed from front page unless they break the rules.\n\bw3)\bg You may report saves for comments or tags too (including your own saves)", "", "[reason]", true, { [this](String const &resultText) {
+		new TextPrompt("Report Save", "Things to consider when reporting:\n\bw1)\bg When reporting stolen saves, please include the ID of the original save.\n\bw2)\bg Do not ask for saves to be removed from front page unless they break the rules.\n\bw3)\bg You may report saves for comments or tags too (including your own saves)", "", "[reason]", true, { [this](PTString const &resultText) {
 			if (reportSaveRequest)
 			{
 				return;
@@ -182,11 +182,11 @@ void PreviewView::AttachController(PreviewController * controller)
 	saveIDLabel->Appearance.HorizontalAlign = ui::Appearance::AlignCentre;
 	AddComponent(saveIDLabel);
 
-	textWidth = Graphics::TextSize(String::Build(c->SaveID())).X - 1;
+	textWidth = Graphics::TextSize(PTString::Build(c->SaveID())).X - 1;
 	saveIDLabel2 = new ui::Label(ui::Point((Size.X-textWidth-20)/2-37, Size.Y+22), ui::Point(40, 16), "Save ID:");
 	AddComponent(saveIDLabel2);
 
-	saveIDButton = new ui::CopyTextButton(ui::Point((Size.X-textWidth-10)/2, Size.Y+20), ui::Point(textWidth+10, 18), String::Build(c->SaveID()), saveIDLabel);
+	saveIDButton = new ui::CopyTextButton(ui::Point((Size.X-textWidth-10)/2, Size.Y+20), ui::Point(textWidth+10, 18), PTString::Build(c->SaveID()), saveIDLabel);
 	AddComponent(saveIDButton);
 }
 
@@ -232,9 +232,9 @@ void PreviewView::commentBoxAutoHeight()
 	}
 }
 
-bool PreviewView::CheckSwearing(String text)
+bool PreviewView::CheckSwearing(PTString text)
 {
-	for (std::set<String>::iterator iter = swearWords.begin(), end = swearWords.end(); iter != end; iter++)
+	for (std::set<PTString>::iterator iter = swearWords.begin(), end = swearWords.end(); iter != end; iter++)
 		if (text.Contains(*iter))
 			return true;
 	return false;
@@ -244,7 +244,7 @@ void PreviewView::CheckComment()
 {
 	if (!commentWarningLabel)
 		return;
-	String text = addCommentBox->GetText().ToLower();
+	PTString text = addCommentBox->GetText().ToLower();
 	if (addCommentRequest)
 	{
 		commentWarningLabel->SetText("Submitting comment...");
@@ -536,7 +536,7 @@ void PreviewView::NotifySaveChanged(PreviewModel * sender)
 		votesUp = save->votesUp;
 		votesDown = save->votesDown;
 		saveNameLabel->SetText(save->name);
-		String dateType;
+		PTString dateType;
 		if (save->updatedDate == save->createdDate)
 			dateType = "Created:";
 		else
@@ -554,7 +554,7 @@ void PreviewView::NotifySaveChanged(PreviewModel * sender)
 			userIsAuthor = true;
 		else
 			userIsAuthor = false;
-		viewsLabel->SetText(String::Build("\bgViews:\bw ", save->Views));
+		viewsLabel->SetText(PTString::Build("\bgViews:\bw ", save->Views));
 		saveDescriptionLabel->SetText(save->Description);
 		if(save->Favourite)
 		{
@@ -604,7 +604,7 @@ void PreviewView::submitComment()
 {
 	if (addCommentBox)
 	{
-		String comment = addCommentBox->GetText();
+		PTString comment = addCommentBox->GetText();
 		if (comment.length() == 0)
 		{
 			c->RefreshComments();
@@ -683,7 +683,7 @@ void PreviewView::NotifyCommentBoxEnabledChanged(PreviewModel * sender)
 	}
 }
 
-void PreviewView::SaveLoadingError(String errorMessage)
+void PreviewView::SaveLoadingError(PTString errorMessage)
 {
 	doError = true;
 	doErrorMessage = errorMessage;
@@ -692,7 +692,7 @@ void PreviewView::SaveLoadingError(String errorMessage)
 
 void PreviewView::NotifyCommentsPageChanged(PreviewModel * sender)
 {
-	pageInfo->SetText(String::Build("Page ", sender->GetCommentsPageNum(), " of ", sender->GetCommentsPageCount()));
+	pageInfo->SetText(PTString::Build("Page ", sender->GetCommentsPageNum(), " of ", sender->GetCommentsPageCount()));
 }
 
 void PreviewView::NotifyCommentsChanged(PreviewModel * sender)

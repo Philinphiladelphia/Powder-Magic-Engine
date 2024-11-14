@@ -62,7 +62,7 @@ void ContextMenu::OnMouseDown(int x, int y, unsigned button)
 		CloseActiveWindow();
 }
 
-void ContextMenu::SetItem(int id, String text)
+void ContextMenu::SetItem(int id, PTString text)
 {
 	for (size_t i = 0; i < items.size(); i++)
 	{

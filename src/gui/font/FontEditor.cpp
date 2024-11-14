@@ -115,7 +115,7 @@ void FontEditor::WriteDataFile(ByteString dataFile, std::vector<unsigned char> c
 	size_t pos = 0;
 	for (size_t i = 0; pos < fontPtrs.size() && fontRanges[i][1]; i++)
 	{
-		for (String::value_type ch = fontRanges[i][0]; ch <= fontRanges[i][1]; ch++)
+		for (PTString::value_type ch = fontRanges[i][0]; ch <= fontRanges[i][1]; ch++)
 		{
 			uncompressed.push_back((char)ch);
 			uncompressed.push_back((char)(ch >> 8));
@@ -141,8 +141,8 @@ void FontEditor::WriteDataFile(ByteString dataFile, std::vector<unsigned char> c
 }
 
 void FontEditor::UnpackData(
-		std::map<String::value_type, unsigned char> &fontWidths,
-		std::map<String::value_type, std::array<std::array<char, MAX_WIDTH>, FONT_H> > &fontPixels,
+		std::map<PTString::value_type, unsigned char> &fontWidths,
+		std::map<PTString::value_type, std::array<std::array<char, MAX_WIDTH>, FONT_H> > &fontPixels,
 		std::vector<unsigned char> const &fontData,
 		std::vector<unsigned int> const &fontPtrs,
 		std::vector<std::array<unsigned int, 2> > const &fontRanges)
@@ -151,7 +151,7 @@ void FontEditor::UnpackData(
 	fontPixels.clear();
 	size_t pos = 0;
 	for(size_t range = 0; fontRanges[range][1]; range++)
-		for(String::value_type ch = fontRanges[range][0]; ch <= fontRanges[range][1]; ch++)
+		for(PTString::value_type ch = fontRanges[range][0]; ch <= fontRanges[range][1]; ch++)
 		{
 			unsigned char const *pointer = &fontData[fontPtrs[pos]];
 			int width = fontWidths[ch] = *(pointer++);
@@ -174,8 +174,8 @@ void FontEditor::UnpackData(
 }
 
 void FontEditor::PackData(
-		std::map<String::value_type, unsigned char> const &fontWidths,
-		std::map<String::value_type, std::array<std::array<char, MAX_WIDTH>, FONT_H> > const &fontPixels,
+		std::map<PTString::value_type, unsigned char> const &fontWidths,
+		std::map<PTString::value_type, std::array<std::array<char, MAX_WIDTH>, FONT_H> > const &fontPixels,
 		std::vector<unsigned char> &fontData,
 		std::vector<unsigned int> &fontPtrs,
 		std::vector<std::array<unsigned int, 2> > &fontRanges)
@@ -184,11 +184,11 @@ void FontEditor::PackData(
 	fontPtrs.clear();
 	fontRanges.clear();
 	bool first = true;
-	String::value_type rangeStart = 0;
-	String::value_type prev = 0;
-	for(std::map<String::value_type, unsigned char>::const_iterator it = fontWidths.begin(); it != fontWidths.end(); it++)
+	PTString::value_type rangeStart = 0;
+	PTString::value_type prev = 0;
+	for(std::map<PTString::value_type, unsigned char>::const_iterator it = fontWidths.begin(); it != fontWidths.end(); it++)
 	{
-		String::value_type ch = it->first;
+		PTString::value_type ch = it->first;
 		if(first)
 		{
 			rangeStart = ch;
@@ -344,7 +344,7 @@ FontEditor::FontEditor(ByteString _dataFile):
 	int *refs[6] = {&fgR, &fgG, &fgB, &bgR, &bgG, &bgB};
 	for(int i = 0; i < 6; i++)
 	{
-		ui::Textbox *colorComponent = new ui::Textbox(ui::Point(currentX, baseline), ui::Point(27, 17), String::Build(*refs[i]));
+		ui::Textbox *colorComponent = new ui::Textbox(ui::Point(currentX, baseline), ui::Point(27, 17), PTString::Build(*refs[i]));
 		currentX += 28;
 		colorComponent->SetActionCallback({ [colorComponent, refs, i] {
 			*refs[i] = colorComponent->GetText().ToNumber<int>(true);
@@ -385,24 +385,24 @@ FontEditor::FontEditor(ByteString _dataFile):
 	inputPreview->Appearance.HorizontalAlign = ui::Appearance::AlignLeft;
 	inputPreview->Appearance.VerticalAlign = ui::Appearance::AlignTop;
 	auto textChangedCallback = [outputPreview, outputPanel, inputPreview, inputPanel] {
-		String str = inputPreview->GetText();
+		PTString str = inputPreview->GetText();
 		size_t at = 0;
 		StringBuilder text;
 		while(at < str.size())
 		{
 			unsigned int ch1, ch2;
 			if(str[at] != ' ')
-				if(String::Split split1 = str.SplitNumber(ch1, Format::Hex(), at))
+				if(PTString::Split split1 = str.SplitNumber(ch1, Format::Hex(), at))
 				{
 					if(str[split1.PositionAfter()] == ':')
-						if(String::Split split2 = str.SplitNumber(ch2, Format::Hex(), split1.PositionAfter() + 1))
+						if(PTString::Split split2 = str.SplitNumber(ch2, Format::Hex(), split1.PositionAfter() + 1))
 						{
 							for(unsigned int ch = ch1; ch <= ch2; ch++)
-								text << String::value_type(ch);
+								text << PTString::value_type(ch);
 							at = split2.PositionAfter();
 							continue;
 						}
-					text << String::value_type(ch1);
+					text << PTString::value_type(ch1);
 					at = split1.PositionAfter();
 				}
 				else
@@ -440,8 +440,8 @@ FontEditor::FontEditor(ByteString target, ByteString source):
 	ui::Window(ui::Point(0, 0), ui::Point(WINDOWW, WINDOWH))
 {
 	ReadDataFile(target);
-	std::map<String::value_type, unsigned char> tgtFontWidths, srcFontWidths;
-	std::map<String::value_type, std::array<std::array<char, MAX_WIDTH>, FONT_H> > tgtFontPixels, srcFontPixels;
+	std::map<PTString::value_type, unsigned char> tgtFontWidths, srcFontWidths;
+	std::map<PTString::value_type, std::array<std::array<char, MAX_WIDTH>, FONT_H> > tgtFontPixels, srcFontPixels;
 	UnpackData(tgtFontWidths, tgtFontPixels, fontData, fontPtrs, fontRanges);
 	ReadDataFile(source);
 	UnpackData(srcFontWidths, srcFontPixels, fontData, fontPtrs, fontRanges);
@@ -583,7 +583,7 @@ void FontEditor::OnKeyPress(int key, int scan, bool repeat, bool shift, bool ctr
 
 void FontEditor::UpdateCharNumber()
 {
-	currentCharTextbox->SetText(String::Build(Format::Hex((unsigned int)currentChar)));
+	currentCharTextbox->SetText(PTString::Build(Format::Hex((unsigned int)currentChar)));
 }
 
 void FontEditor::PrevChar()

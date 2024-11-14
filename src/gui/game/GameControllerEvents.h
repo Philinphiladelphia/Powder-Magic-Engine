@@ -1,5 +1,5 @@
 #pragma once
-#include "common/String.h"
+#include "common/PTString.h"
 #include <variant>
 #include <cstdint>
 
@@ -13,13 +13,13 @@ enum EventTraits : uint32_t
 struct TextInputEvent
 {
 	static constexpr EventTraits traits = eventTraitNone;
-	String text;
+	PTString text;
 };
 
 struct TextEditingEvent
 {
 	static constexpr EventTraits traits = eventTraitNone;
-	String text;
+	PTString text;
 };
 
 struct KeyEvent

@@ -8,7 +8,7 @@
 
 namespace ui
 {
-	CopyTextButton::CopyTextButton(Point position, Point size, String buttonText, Label *copyTextLabel_):
+	CopyTextButton::CopyTextButton(Point position, Point size, PTString buttonText, Label *copyTextLabel_):
 		Button(position, size, buttonText)
 	{
 		copyTextLabel = copyTextLabel_;

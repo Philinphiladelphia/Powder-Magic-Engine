@@ -49,7 +49,7 @@ class SplitButton : public ui::Button
 	bool leftDown;
 	bool showSplit;
 	int splitPosition;
-	String toolTip2;
+	PTString toolTip2;
 
 	struct SplitButtonAction
 	{
@@ -58,7 +58,7 @@ class SplitButton : public ui::Button
 	SplitButtonAction actionCallback;
 
 public:
-	SplitButton(ui::Point position, ui::Point size, String buttonText, String toolTip, String toolTip2, int split) :
+	SplitButton(ui::Point position, ui::Point size, PTString buttonText, PTString toolTip, PTString toolTip2, int split) :
 		Button(position, size, buttonText, toolTip),
 		showSplit(true),
 		splitPosition(split),
@@ -68,7 +68,7 @@ public:
 	}
 	virtual ~SplitButton() = default;
 
-	void SetRightToolTip(String tooltip) { toolTip2 = tooltip; }
+	void SetRightToolTip(PTString tooltip) { toolTip2 = tooltip; }
 	bool GetShowSplit() { return showSplit; }
 	void SetShowSplit(bool split) { showSplit = split; }
 	inline SplitButtonAction const &GetSplitActionCallback() { return actionCallback; }
@@ -113,12 +113,12 @@ public:
 			return;
 		SetToolTip(x, y);
 	}
-	void TextPosition(String ButtonText) override
+	void TextPosition(PTString ButtonText) override
 	{
 		ui::Button::TextPosition(ButtonText);
 		textPosition.X += 3;
 	}
-	void SetToolTips(String newToolTip1, String newToolTip2)
+	void SetToolTips(PTString newToolTip1, PTString newToolTip2)
 	{
 		toolTip = newToolTip1;
 		toolTip2 = newToolTip2;
@@ -412,9 +412,9 @@ void GameView::NotifyMenuListChanged(GameModel * sender)
 	{
 		if (menuList[i]->GetVisible())
 		{
-			String tempString = "";
+			PTString tempString = "";
 			tempString += menuList[i]->GetIcon();
-			String description = menuList[i]->GetDescription();
+			PTString description = menuList[i]->GetDescription();
 			if (i == SC_FAVORITES && !Favorite::Ref().AnyFavorites())
 				description += " (Use ctrl+shift+click to toggle the favorite status of an element)";
 			auto *tempButton = new MenuButton(ui::Point(WINDOWW-16, currentY), ui::Point(15, 15), tempString, description);
@@ -1274,7 +1274,7 @@ void GameView::OnMouseUp(int x, int y, unsigned button)
 	UpdateDrawMode();
 }
 
-void GameView::ToolTip(ui::Point senderPosition, String toolTip)
+void GameView::ToolTip(ui::Point senderPosition, PTString toolTip)
 {
 	// buttom button tooltips
 	if (senderPosition.Y > Size.Y-17)
@@ -1736,7 +1736,7 @@ void GameView::OnTick(float dt)
 	int foundSignID = c->GetSignAt(mousePosition.X, mousePosition.Y);
 	if (foundSignID != -1)
 	{
-		String str = c->GetSignText(foundSignID);
+		PTString str = c->GetSignText(foundSignID);
 		auto si = c->GetSignSplit(foundSignID);
 
 		StringBuilder tooltip;
@@ -1834,13 +1834,13 @@ void GameView::DoMouseWheel(int x, int y, int d)
 		Window::DoMouseWheel(x, y, d);
 }
 
-void GameView::DoTextInput(String text)
+void GameView::DoTextInput(PTString text)
 {
 	if (c->TextInput(text))
 		Window::DoTextInput(text);
 }
 
-void GameView::DoTextEditing(String text)
+void GameView::DoTextEditing(PTString text)
 {
 	if (c->TextEditing(text))
 		Window::DoTextEditing(text);
@@ -1946,9 +1946,9 @@ void GameView::NotifyZoomChanged(GameModel * sender)
 	zoomEnabled = sender->GetZoomEnabled();
 }
 
-void GameView::NotifyLogChanged(GameModel * sender, String entry)
+void GameView::NotifyLogChanged(GameModel * sender, PTString entry)
 {
-	logEntries.push_front(std::pair<String, int>(entry, 600));
+	logEntries.push_front(std::pair<PTString, int>(entry, 600));
 	if (logEntries.size() > 20)
 		logEntries.pop_back();
 }
@@ -2299,10 +2299,10 @@ void GameView::OnDraw()
 	{
 		int startX = 20;
 		int startY = YRES-20;
-		std::deque<std::pair<String, int> >::iterator iter;
+		std::deque<std::pair<PTString, int> >::iterator iter;
 		for(iter = logEntries.begin(); iter != logEntries.end(); iter++)
 		{
-			String message = (*iter).first;
+			PTString message = (*iter).first;
 			int alpha = std::min((*iter).second, 255);
 			if (alpha <= 0) //erase this and everything older
 			{
@@ -2318,7 +2318,7 @@ void GameView::OnDraw()
 
 	if (recording)
 	{
-		String sampleInfo = String::Build("#", screenshotIndex, " ", String(0xE00E), " REC");
+		PTString sampleInfo = PTString::Build("#", screenshotIndex, " ", PTString(0xE00E), " REC");
 
 		int textWidth = Graphics::TextSize(sampleInfo).X - 1;
 		g->BlendFilledRect(RectSized(Vec2{ XRES-20-textWidth, 12 }, Vec2{ textWidth+8, 15 }), 0x000000_rgb .WithAlpha(127));
@@ -2368,7 +2368,7 @@ void GameView::OnDraw()
 				else if (type == PT_FILT)
 				{
 					sampleInfo << c->ElementResolve(type, ctype);
-					String filtModes[] = {"set colour", "AND", "OR", "subtract colour", "red shift", "blue shift", "no effect", "XOR", "NOT", "old QRTZ scattering", "variable red shift", "variable blue shift"};
+					PTString filtModes[] = {"set colour", "AND", "OR", "subtract colour", "red shift", "blue shift", "no effect", "XOR", "NOT", "old QRTZ scattering", "variable red shift", "variable blue shift"};
 					if (sample.particle.tmp>=0 && sample.particle.tmp<=11)
 						sampleInfo << " (" << filtModes[sample.particle.tmp] << ")";
 					else
@@ -2398,7 +2398,7 @@ void GameView::OnDraw()
 				{
 					if (sample.particle.type == PT_CONV)
 					{
-						String elemName = c->ElementResolve(
+						PTString elemName = c->ElementResolve(
 							TYP(sample.particle.tmp),
 							ID(sample.particle.tmp));
 						if (elemName == "")

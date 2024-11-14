@@ -1,6 +1,6 @@
 #pragma once
 
-#include "common/String.h"
+#include "common/PTString.h"
 #include "Point.h"
 
 #include <vector>
@@ -20,7 +20,7 @@ namespace ui
 	private:
 		int raw_text_size;
 		int clear_text_size;
-		String wrapped_text;
+		PTString wrapped_text;
 		struct clickmap_region
 		{
 			int pos_x, pos_y, width, pos_line;
@@ -31,12 +31,12 @@ namespace ui
 		std::vector<clickmap_region> regions;
 
 	public:
-		int Update(String const &text, bool do_wrapping, int max_width);
+		int Update(PTString const &text, bool do_wrapping, int max_width);
 		Index Clear2Index(int clear_index) const;
 		Index Point2Index(int x, int y) const;
 		int Index2Point(Index index, int &x, int &y) const;
 
-		String const &WrappedText() const
+		PTString const &WrappedText() const
 		{
 			return wrapped_text;
 		}

@@ -11,7 +11,7 @@ public:
 	struct Configuration
 	{
 		AccessProperty changeProperty;
-		String propertyValueStr;
+		PTString propertyValueStr;
 	};
 
 private:

@@ -1,7 +1,7 @@
 #pragma once
 #include "CommandInterfacePtr.h"
 #include "common/ExplicitSingleton.h"
-#include "common/String.h"
+#include "common/PTString.h"
 #include "gui/game/GameControllerEvents.h"
 #include "TPTSTypes.h"
 #include <deque>
@@ -14,20 +14,20 @@ class Tool;
 class CommandInterface : public ExplicitSingleton<CommandInterface>
 {
 protected:
-	String lastError;
+	PTString lastError;
 	GameModel * m;
 	GameController * c;
 
 
-	int PlainCommand(String command);
-	String PlainFormatCommand(String command);
+	int PlainCommand(PTString command);
+	PTString PlainFormatCommand(PTString command);
 
 public:
 	CommandInterface(GameController *newGameController, GameModel *newGameModel);
 
 	enum LogType { LogError, LogWarning, LogNotice };
 	enum FormatType { FormatInt, FormatString, FormatChar, FormatFloat, FormatElement };
-	void Log(LogType type, String message);
+	void Log(LogType type, PTString message);
 	//void AttachGameModel(GameModel * m);
 
 	void OnTick();
@@ -36,25 +36,25 @@ public:
 	bool HandleEvent(const GameControllerEvent &event);
 	bool HaveSimGraphicsEventHandlers();
 
-	int Command(String command);
-	String FormatCommand(String command);
-	void SetLastError(String err)
+	int Command(PTString command);
+	PTString FormatCommand(PTString command);
+	void SetLastError(PTString err)
 	{
 		lastError = err;
 	}
-	String GetLastError();
+	PTString GetLastError();
 
-	AnyType eval(std::deque<String> * words);
-	int parseNumber(String str);
-	AnyType tptS_set(std::deque<String> * words);
-	AnyType tptS_get(std::deque<String> * words);
-	AnyType tptS_create(std::deque<String> * words);
-	AnyType tptS_delete(std::deque<String> * words);
-	AnyType tptS_load(std::deque<String> * words);
-	AnyType tptS_reset(std::deque<String> * words);
-	AnyType tptS_bubble(std::deque<String> * words);
-	AnyType tptS_quit(std::deque<String> * words);
-	ValueType testType(String word);
+	AnyType eval(std::deque<PTString> * words);
+	int parseNumber(PTString str);
+	AnyType tptS_set(std::deque<PTString> * words);
+	AnyType tptS_get(std::deque<PTString> * words);
+	AnyType tptS_create(std::deque<PTString> * words);
+	AnyType tptS_delete(std::deque<PTString> * words);
+	AnyType tptS_load(std::deque<PTString> * words);
+	AnyType tptS_reset(std::deque<PTString> * words);
+	AnyType tptS_bubble(std::deque<PTString> * words);
+	AnyType tptS_quit(std::deque<PTString> * words);
+	ValueType testType(PTString word);
 
 	void SetToolIndex(ByteString identifier, std::optional<int> index);
 

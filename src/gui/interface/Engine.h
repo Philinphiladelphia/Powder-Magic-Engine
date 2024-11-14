@@ -1,7 +1,7 @@
 #pragma once
 #include <memory>
 #include <stack>
-#include "common/String.h"
+#include "common/PTString.h"
 #include "common/ExplicitSingleton.h"
 #include "graphics/Pixel.h"
 #include "gui/interface/Point.h"
@@ -35,8 +35,8 @@ namespace ui
 		void onMouseWheel(int x, int y, int delta);
 		void onKeyPress(int key, int scan, bool repeat, bool shift, bool ctrl, bool alt);
 		void onKeyRelease(int key, int scan, bool repeat, bool shift, bool ctrl, bool alt);
-		void onTextInput(String text);
-		void onTextEditing(String text, int start);
+		void onTextInput(PTString text);
+		void onTextEditing(PTString text, int start);
 		void onClose();
 		void onFileDrop(ByteString filename);
 
@@ -115,7 +115,7 @@ namespace ui
 		int mousexp_;
 		int mouseyp_;
 
-		String textEditingBuf;
+		PTString textEditingBuf;
 
 	public:
 		bool MomentumScroll = true;

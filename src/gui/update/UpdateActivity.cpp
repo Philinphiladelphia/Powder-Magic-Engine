@@ -28,7 +28,7 @@ private:
 	{
 		auto &prefs = GlobalPrefs::Ref();
 
-		auto niceNotifyError = [this](String error) {
+		auto niceNotifyError = [this](PTString error) {
 			notifyError("Downloaded update is corrupted\n" + error);
 			return false;
 		};
@@ -60,11 +60,11 @@ private:
 		}
 		catch (const http::RequestError &ex)
 		{
-			return niceNotifyError("Could not download update: " + String::Build("Server responded with Status ", ByteString(ex.what()).FromAscii()));
+			return niceNotifyError("Could not download update: " + PTString::Build("Server responded with Status ", ByteString(ex.what()).FromAscii()));
 		}
 		if (status!=200)
 		{
-			return niceNotifyError("Could not download update: " + String::Build("Server responded with Status ", status));
+			return niceNotifyError("Could not download update: " + PTString::Build("Server responded with Status ", status));
 		}
 		if (!data.size())
 		{
@@ -78,7 +78,7 @@ private:
 
 		if(data.size()<16)
 		{
-			return niceNotifyError(String::Build("Unsufficient data, got ", data.size(), " bytes"));
+			return niceNotifyError(PTString::Build("Unsufficient data, got ", data.size(), " bytes"));
 		}
 		if (data[0]!=0x42 || data[1]!=0x75 || data[2]!=0x54 || data[3]!=0x54)
 		{
@@ -96,7 +96,7 @@ private:
 		dstate = BZ2_bzBuffToBuffDecompress(res.data(), (unsigned *)&uncompressedLength, &data[8], data.size()-8, 0, 0);
 		if (dstate)
 		{
-			return niceNotifyError(String::Build("Unable to decompress update: ", dstate));
+			return niceNotifyError(PTString::Build("Unable to decompress update: ", dstate));
 		}
 
 		notifyStatus("Applying update");

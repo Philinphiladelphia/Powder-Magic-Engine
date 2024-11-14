@@ -229,7 +229,7 @@ void Engine::onKeyRelease(int key, int scan, bool repeat, bool shift, bool ctrl,
 		state_->DoKeyRelease(key, scan, repeat, shift, ctrl, alt);
 }
 
-void Engine::onTextInput(String text)
+void Engine::onTextInput(PTString text)
 {
 	if (textInput)
 	{
@@ -238,7 +238,7 @@ void Engine::onTextInput(String text)
 	}
 }
 
-void Engine::onTextEditing(String text, int start)
+void Engine::onTextEditing(PTString text, int start)
 {
 	if (textInput)
 	{

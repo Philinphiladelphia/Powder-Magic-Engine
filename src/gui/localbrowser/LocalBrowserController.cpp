@@ -61,7 +61,7 @@ void LocalBrowserController::removeSelectedC()
 		{
 			for (size_t i = 0; i < saves.size(); i++)
 			{
-				notifyStatus(String::Build("Deleting stamp [", saves[i].FromUtf8(), "] ..."));
+				notifyStatus(PTString::Build("Deleting stamp [", saves[i].FromUtf8(), "] ..."));
 				Client::Ref().DeleteStamp(saves[i]);
 				notifyProgress((i + 1) * 100 / saves.size());
 			}
@@ -81,7 +81,7 @@ void LocalBrowserController::RenameSelected()
 {
 	ByteString save = browserModel->GetSelected()[0];
 
-	new TextPrompt("Rename stamp", "Enter a new name for the stamp:", "", "[new name]", false, { [this, save](const String &newName) {
+	new TextPrompt("Rename stamp", "Enter a new name for the stamp:", "", "[new name]", false, { [this, save](const PTString &newName) {
 		if (newName.length() == 0)
 		{
 			new ErrorMessage("Error renaming stamp", "You have to specify the filename.");

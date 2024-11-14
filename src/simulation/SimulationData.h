@@ -2,7 +2,7 @@
 #include "SimulationConfig.h"
 #include "ElementDefs.h"
 #include "common/ExplicitSingleton.h"
-#include "common/String.h"
+#include "common/PTString.h"
 #include "MenuSection.h"
 #include "BuiltinGOL.h"
 #include "Element.h"
@@ -155,8 +155,8 @@ public:
 	const std::vector<CustomGOLData> &GetCustomGol() const { return customGol; }
 	void SetCustomGOL(std::vector<CustomGOLData> newCustomGol);
 
-	String ElementResolve(int type, int ctype) const;
-	String BasicParticleInfo(Particle const &sample_part) const;
+	PTString ElementResolve(int type, int ctype) const;
+	PTString BasicParticleInfo(Particle const &sample_part) const;
 	int GetParticleType(ByteString type) const;
 
 	bool IsElement(int type) const

@@ -8,7 +8,7 @@
 
 namespace ui {
 
-Button::Button(Point position, Point size, String buttonText, String toolTip):
+Button::Button(Point position, Point size, PTString buttonText, PTString toolTip):
 	Component(position, size),
 	ButtonText(buttonText),
 	toolTip(toolTip),
@@ -20,7 +20,7 @@ Button::Button(Point position, Point size, String buttonText, String toolTip):
 	TextPosition(ButtonText);
 }
 
-void Button::TextPosition(String ButtonText)
+void Button::TextPosition(PTString ButtonText)
 {
 	buttonDisplayText = ButtonText;
 	if(buttonDisplayText.length())
@@ -42,7 +42,7 @@ void Button::SetIcon(Icon icon)
 	TextPosition(ButtonText);
 }
 
-void Button::SetText(String buttonText)
+void Button::SetText(PTString buttonText)
 {
 	ButtonText = buttonText;
 	TextPosition(ButtonText);

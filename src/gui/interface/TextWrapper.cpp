@@ -9,13 +9,13 @@
 
 namespace ui
 {
-	int TextWrapper::Update(String const &text, bool do_wrapping, int max_width)
+	int TextWrapper::Update(PTString const &text, bool do_wrapping, int max_width)
 	{
 		raw_text_size = (int)text.size();
 
 		struct wrap_record
 		{
-			String::value_type character;
+			PTString::value_type character;
 			int width;
 			int raw_index;
 			int clear_index;

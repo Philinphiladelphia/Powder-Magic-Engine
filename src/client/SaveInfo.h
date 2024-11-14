@@ -1,5 +1,5 @@
 #pragma once
-#include "common/String.h"
+#include "common/PTString.h"
 #include <list>
 #include <memory>
 #include <ctime>
@@ -22,22 +22,22 @@ public:
 
 	ByteString userName;
 
-	String name;
-	String Description;
+	PTString name;
+	PTString Description;
 	bool Published;
 
 	std::list<ByteString> tags;
 	std::unique_ptr<GameSave> gameSave;
 
-	SaveInfo(int _id, time_t _createdDate, time_t _updatedDate, int _votesUp, int _votesDown, ByteString _userName, String _name);
+	SaveInfo(int _id, time_t _createdDate, time_t _updatedDate, int _votesUp, int _votesDown, ByteString _userName, PTString _name);
 
-	SaveInfo(int _id, time_t _createdDate, time_t _updatedDate, int _votesUp, int _votesDown, int _vote, ByteString _userName, String _name, String description_, bool published_, std::list<ByteString> tags);
+	SaveInfo(int _id, time_t _createdDate, time_t _updatedDate, int _votesUp, int _votesDown, int _vote, ByteString _userName, PTString _name, PTString description_, bool published_, std::list<ByteString> tags);
 
-	void SetName(String name);
-	const String &GetName() const;
+	void SetName(PTString name);
+	const PTString &GetName() const;
 
-	void SetDescription(String description);
-	const String &GetDescription() const;
+	void SetDescription(PTString description);
+	const PTString &GetDescription() const;
 
 	void SetPublished(bool published);
 	bool GetPublished() const;

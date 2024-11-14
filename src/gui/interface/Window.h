@@ -1,5 +1,5 @@
 #pragma once
-#include "common/String.h"
+#include "common/PTString.h"
 #include "gui/interface/Point.h"
 #include <vector>
 
@@ -50,7 +50,7 @@ namespace ui
 		// Remove a component from window. NOTE: This WILL free component from memory.
 		void RemoveComponent(unsigned idx);
 
-		virtual void ToolTip(ui::Point senderPosition, String toolTip) {}
+		virtual void ToolTip(ui::Point senderPosition, PTString toolTip) {}
 
 		virtual void DoInitialized();
 		virtual void DoExit();
@@ -66,8 +66,8 @@ namespace ui
 		virtual void DoMouseWheel(int x, int y, int d);
 		virtual void DoKeyPress(int key, int scan, bool repeat, bool shift, bool ctrl, bool alt);
 		virtual void DoKeyRelease(int key, int scan, bool repeat, bool shift, bool ctrl, bool alt);
-		virtual void DoTextInput(String text);
-		virtual void DoTextEditing(String text);
+		virtual void DoTextInput(PTString text);
+		virtual void DoTextEditing(PTString text);
 
 		// Sets halt and destroy, this causes the Windows to stop sending events and remove itself.
 		void SelfDestruct();
@@ -106,8 +106,8 @@ namespace ui
 		virtual void OnMouseWheel(int x, int y, int d) {}
 		virtual void OnKeyPress(int key, int scan, bool repeat, bool shift, bool ctrl, bool alt) {}
 		virtual void OnKeyRelease(int key, int scan, bool repeat, bool shift, bool ctrl, bool alt) {}
-		virtual void OnTextInput(String text) {}
-		virtual void OnTextEditing(String text) {}
+		virtual void OnTextInput(PTString text) {}
+		virtual void OnTextEditing(PTString text) {}
 		std::vector<Component*> Components;
 		Component *focusedComponent_;
 		Component *hoverComponent;

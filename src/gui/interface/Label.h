@@ -1,5 +1,5 @@
 #pragma once
-#include "common/String.h"
+#include "common/PTString.h"
 
 #include "Component.h"
 #include "Colour.h"
@@ -10,13 +10,13 @@ namespace ui
 	class Label : public Component
 	{
 	protected:
-		String textFragments;
-		String displayTextWithSelection;
+		PTString textFragments;
+		PTString displayTextWithSelection;
 
-		String text;
+		PTString text;
 		TextWrapper textWrapper;
 
-		String displayText;
+		PTString displayText;
 		TextWrapper displayTextWrapper;
 
 		Colour textColour;
@@ -39,16 +39,16 @@ namespace ui
 
 		void copySelection();
 	public:
-		//Label(Window* parent_state, String labelText);
-		Label(Point position, Point size, String labelText);
-		//Label(String labelText);
+		//Label(Window* parent_state, PTString labelText);
+		Label(Point position, Point size, PTString labelText);
+		//Label(PTString labelText);
 		virtual ~Label();
 
 		void SetMultiline(bool status);
 
-		virtual void SetText(String text);
-		virtual void SetDisplayText(String text);
-		virtual String GetText();
+		virtual void SetText(PTString text);
+		virtual void SetDisplayText(PTString text);
+		virtual PTString GetText();
 
 		bool HasSelection();
 		void ClearSelection();

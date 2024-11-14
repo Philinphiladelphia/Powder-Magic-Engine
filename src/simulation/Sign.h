@@ -1,5 +1,5 @@
 #pragma once
-#include "common/String.h"
+#include "common/PTString.h"
 #include <utility>
 
 struct RenderableSimulation;
@@ -26,9 +26,9 @@ struct sign
 
 	int x, y;
 	Justification ju;
-	String text;
+	PTString text;
 
-	sign(String text_, int x_, int y_, Justification justification_);
-	String getDisplayText(const RenderableSimulation *sim, int &x, int &y, int &w, int &h, bool colorize = true, bool *v95 = nullptr) const;
+	sign(PTString text_, int x_, int y_, Justification justification_);
+	PTString getDisplayText(const RenderableSimulation *sim, int &x, int &y, int &w, int &h, bool colorize = true, bool *v95 = nullptr) const;
 	std::pair<int, Type> split() const;
 };

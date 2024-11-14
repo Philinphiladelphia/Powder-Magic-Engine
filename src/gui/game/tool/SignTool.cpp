@@ -90,10 +90,10 @@ SignWindow::SignWindow(SignTool * tool_, Simulation * sim_, int signID_, ui::Poi
 
 	justification = new ui::DropDown(ui::Point(52, 48), ui::Point(55, 16));
 	AddComponent(justification);
-	justification->AddOption(std::pair<String, int>(0xE020 + String(" Left"), (int)sign::Left));
-	justification->AddOption(std::pair<String, int>(0xE01E + String(" Middle"), (int)sign::Middle));
-	justification->AddOption(std::pair<String, int>(0xE01F + String(" Right"), (int)sign::Right));
-	justification->AddOption(std::pair<String, int>(0xE01D + String(" None"), (int)sign::None));
+	justification->AddOption(std::pair<PTString, int>(0xE020 + PTString(" Left"), (int)sign::Left));
+	justification->AddOption(std::pair<PTString, int>(0xE01E + PTString(" Middle"), (int)sign::Middle));
+	justification->AddOption(std::pair<PTString, int>(0xE01F + PTString(" Right"), (int)sign::Right));
+	justification->AddOption(std::pair<PTString, int>(0xE01D + PTString(" None"), (int)sign::None));
 	justification->SetOption(1);
 	justification->Appearance.HorizontalAlign = ui::Appearance::AlignLeft;
 
@@ -164,7 +164,7 @@ void SignWindow::DoDraw()
 		int x, y, w, h, dx, dy;
 		Graphics * g = GetGraphics();
 
-		String text = currentSign.getDisplayText(sim, x, y, w, h);
+		PTString text = currentSign.getDisplayText(sim, x, y, w, h);
 		g->DrawFilledRect(RectSized(Vec2{ x + 1, y + 1 }, Vec2{ w, h - 1 }), 0x000000_rgb);
 		g->DrawRect(RectSized(Vec2{ x, y }, Vec2{ w+1, h }), 0xC0C0C0_rgb);
 		g->BlendText({ x+3, y+4 }, text, 0xFFFFFF_rgb .WithAlpha(255));

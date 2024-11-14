@@ -1,5 +1,5 @@
 #pragma once
-#include "common/String.h"
+#include "common/PTString.h"
 #include "common/Vec2.h"
 #include "graphics/Pixel.h"
 
@@ -42,22 +42,22 @@ struct RasterDrawMethods
 	void BlendRGBAImage(pixel_rgba const *, Rect<int>, size_t rowStride);
 
 	// Returns width of character
-	int BlendChar(Vec2<int>, String::value_type, RGBA<uint8_t>);
-	int AddChar(Vec2<int>, String::value_type, RGBA<uint8_t>);
+	int BlendChar(Vec2<int>, PTString::value_type, RGBA<uint8_t>);
+	int AddChar(Vec2<int>, PTString::value_type, RGBA<uint8_t>);
 
 	// Returns the offset between the first character and the
 	// would-be-next character
-	Vec2<int> BlendText(Vec2<int>, String const &, RGBA<uint8_t>);
+	Vec2<int> BlendText(Vec2<int>, PTString const &, RGBA<uint8_t>);
 
-	Vec2<int> BlendTextOutline(Vec2<int>, String const &, RGBA<uint8_t>);
+	Vec2<int> BlendTextOutline(Vec2<int>, PTString const &, RGBA<uint8_t>);
 
-	static int CharWidth(String::value_type);
+	static int CharWidth(PTString::value_type);
 	// Considers the first line to be FONT_H-2 tall with successive lines adding
 	// FONT_H each
-	static Vec2<int> TextSize(String const &);
+	static Vec2<int> TextSize(PTString const &);
 	// Return iterator to the end of an initial portion of text that fits in
 	// the given width
-	static String::const_iterator TextFit(String const &, int width);
+	static PTString::const_iterator TextFit(PTString const &, int width);
 
 	void Clear();
 };

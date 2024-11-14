@@ -1,12 +1,12 @@
 #pragma once
-#include "common/String.h"
+#include "common/PTString.h"
 
 class Notification
 {
 public:
-	Notification(String message) : Message(message) {}
+	Notification(PTString message) : Message(message) {}
 	virtual ~Notification() {};
-	String Message;
+	PTString Message;
 
 	virtual void Action() { }
 };

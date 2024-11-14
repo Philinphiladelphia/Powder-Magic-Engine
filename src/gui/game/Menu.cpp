@@ -1,6 +1,6 @@
 #include "Menu.h"
 
-Menu::Menu(String::value_type icon_, String description_, int visible_):
+Menu::Menu(PTString::value_type icon_, PTString description_, int visible_):
 	icon(icon_),
 	description(description_),
 	tools(std::vector<Tool*>()),

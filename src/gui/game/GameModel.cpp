@@ -65,136 +65,63 @@ GameModel::GameModel():
 {
 	sim = new Simulation();
 	sim->useLuaCallbacks = true;
-	ren = new Renderer();
+	
+	// //Load config into simulation
+	// edgeMode = prefs.Get("Simulation.EdgeMode", NUM_EDGEMODES, EDGE_VOID);
+	// sim->SetEdgeMode(edgeMode);
+	// ambientAirTemp = float(R_TEMP) + 273.15f;
+	// {
+	// 	auto temp = prefs.Get("Simulation.AmbientAirTemp", ambientAirTemp);
+	// 	if (MIN_TEMP <= temp && MAX_TEMP >= temp)
+	// 	{
+	// 		ambientAirTemp = temp;
+	// 	}
+	// }
+	// sim->air->ambientAirTemp = ambientAirTemp;
+	// if (prefs.Get("Simulation.NewtonianGravity", false))
+	// {
+	// 	sim->EnableNewtonianGravity(true);
+	// }
+	// sim->aheat_enable = prefs.Get("Simulation.AmbientHeat", 0); // TODO: AmbientHeat enum
+	// sim->pretty_powder = prefs.Get("Simulation.PrettyPowder", 0); // TODO: PrettyPowder enum
 
-	activeTools = regularToolset.data();
+	// undoHistoryLimit = prefs.Get("Simulation.UndoHistoryLimit", 5U);
+	// // cap due to memory usage (this is about 3.4GB of RAM)
+	// if (undoHistoryLimit > 200)
+	
+	// SetUndoHistoryLimit(0);
 
-	std::fill(decoToolset.begin(), decoToolset.end(), nullptr);
-	std::fill(regularToolset.begin(), regularToolset.end(), nullptr);
-
-	//Load config into renderer
-	auto &prefs = GlobalPrefs::Ref();
-
-	auto handleOldModes = [&prefs](ByteString prefName, ByteString oldPrefName, uint32_t defaultValue, auto setFunc) {
-		auto pref = prefs.Get<uint32_t>(prefName);
-		if (!pref.has_value())
-		{
-			auto modes = prefs.Get(oldPrefName, std::vector<unsigned int>{});
-			if (modes.size())
-			{
-				uint32_t mode = 0;
-				for (auto partial : modes)
-				{
-					mode |= partial;
-				}
-				pref = mode;
-			}
-			else
-			{
-				pref = defaultValue;
-			}
-		}
-		setFunc(*pref);
-	};
-	handleOldModes("Renderer.RenderMode", "Renderer.RenderModes", RENDER_FIRE | RENDER_EFFE | RENDER_BASC, [this](uint32_t renderMode) {
-		rendererSettings.renderMode = renderMode;
-	});
-	handleOldModes("Renderer.DisplayMode", "Renderer.DisplayModes", 0, [this](uint32_t displayMode) {
-		rendererSettings.displayMode = displayMode;
-	});
-	rendererSettings.colorMode = prefs.Get("Renderer.ColourMode", UINT32_C(0));
-
-	rendererSettings.gravityFieldEnabled = prefs.Get("Renderer.GravityField", false);
-	rendererSettings.decorationLevel = prefs.Get("Renderer.Decorations", true) ? RendererSettings::decorationEnabled : RendererSettings::decorationDisabled;
-	threadedRendering = prefs.Get("Renderer.SeparateThread", false);
-
-	//Load config into simulation
-	edgeMode = prefs.Get("Simulation.EdgeMode", NUM_EDGEMODES, EDGE_VOID);
-	sim->SetEdgeMode(edgeMode);
-	ambientAirTemp = float(R_TEMP) + 273.15f;
-	{
-		auto temp = prefs.Get("Simulation.AmbientAirTemp", ambientAirTemp);
-		if (MIN_TEMP <= temp && MAX_TEMP >= temp)
-		{
-			ambientAirTemp = temp;
-		}
-	}
-	sim->air->ambientAirTemp = ambientAirTemp;
-	decoSpace = prefs.Get("Simulation.DecoSpace", NUM_DECOSPACES, DECOSPACE_SRGB);
-	sim->SetDecoSpace(decoSpace);
-	if (prefs.Get("Simulation.NewtonianGravity", false))
-	{
-		sim->EnableNewtonianGravity(true);
-	}
-	sim->aheat_enable = prefs.Get("Simulation.AmbientHeat", 0); // TODO: AmbientHeat enum
-	sim->pretty_powder = prefs.Get("Simulation.PrettyPowder", 0); // TODO: PrettyPowder enum
-
-	Favorite::Ref().LoadFavoritesFromPrefs();
-
-	//Load last user
-	if(Client::Ref().GetAuthUser().UserID)
-	{
-		currentUser = Client::Ref().GetAuthUser();
-	}
-
-	perfectCircle = prefs.Get("PerfectCircleBrush", true);
-	BuildBrushList();
-
-	InitTools();
-
-	//Set default decoration colour
-	unsigned char colourR = std::max(std::min(prefs.Get("Decoration.Red", 200), 255), 0);
-	unsigned char colourG = std::max(std::min(prefs.Get("Decoration.Green", 100), 255), 0);
-	unsigned char colourB = std::max(std::min(prefs.Get("Decoration.Blue", 50), 255), 0);
-	unsigned char colourA = std::max(std::min(prefs.Get("Decoration.Alpha", 255), 255), 0);
-
-	SetColourSelectorColour(ui::Colour(colourR, colourG, colourB, colourA));
-
-	colourPresets.push_back(ui::Colour(255, 255, 255));
-	colourPresets.push_back(ui::Colour(0, 255, 255));
-	colourPresets.push_back(ui::Colour(255, 0, 255));
-	colourPresets.push_back(ui::Colour(255, 255, 0));
-	colourPresets.push_back(ui::Colour(255, 0, 0));
-	colourPresets.push_back(ui::Colour(0, 255, 0));
-	colourPresets.push_back(ui::Colour(0, 0, 255));
-	colourPresets.push_back(ui::Colour(0, 0, 0));
-
-	undoHistoryLimit = prefs.Get("Simulation.UndoHistoryLimit", 5U);
-	// cap due to memory usage (this is about 3.4GB of RAM)
-	if (undoHistoryLimit > 200)
-		SetUndoHistoryLimit(200);
-
-	mouseClickRequired = prefs.Get("MouseClickRequired", false);
-	includePressure = prefs.Get("Simulation.IncludePressure", true);
-	temperatureScale = prefs.Get("Renderer.TemperatureScale", 1); // TODO: TemperatureScale enum
+	// mouseClickRequired = prefs.Get("MouseClickRequired", false);
+	// includePressure = prefs.Get("Simulation.IncludePressure", true);
+	// temperatureScale = prefs.Get("Renderer.TemperatureScale", 1); // TODO: TemperatureScale enum
 
 	ClearSimulation();
 }
 
 GameModel::~GameModel()
 {
-	auto &prefs = GlobalPrefs::Ref();
-	{
-		//Save to config:
-		Prefs::DeferWrite dw(prefs);
-		prefs.Set("Renderer.ColourMode", rendererSettings.colorMode);
-		prefs.Set("Renderer.DisplayMode", rendererSettings.displayMode);
-		prefs.Set("Renderer.RenderMode", rendererSettings.renderMode);
-		prefs.Set("Renderer.GravityField", rendererSettings.gravityFieldEnabled);
-		prefs.Set("Renderer.Decorations", GetDecoration());
-		prefs.Set("Renderer.DebugMode", rendererSettings.debugLines); //These two should always be equivalent, even though they are different things
-		prefs.Set("Simulation.NewtonianGravity", bool(sim->grav));
-		prefs.Set("Simulation.AmbientHeat", sim->aheat_enable);
-		prefs.Set("Simulation.PrettyPowder", sim->pretty_powder);
-		prefs.Set("Decoration.Red", (int)colour.Red);
-		prefs.Set("Decoration.Green", (int)colour.Green);
-		prefs.Set("Decoration.Blue", (int)colour.Blue);
-		prefs.Set("Decoration.Alpha", (int)colour.Alpha);
-	}
+	// auto &prefs = GlobalPrefs::Ref();
+	// {
+	// 	//Save to config:
+	// 	Prefs::DeferWrite dw(prefs);
+	// 	prefs.Set("Renderer.ColourMode", rendererSettings.colorMode);
+	// 	prefs.Set("Renderer.DisplayMode", rendererSettings.displayMode);
+	// 	prefs.Set("Renderer.RenderMode", rendererSettings.renderMode);
+	// 	prefs.Set("Renderer.GravityField", rendererSettings.gravityFieldEnabled);
+	// 	prefs.Set("Renderer.Decorations", GetDecoration());
+	// 	prefs.Set("Renderer.DebugMode", rendererSettings.debugLines); //These two should always be equivalent, even though they are different things
+	// 	prefs.Set("Simulation.NewtonianGravity", bool(sim->grav));
+	// 	prefs.Set("Simulation.AmbientHeat", sim->aheat_enable);
+	// 	prefs.Set("Simulation.PrettyPowder", sim->pretty_powder);
+	// 	prefs.Set("Decoration.Red", (int)colour.Red);
+	// 	prefs.Set("Decoration.Green", (int)colour.Green);
+	// 	prefs.Set("Decoration.Blue", (int)colour.Blue);
+	// 	prefs.Set("Decoration.Alpha", (int)colour.Alpha);
+	// }
 
-	view->PauseRendererThread();
+	// view->PauseRendererThread();
 	delete sim;
-	delete ren;
+	//delete ren;
 	//if(activeTools)
 	//	delete[] activeTools;
 }
@@ -1007,7 +934,7 @@ void GameModel::SetPaused(bool pauseState)
 {
 	if (!pauseState && sim->debug_nextToUpdate > 0)
 	{
-		String logmessage = String::Build("Updated particles from #", sim->debug_nextToUpdate, " to end due to unpause");
+		PTString logmessage = PTString::Build("Updated particles from #", sim->debug_nextToUpdate, " to end due to unpause");
 		UpdateUpTo(NPART);
 		Log(logmessage, false);
 	}
@@ -1155,7 +1082,7 @@ const GameSave *GameModel::GetTransformedPlaceSave() const
 	return transformedPlaceSave.get();
 }
 
-void GameModel::Log(String message, bool printToFile)
+void GameModel::Log(PTString message, bool printToFile)
 {
 	consoleLog.push_front(message);
 	if(consoleLog.size()>100)
@@ -1165,7 +1092,7 @@ void GameModel::Log(String message, bool printToFile)
 		std::cout << message.ToUtf8() << std::endl;
 }
 
-std::deque<String> GameModel::GetLog()
+std::deque<PTString> GameModel::GetLog()
 {
 	return consoleLog;
 }
@@ -1195,24 +1122,24 @@ void GameModel::RemoveNotification(Notification * notification)
 	notifyNotificationsChanged();
 }
 
-void GameModel::SetToolTip(String text)
+void GameModel::SetToolTip(PTString text)
 {
 	toolTip = text;
 	notifyToolTipChanged();
 }
 
-void GameModel::SetInfoTip(String text)
+void GameModel::SetInfoTip(PTString text)
 {
 	infoTip = text;
 	notifyInfoTipChanged();
 }
 
-String GameModel::GetToolTip()
+PTString GameModel::GetToolTip()
 {
 	return toolTip;
 }
 
-String GameModel::GetInfoTip()
+PTString GameModel::GetInfoTip()
 {
 	return infoTip;
 }
@@ -1361,7 +1288,7 @@ void GameModel::notifyTransformedPlaceSaveChanged()
 	}
 }
 
-void GameModel::notifyLogChanged(String entry)
+void GameModel::notifyLogChanged(PTString entry)
 {
 	for (size_t i = 0; i < observers.size(); i++)
 	{
@@ -1430,7 +1357,7 @@ void GameModel::SetPerfectCircle(bool perfectCircle)
 	}
 }
 
-bool GameModel::AddCustomGol(String ruleString, String nameString, RGB<uint8_t> color1, RGB<uint8_t> color2)
+bool GameModel::AddCustomGol(PTString ruleString, PTString nameString, RGB<uint8_t> color1, RGB<uint8_t> color2)
 {
 	if (auto gd = CheckCustomGol(ruleString, nameString, color1, color2))
 	{
@@ -1534,7 +1461,7 @@ void GameModel::SaveCustomGol()
 	prefs.Set("CustomGOL.Types", newCustomGOLTypes);
 }
 
-std::optional<CustomGOLData> GameModel::CheckCustomGol(String ruleString, String nameString, RGB<uint8_t> color1, RGB<uint8_t> color2)
+std::optional<CustomGOLData> GameModel::CheckCustomGol(PTString ruleString, PTString nameString, RGB<uint8_t> color1, RGB<uint8_t> color2)
 {
 	if (!ValidateGOLName(nameString))
 	{

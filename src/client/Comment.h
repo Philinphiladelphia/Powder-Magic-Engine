@@ -7,5 +7,5 @@ struct Comment
 	User::Elevation authorElevation;
 	bool authorIsSelf;
 	bool authorIsBanned;
-	String content;
+	PTString content;
 };

@@ -28,12 +28,12 @@ bool CommandInterface::HaveSimGraphicsEventHandlers()
 	return false;
 }
 
-int CommandInterface::Command(String command)
+int CommandInterface::Command(PTString command)
 {
 	return PlainCommand(command);
 }
 
-String CommandInterface::FormatCommand(String command)
+PTString CommandInterface::FormatCommand(PTString command)
 {
 	return PlainFormatCommand(command);
 }

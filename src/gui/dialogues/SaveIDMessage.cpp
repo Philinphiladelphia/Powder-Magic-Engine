@@ -29,8 +29,8 @@ SaveIDMessage::SaveIDMessage(int id):
 	copyTextLabel->Appearance.HorizontalAlign = ui::Appearance::AlignCentre;
 	AddComponent(copyTextLabel);
 
-	textWidth = Graphics::TextSize(String::Build(id)).X - 1;
-	ui::CopyTextButton * copyTextButton = new ui::CopyTextButton(ui::Point((Size.X-textWidth-10)/2, 50), ui::Point(textWidth+10, 18), String::Build(id), copyTextLabel);
+	textWidth = Graphics::TextSize(PTString::Build(id)).X - 1;
+	ui::CopyTextButton * copyTextButton = new ui::CopyTextButton(ui::Point((Size.X-textWidth-10)/2, 50), ui::Point(textWidth+10, 18), PTString::Build(id), copyTextLabel);
 	AddComponent(copyTextButton);
 
 	ui::Button * okayButton = new ui::Button(ui::Point(0, Size.Y-16), ui::Point(Size.X, 16), "OK");

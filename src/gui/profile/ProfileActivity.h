@@ -1,5 +1,5 @@
 #pragma once
-#include "common/String.h"
+#include "common/PTString.h"
 #include "Activity.h"
 #include "client/UserInfo.h"
 #include <memory>
@@ -24,7 +24,7 @@ class ProfileActivity: public WindowActivity {
 	bool loading;
 	bool saving;
 	bool doError;
-	String doErrorMessage;
+	PTString doErrorMessage;
 	void setUserInfo(UserInfo newInfo);
 
 	std::unique_ptr<http::SaveUserInfoRequest> saveUserInfoRequest;
