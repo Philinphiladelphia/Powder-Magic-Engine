@@ -5,7 +5,7 @@
 #include "common/tpt-rand.h"
 #include <vector>
 #include <array>
-#include <json/json.h>
+#include "json.h"
 
 class Snapshot
 {

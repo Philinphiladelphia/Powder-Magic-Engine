@@ -11,7 +11,7 @@
 #include "SimulationConfig.h"
 #include <vector>
 #include <array>
-#include <json/json.h>
+#include "json.h"
 
 struct sign;
 struct Particle;

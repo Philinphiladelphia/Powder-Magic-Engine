@@ -7,7 +7,7 @@
 #include <cstdint>
 #include <list>
 #include <memory>
-#include <json/json.h>
+#include "json.h"
 
 class SaveInfo;
 class SaveFile;

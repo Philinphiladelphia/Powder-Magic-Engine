@@ -13,7 +13,7 @@ def find_headers(directory):
 def copy_headers(headers, destination, use_path=True):
     for header in headers:
         # Create the destination path preserving the directory structure
-        if (use_path):
+        if use_path:
             dest_path = os.path.join(destination, os.path.relpath(header, start='src'))
         else:
             dest_path = os.path.join(destination, os.path.relpath(header, start='builddir/src'))
@@ -32,6 +32,20 @@ def copy_generated_headers(build_dir, destination):
     for header in headers:
         shutil.copy2(header, destination)
 
+def copy_json_directory(destination):
+    json_dir = 'json'
+    dest_path = os.path.join(destination, 'include/json')
+    if os.path.exists(json_dir):
+        shutil.copytree(json_dir, dest_path, dirs_exist_ok=True)
+
+def replace_includes(headers):
+    for header in headers:
+        with open(header, 'r') as file:
+            content = file.read()
+        content = content.replace('#include "json/json.h"', '#include "json.h"')
+        with open(header, 'w') as file:
+            file.write(content)
+
 if __name__ == "__main__":
     if len(sys.argv) != 2:
         print("Usage: install_libs.py <base_path>")
@@ -49,5 +63,12 @@ if __name__ == "__main__":
     current_dir = os.getcwd()
     copy_libraries(os.path.join(current_dir, 'builddir'), os.path.join(base_path, 'libpath'))
 
-    for header in extra_headers + base_headers:
+    # Copy the json directory
+    copy_json_directory(base_path)
+
+    # Replace includes in all headers
+    all_headers = base_headers + extra_headers
+    replace_includes(all_headers)
+
+    for header in all_headers:
         print(header)

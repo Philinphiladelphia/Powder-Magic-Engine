@@ -3,6 +3,7 @@
 
 #include <deque>  // Include deque for circular buffer
 #include <chrono>  // Include for high_resolution_clock
+#include <vector>
 
 // Powder Toy Imports
 #include "SimulationConfig.h"
@@ -10,6 +11,12 @@
 #include "common/platform/Platform.h"
 
 using std::placeholders::_1;
+
+struct PowderPoint {
+	int x;
+	int y;
+	int type;
+};
 
 // Goal: have a node in godot that is a powder toy simulation.
 
@@ -106,6 +113,8 @@ void PowderToyInterface::MakeCircle(PowderCircle &circle) {
 void PowderToyInterface::GetParticles(int* particles) {
     // Ensure the particles field is properly initialized
     static_assert(YRES * XRES == 40000, "The size of the particles array must be 40000.");
+
+	// can I just return the x-y of every particle along with it's type? Would make my life a lot easier for goot integration.
 
     // Copy pmap to sim_data.particles
     for (int i = 0; i < YRES; ++i) {
