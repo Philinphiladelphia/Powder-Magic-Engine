@@ -42,7 +42,7 @@ def replace_includes(headers):
     for header in headers:
         with open(header, 'r') as file:
             content = file.read()
-        content = content.replace('#include "json/json.h"', '#include "json.h"')
+        content = content.replace('#include <json/json.h>', '#include "json.h"')
         with open(header, 'w') as file:
             file.write(content)
 

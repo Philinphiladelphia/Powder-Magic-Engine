@@ -104,7 +104,6 @@ void PowderToyInterface::SetSimDrawingFrequency(int frequency)
 
 // point, circle, triangle, polygon, line, arc
 void PowderToyInterface::MakeCircle(PowderCircle &circle) {
-    printf("Creating point at (%d, %d) with radius %d and element %d\n", circle.x, circle.y, circle.r, circle.element);
     explicit_singletons_->simulation->CreateParts(circle.x, circle.y, circle.r, circle.r, circle.element, 0);
 
 	// might benefit me to use brush objects from powder toy
