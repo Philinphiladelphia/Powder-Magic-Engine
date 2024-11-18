@@ -1,6 +1,6 @@
 #pragma once
 #include "common/PTString.h"
-#include "json.h"
+#include <json/json.h>
 #include <optional>
 
 class Prefs

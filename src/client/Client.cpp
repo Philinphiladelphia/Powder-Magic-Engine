@@ -40,10 +40,6 @@ Client::Client():
 void Client::MigrateStampsDef()
 {
 	std::vector<char> data;
-	if (!Platform::ReadFile(data, ByteString::Build(STAMPS_DIR, PATH_SEP_CHAR, "stamps.def")))
-	{
-		return;
-	}
 	for (auto i = 0; i < int(data.size()); i += 10)
 	{
 		stampIDs.push_back(ByteString(data.data() + i, data.data() + i + 10));
@@ -59,7 +55,6 @@ void Client::Initialize()
 		Platform::UpdateFinish();
 	}
 
-	stamps = std::make_unique<Prefs>(ByteString::Build(STAMPS_DIR, PATH_SEP_CHAR, "stamps.json"));
 	stampIDs = stamps->Get("MostRecentlyUsedFirst", std::vector<ByteString>{});
 	{
 		Prefs::DeferWrite dw(*stamps);
@@ -604,9 +599,6 @@ PTString Client::DoMigration(ByteString fromDir, ByteString toDir)
 		}
 	};
 
-	// Do actual migration
-	Platform::RemoveFile(fromDir + "stamps/stamps.def");
-	Platform::RemoveFile(fromDir + "stamps/stamps.json");
 	migrateList(stamps, "stamps", "Stamps");
 	migrateList(saves, "Saves", "Saves");
 	if (!scripts.empty())

@@ -38,14 +38,6 @@ def copy_json_directory(destination):
     if os.path.exists(json_dir):
         shutil.copytree(json_dir, dest_path, dirs_exist_ok=True)
 
-def replace_includes(headers):
-    for header in headers:
-        with open(header, 'r') as file:
-            content = file.read()
-        content = content.replace('#include <json/json.h>', '#include "json.h"')
-        with open(header, 'w') as file:
-            file.write(content)
-
 if __name__ == "__main__":
     if len(sys.argv) != 2:
         print("Usage: install_libs.py <base_path>")
@@ -68,7 +60,6 @@ if __name__ == "__main__":
 
     # Replace includes in all headers
     all_headers = base_headers + extra_headers
-    replace_includes(all_headers)
 
     for header in all_headers:
         print(header)

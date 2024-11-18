@@ -76,9 +76,9 @@ namespace http
 
 	void Request::Start()
 	{
-		assert(handle->state == RequestHandle::ready);
-		handle->state = RequestHandle::running;
-		RequestManager::Ref().RegisterRequest(*this);
+		// assert(handle->state == RequestHandle::ready);
+		// handle->state = RequestHandle::running;
+		// RequestManager::Ref().RegisterRequest(*this);
 	}
 
 	bool Request::CheckDone() const
